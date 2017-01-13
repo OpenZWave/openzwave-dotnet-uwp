@@ -19,8 +19,10 @@ namespace OpenZWave
 	};
 
 	/**
-	* \nosubgrouping
+	* <summary>
 	* A class that manages program options read from XML files or the command line.
+	* </summary>
+	* <remarks>
 	* The OpenZWave Manager class requires a complete and locked Options
 	* object when created.  The Options are therefore one of the first things that
 	* any OpenZWave application must deal with.
@@ -32,61 +34,69 @@ namespace OpenZWave
 	* The second source of program options is a string, which will normally be the
 	* command line used to launch the application.
 	* In this way, common options can be specified in the XML, but over-ridden if
-	* necessary by the command line.
-	* The Options process is as follows:
+	* necessary by the command line.<br/>
+	* The Options process is as follows:<br/>
 	* 1) Create an Options object, providing paths to the OpenZWave config folder,
-	* the User data folder and any command line string containing program options.
+	* the User data folder and any command line string containing program options.<br/>
 	* 2) Call Options::AddOptionBool, Options::AddOptionInt or Options::AddOptionString
 	* to add any application-specific configurable options
 	* The OpenZWave options will already have been added during construction of the
-	* Options object.
+	* Options object.<br/>
 	* 3) Call Options::Lock.  This will cause the option values to be read from
-	* the options.xml file and the command line string, and will lock the options
+	* the options.xml file and the command line string, and will lock the options<br/>
 	* so that no more calls aside from GetOptionAs may be made.
 	* 4) Create the OpenZWave Manager object.
+	* </remarks>
 	*/
 	public ref class ZWOptions sealed
 	{
 	public:
 		/**
-		* Creates an object to manage the program options.
-		* \param _configPath a string containing the path to the OpenZWave library config
-		* folder, which contains XML descriptions of Z-Wave manufacturers and products.
-		* \param _userPath a string containing the path to the application's user data
+		* <summary>Creates an object to manage the program options.</summary>
+		* <param name="_configPath">a string containing the path to the OpenZWave library config
+		* folder, which contains XML descriptions of Z-Wave manufacturers and products.</param>
+		* <param name="_userPath">a string containing the path to the application's user data
 		* folder where the OpenZWave should store the Z-Wave network configuration and state.
+		* </param>
+		* <param name="_commandLine">A string containing the program's command line options.
+		* Command line options are parsed after the options.xml file, and so take precedence.
+		* Options are identified by a leading -- (two minus signs). The following items
+		* in the string are treated as values for this option, until the next -- is
+		* reached. For boolean options only, it is possible to omit the value, in which case
+		* the value is assumed to be "true".  Note that option names are case insensitive, and
+		* that option values should be separated by a space.</param>
+		* <remarks>
 		* The _userPath is also the folder where OpenZWave will look for the file Options.xml
 		* which contains program option values.  The file should be in the form outlined below,
 		* with one or more Option elements containing a name and value attribute.  Multiple
 		* values with the same option name should be listed separately. Note that option names
 		* are case insensitive.
-		* \code
+		* <code><![CDATA[
 		* <?xml version="1.0" encoding="utf-8"?>
 		* <Options>
 		*   <Option name="logging" value="true" />
 		*   <Option name="ignore" value="COMMAND_CLASS_BASIC" />
 		*   <Option name="ignore" value="COMMAND_CLASS_VERSION" />
 		* </Options>
-		* \endcode
-		* \param _commandLine a string containing the program's command line options.
-		* Command line options are parsed after the options.xml file, and so take precedence.
-		* Options are identified by a leading -- (two minus signs). The following items
-		* in the string are treated as values for this option, until the next -- is
-		* reached. For boolean options only, it is possible to omit the value, in which case
-		* the value is assumed to be "true".  Note that option names are case insensitive, and
-		* that option values should be separated by a space.
-		* \see Get, Destroy, AddOption, GetOptionAs, Lock
+		* ]]></code>
+		* </remarks>
+		* <seealso cref="Get" />
+		* <seealso cref="Destroy" />
+		* <seealso cref="AddOption" />
+		* <seealso cref="GetOptionsAs" />
+		* <seealso cref="Lock" />
 		*/
 		void Create(String^ _configPath, String^ _userPath, String^ _commandLine);
 
-		/**
+		/** <summary>
 		* Deletes the Options and cleans up any associated objects.
 		* The application is responsible for destroying the Options object,
 		* but this must not be done until after the Manager object has been
-		* destroyed.
-		* \param _options Pointer to the Options object to be destroyed.
-		* \return true if the Options object was destroyed.  If the manager
-		* object still exists, this call will return false.
-		* \see Create, Get
+		* destroyed.</summary>
+		* <returns> true if the Options object was destroyed.  If the manager
+		* object still exists, this call will return false.</returns>
+		* <seealso cref="Create" />
+		* <seealso cref="Get" />
 		*/
 		bool Destroy() { return Options::Destroy(); }
 
