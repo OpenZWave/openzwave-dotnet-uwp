@@ -16,7 +16,7 @@
 using namespace OpenZWave;
 using namespace Platform;
 
-namespace OpenZWaveUWP
+namespace OpenZWave
 {
 	// Logging levels
 	public enum class ZWLogLevel

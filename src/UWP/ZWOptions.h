@@ -8,7 +8,7 @@
 using namespace OpenZWave;
 using namespace Platform;
 
-namespace OpenZWaveUWP 
+namespace OpenZWave
 {
 	public enum class ZWOptionType
 	{

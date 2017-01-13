@@ -4,7 +4,7 @@
 
 using namespace OpenZWave;
 
-namespace OpenZWaveUWP
+namespace OpenZWave
 {
 	public enum class ZWValueGenre
 	{

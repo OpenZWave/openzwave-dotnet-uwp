@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{46641b66-9271-4234-8e8b-1547def4bebb}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>OpenZWaveUWP</RootNamespace>
+    <RootNamespace>OpenZWave</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -101,31 +101,37 @@
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

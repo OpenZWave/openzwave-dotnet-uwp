@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "ZWOptions.h"
 
-using namespace OpenZWaveUWP;
 using namespace OpenZWave;
 
 //-----------------------------------------------------------------------------
