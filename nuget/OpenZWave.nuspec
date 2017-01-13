@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>OpenZWave</id>
+    <version>1.5.0.0</version>
+    <title>OpenZWave</title>
+    <authors>openzwave.com</authors>
+    <owners>openzwave.com</owners>
+    <licenseUrl>https://github.com/OpenZWave/open-zwave/blob/1c2511bb46d935864f0a6ff19fd804028b7beab3/license/lgpl.txt</licenseUrl>
+    <projectUrl>http://www.openzwave.net/</projectUrl>
+    <iconUrl>http://www.openzwave.net/css/ozwlogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Dotnet Wrapper for Windows that include :
+- OpenZWaveDotNet.dll
+- config directory (xml files for devices)</description>
+    <summary>free software library that interfaces with selected Z-Wave PC controllers to manipulate and respond to devices on a Z-Wave network.</summary>
+    <releaseNotes>https://github.com/OpenZWave/open-zwave/blob/1c2511bb46d935864f0a6ff19fd804028b7beab3/ChangeLog</releaseNotes>
+    <tags>openzwave zwave z-wave home automation iot</tags>
+  </metadata>
+</package>
