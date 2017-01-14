@@ -26,7 +26,13 @@
                         <Setter Property="Margin" Value="0,2" />
                     </Style>
                 </StackPanel.Resources>
-                <ComboBox x:Name="SerialPortList" Header="Serial port:" HorizontalAlignment="Stretch" />
+                <ComboBox x:Name="SerialPortList" Header="Serial port:" HorizontalAlignment="Stretch" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
                 <Button Content="Create New Primary Controller" />
                 <Button Content="Transfer Primary Role" />
@@ -40,7 +46,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <GridView x:Name="NodeGridView" ItemsSource="{x:Bind Nodes}" Grid.Column="1" >
+        <GridView x:Name="NodeGridView" ItemsSource="{x:Bind VM.Nodes}" Grid.Column="1" >
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:Node">
                     <Grid Margin="5" Width="200" Background="CornflowerBlue" RequestedTheme="Dark" Padding="5">
