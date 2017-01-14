@@ -70,23 +70,22 @@ namespace OpenZWave
 	public ref class ZWManager sealed
 	{
 	public:
-		/**
-		* \brief Creates the Manager singleton object.
-		*
+		/** <summary>Creates the Manager singleton object.</summary>
+		* <remarks>
 		* The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
 		* There can be only one Manager in an OpenZWave application.  Once the Manager has been created, call AddWatcher to install a notification
-		* callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.
-		* \param _configPath a string containing the path to the OpenZWave library config folder, which contains XML descriptions of Z-Wave manufacturers and products.
-		* \param _userPath a string containing the path to the application's user data folder where the OpenZWave should store the Z-Wave network configuration and state.
-		* \return a pointer to the newly created Manager object.
+		* callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
 		* \see Destroy, AddWatcher, AddDriver
+		* <seealso cref="Destroy" />
+		* <seealso cref="AddWatcher" />
+		* <seealso cref="AddDriver" />
 		*/
 		void Create();
 
 		/**
-		* \brief Deletes the Manager and cleans up any associated objects.
-		*
-		* \see Create, Get
+		* <summary>Deletes the Manager and cleans up any associated objects.</summary>
+		* <seealso cref="Create" />
+		* <seealso cref="Get" />
 		*/
 		void Destroy() { Manager::Get()->Destroy(); }
 

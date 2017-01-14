@@ -70,7 +70,7 @@ namespace OpenZWave
 		* which contains program option values.  The file should be in the form outlined below,
 		* with one or more Option elements containing a name and value attribute.  Multiple
 		* values with the same option name should be listed separately. Note that option names
-		* are case insensitive.
+		* are case insensitive.</remarks>
 		* <code><![CDATA[
 		* <?xml version="1.0" encoding="utf-8"?>
 		* <Options>
@@ -79,7 +79,6 @@ namespace OpenZWave
 		*   <Option name="ignore" value="COMMAND_CLASS_VERSION" />
 		* </Options>
 		* ]]></code>
-		* </remarks>
 		* <seealso cref="Get" />
 		* <seealso cref="Destroy" />
 		* <seealso cref="AddOption" />
@@ -96,27 +95,25 @@ namespace OpenZWave
 		* <returns> true if the Options object was destroyed.  If the manager
 		* object still exists, this call will return false.</returns>
 		* <seealso cref="Create" />
-		* <seealso cref="Get" />
 		*/
 		bool Destroy() { return Options::Destroy(); }
 
 		/**
-		* Locks the options.
-		* Reads in option values from  the XML options file and command line string and
-		* marks the options as locked.  Once locked, no more calls to AddOption
-		* can be made.
-		* The options must be locked before the Manager::Create method is called.
-		* \see AddOption
+		* <summary>Locks the options.</summary>
+		* <remarks>Reads in option values from  the XML options file and command line string and
+		* marks the options as locked.  Once locked, no more calls to AddOptionXXX
+		* can be made.<br/>
+		* The options must be locked before the <see cref="ZWManager.Create()" /> method is called.</remarks>
 		*/
 		bool Lock() { return Options::Get()->Lock(); }
 
 		/**
-		* Add a boolean option to the program.
-		* Adds an option to the program whose value can then be read from a file or command line.
-		* All calls to AddOptionInt must be made before Lock.
-		* \param _name the name of the option.  Option names are case insensitive and must be unique.
-		* \param _default the default value for this option.
-		* \see GetOptionAsBool
+		* <summary>Add a boolean option to the program.</summary>
+		* <remarks>Adds an option to the program whose value can then be read from a file or command line.
+		* All calls to AddOptionInt must be made before Lock.</remarks>
+		* <param name="_name"> the name of the option.  Option names are case insensitive and must be unique.</param>
+		* <param name="_default">the default value for this option.</param>
+		* <seealso cref="GetOptionAsBool" />
 		*/
 		bool AddOptionBool(String^ _name, bool _default);
 
@@ -183,9 +180,9 @@ namespace OpenZWave
 		ZWOptionType GetOptionType(String^ _name);
 
 		/**
-		* Test whether the options have been locked.
-		* \return true if the options have been locked.
-		* \see Lock
+		* <summary>Test whether the options have been locked.</summary>
+		* <returns><c>true</c> if the options have been locked.</returns>
+		* <seealso cref="Lock" />
 		*/
 		bool AreLocked() { return Options::Get()->AreLocked(); }
 	private:
