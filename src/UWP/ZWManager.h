@@ -18,7 +18,7 @@ using namespace Platform;
 
 namespace OpenZWave
 {
-	// Logging levels
+	/// <summary>Various LogLevels available to the Application</summary>
 	public enum class ZWLogLevel
 	{
 		None = LogLevel_None,
@@ -42,31 +42,94 @@ namespace OpenZWave
 		Hid = Driver::ControllerInterface_Hid
 	};
 
+	/// <summary>Controller Commands.</summary>
+	/// <remarks>Commands to be used with the <see cref="ZWManager.BeginControllerCommand"/> method.</remarks>
 	public enum class ZWControllerCommand
 	{
-		None = Driver::ControllerCommand_None,						/**< No command. */
-		AddDevice = Driver::ControllerCommand_AddDevice,					/**< Add a new device (but not a controller) to the Z-Wave network. */
-		CreateNewPrimary = Driver::ControllerCommand_CreateNewPrimary,			/**< Add a new controller to the Z-Wave network.  The new controller will be the primary, and the current primary will become a secondary controller. */
-		ReceiveConfiguration = Driver::ControllerCommand_ReceiveConfiguration,		/**< Receive Z-Wave network configuration information from another controller. */
-		RemoveDevice = Driver::ControllerCommand_RemoveDevice,				/**< Remove a new device (but not a controller) from the Z-Wave network. */
-		RemoveFailedNode = Driver::ControllerCommand_RemoveFailedNode,			/**< Move a node to the controller's failed nodes list. This command will only work if the node cannot respond. */
-		HasNodeFailed = Driver::ControllerCommand_HasNodeFailed,				/**< Check whether a node is in the controller's failed nodes list. */
-		ReplaceFailedNode = Driver::ControllerCommand_ReplaceFailedNode,			/**< Replace a non-responding device with another. */
-		TransferPrimaryRole = Driver::ControllerCommand_TransferPrimaryRole,		/**< Make a different controller the primary. */
-		RequestNetworkUpdate = Driver::ControllerCommand_RequestNetworkUpdate,		/**< Request network information from the SUC/SIS. */
-		RequestNodeNeighborUpdate = Driver::ControllerCommand_RequestNodeNeighborUpdate,	/**< Get a node to rebuild its neighbour list.  This method also does ControllerCommand_RequestNodeNeighbors */
-		AssignReturnRoute = Driver::ControllerCommand_AssignReturnRoute,			/**< Assign a network return route to a device. */
-		DeleteAllReturnRoutes = Driver::ControllerCommand_DeleteAllReturnRoutes,		/**< Delete all network return routes from a device. */
-		SendNodeInformation = Driver::ControllerCommand_SendNodeInformation,		/**< Send a node information frame */
-		ReplicationSend = Driver::ControllerCommand_ReplicationSend,			/**< Send information from primary to secondary */
-		CreateButton = Driver::ControllerCommand_CreateButton,				/**< Create an id that tracks handheld button presses */
-		DeleteButton = Driver::ControllerCommand_DeleteButton				/**< Delete id that tracks handheld button presses */
+		/// <summary>No command.</summary>
+		None = Driver::ControllerCommand_None,												
+		/// <summary>Add a new device (but not a controller) to the Z-Wave network.</summary>
+		AddDevice = Driver::ControllerCommand_AddDevice,
+		/// <summary>Add a new controller to the Z-Wave network.  The new controller will be the primary, and the current primary will become a secondary controller.</summary>
+		CreateNewPrimary = Driver::ControllerCommand_CreateNewPrimary,
+		/// <summary>Receive Z-Wave network configuration information from another controller.</summary>
+		ReceiveConfiguration = Driver::ControllerCommand_ReceiveConfiguration,
+		/// <summary>Remove a new device (but not a controller) from the Z-Wave network.</summary>
+		RemoveDevice = Driver::ControllerCommand_RemoveDevice,
+		/// <summary>Move a node to the controller's failed nodes list. This command will only work if the node cannot respond.</summary>
+		RemoveFailedNode = Driver::ControllerCommand_RemoveFailedNode,
+		/// <summary>Check whether a node is in the controller's failed nodes list.</summary>
+		HasNodeFailed = Driver::ControllerCommand_HasNodeFailed,
+		/// <summary>Replace a non-responding device with another.</summary>
+		ReplaceFailedNode = Driver::ControllerCommand_ReplaceFailedNode,
+		/// <summary>Make a different controller the primary.</summary>
+		TransferPrimaryRole = Driver::ControllerCommand_TransferPrimaryRole,
+		/// <summary>Request network information from the SUC/SIS.</summary>
+		RequestNetworkUpdate = Driver::ControllerCommand_RequestNetworkUpdate,
+		/// <summary>Get a node to rebuild its neighbour list.  This method also does ControllerCommand_RequestNodeNeighbors</summary>
+		RequestNodeNeighborUpdate = Driver::ControllerCommand_RequestNodeNeighborUpdate,
+		/// <summary>Assign a network return route to a device.</summary>
+		AssignReturnRoute = Driver::ControllerCommand_AssignReturnRoute,
+		/// <summary>Delete all network return routes from a device.</summary>
+		DeleteAllReturnRoutes = Driver::ControllerCommand_DeleteAllReturnRoutes,
+		/// <summary>Send a node information frame</summary>
+		SendNodeInformation = Driver::ControllerCommand_SendNodeInformation,
+		/// <summary>Send information from primary to secondary</summary>
+		ReplicationSend = Driver::ControllerCommand_ReplicationSend,
+		/// <summary>Create an id that tracks handheld button presses</summary>
+		CreateButton = Driver::ControllerCommand_CreateButton,
+		/// <summary>Delete id that tracks handheld button presses</summary>
+		DeleteButton = Driver::ControllerCommand_DeleteButton
 	};
 
 	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
 	private delegate void OnNotificationFromUnmanagedDelegate(void *_notification, void* _context);
 
+	/// <summary>The main public interface to OpenZWave.</summary>
+	/// <remarks><para>
+	/// A singleton class providing the main public interface to OpenZWave.
+	/// The Manager class exposes all the functionality required to add
+	/// Z-Wave support to an application.  It handles the sending and receiving
+	/// of Z-Wave messages as well as the configuration of a Z-Wave network
+	/// and its devices, freeing the library user from the burden of learning
+	/// the low-level details of the Z-Wave protocol.
+	/// </para><para>
+	/// All Z-Wave functionality is accessed via the Manager class.  While this
+	/// does not make for the most efficient code structure, it does enable
+	/// the library to handle potentially complex and hard-to-debug issues
+	/// such as multi-threading and object lifespans behind the scenes.
+	/// Application development is therefore simplified and less prone to bugs.
+	/// </para><para>
+	/// There can be only one instance of the Manager class, and all applications
+	/// will start by calling Manager::Create static method to create that instance.
+	/// From then on, a call to the Manager::Get static method will return the
+	/// pointer to the Manager object.  On application exit, Manager::Destroy
+	/// should be called to allow OpenZWave to clean up and delete any other
+	/// objects it has created.
+	/// </para><para>
+	/// Once the Manager has been created, a call should be made to Manager::AddWatcher
+	/// to install a notification callback handler.  This handler will receive
+	/// notifications of Z-Wave network changes and updates to device values, and is
+	/// an essential element of OpenZWave.
+	/// </para><para>
+	/// Next, a call should be made to Manager::AddDriver for each Z-Wave controller
+	/// attached to the PC.  Each Driver will handle the sending and receiving of
+	/// messages for all the devices in its controller's Z-Wave network.  The Driver
+	/// will read any previously saved configuration and then query the Z-Wave controller
+	/// for any missing information.  Once that process is complete, a DriverReady
+	/// notification callback will be sent containing the Home ID of the controller,
+	/// which is required by most of the other Manager class methods.
+	/// </para><para>
+	/// [After the DriverReady notification is sent, the Driver will poll each node on
+	/// the network to update information about each node.  After all "awake" nodes
+	/// have been polled, an "AllAwakeNodesQueried" notification is sent.  This is when
+	/// a client application can expect all of the node information (both static
+	/// information, like the physical device's capabilities, session information
+	/// (like [associations and/or names] and dynamic information (like temperature or
+	/// on/off state) to be available.  Finally, after all nodes (whether listening or
+	/// sleeping) have been polled, an "AllNodesQueried" notification is sent.]
+	/// </para>
 	public ref class ZWManager sealed
 	{
 	public:
@@ -191,31 +254,26 @@ namespace OpenZWave
 		uint8 GetSUCNodeId(uint32 homeId) { return Manager::Get()->GetSUCNodeId(homeId); }
 
 
-		/**
-		* \brief Query if the controller is a primary controller.
-		*
-		* The primary controller is the main device used to configure and control a Z-Wave network.
-		* There can only be one primary controller - all other controllers are secondary controllers.
-		* <p>
-		* The only difference between a primary and secondary controller is that the primary is the
-		* only one that can be used to add or remove other devices.  For this reason, it is usually
-		* better for the promary controller to be portable, since most devices must be added when
-		* installed in their final location.
-		* <p>
-		* Calls to BeginControllerCommand will fail if the controller is not the primary.
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return true if it is a primary controller, false if not.
-		*/
+		/// <summary>brief Query if the controller is a primary controller.</summary>
+		/// <remarks>
+		/// <para>The primary controller is the main device used to configure and control a Z-Wave network.
+		/// There can only be one primary controller - all other controllers are secondary controllers.
+		/// </para><para>
+		/// The only difference between a primary and secondary controller is that the primary is the
+		/// only one that can be used to add or remove other devices.  For this reason, it is usually
+		/// better for the promary controller to be portable, since most devices must be added when
+		/// installed in their final location.
+		/// </para><para>
+		/// Calls to BeginControllerCommand will fail if the controller is not the primary.</para>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>true if it is a primary controller, false if not.<returns>
 		bool IsPrimaryController(uint32 homeId) { return Manager::Get()->IsPrimaryController(homeId); }
 
-		/**
-		* \brief Query if the controller is a static update controller.
-		*
-		* A Static Update Controller (SUC) is a controller that must never be moved in normal operation
-		* and which can be used by other nodes to receive information about network changes.
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return true if it is a static update controller, false if not.
-		*/
+		/// <summary>Query if the controller is a static update controller.</summary>
+		/// <remarks>A Static Update Controller (SUC) is a controller that must never be moved in normal operation
+		/// and which can be used by other nodes to receive information about network changes.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>true if it is a static update controller, false if not.</returns>
 		bool IsStaticUpdateController(uint32 homeId) { return Manager::Get()->IsStaticUpdateController(homeId); }
 
 		/**

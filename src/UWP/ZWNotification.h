@@ -48,6 +48,9 @@ using namespace OpenZWave;
 
 namespace OpenZWave
 {
+	/** <summary>Notification types.</summary>
+	  * <remarks>Notifications of various Z-Wave events sent to the watchers
+      * registered with the Manager::AddWatcher method.</remarks> */
 	public enum class NotificationType
 	{
 		/** <summary>A new node value has been added to OpenZWave's list. These notifications occur after a node has been discovered, and details of its command classes have been received.  Each command class may generate one or more values depending on the complexity of the item being represented.</summary> */
@@ -116,14 +119,26 @@ namespace OpenZWave
 		ManufacturerSpecificDBReady = Notification::Type_ManufacturerSpecificDBReady		
 	};
 
+	/**
+	* <summary>Notification codes.</summary>
+	* <remarks>Notifications of the type Type_Notification convey some
+	* extra information defined here.</remarks>
+	*/
 	public enum class NotificationCode
 	{
+		/** <summary>Completed messages</summary> */
 		MsgComplete = Notification::Code_MsgComplete,
+		/** <summary>Messages that timeout will send a Notification with this code.</summary> */
 		Timeout = Notification::Code_Timeout,
+		/** <summary>Report on NoOperation message sent completion.</summary> */
 		NoOperation = Notification::Code_NoOperation,
+		/** <summary>Report when a sleeping node wakes up.</summary> */
 		Awake = Notification::Code_Awake,
+		/** <summary>Report when a node goes to sleep.</summary> */
 		Sleep = Notification::Code_Sleep,
+		/** <summary>Report when a node is presumed dead.</summary> */
 		Dead = Notification::Code_Dead,
+		/** <summary>Report when a node is revived.</summary> */
 		Alive = Notification::Code_Alive
 	};
 
