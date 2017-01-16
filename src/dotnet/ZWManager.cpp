@@ -122,6 +122,7 @@ bool ZWManager::GetValueAsByte
 // <ZWManager::GetValueAsDecimal>
 // Gets a value as a Decimal
 //-----------------------------------------------------------------------------
+// Deprecated
 bool ZWManager::GetValueAsDecimal
 ( 
 	ZWValueID^ id,
@@ -488,6 +489,7 @@ bool ZWManager::SceneGetValueAsByte
 // <ZWManager::SceneGetValueAsDecimal>
 // Retrieves a scene's value as a decimal
 //-----------------------------------------------------------------------------
+// Deprecated
 bool ZWManager::SceneGetValueAsDecimal
 (
 	uint8 sceneId,
