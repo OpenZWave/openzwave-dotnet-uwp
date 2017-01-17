@@ -31,6 +31,7 @@
 #pragma once
 
 #include "Options.h"
+#include "ZWEnums.h"
 #include <locale>
 #include <codecvt>
 #include <string>
@@ -40,14 +41,6 @@ using namespace Platform;
 
 namespace OpenZWave
 {
-	public enum class ZWOptionType
-	{
-		Invalid = Options::OptionType_Invalid,
-		Bool = Options::OptionType_Bool,
-		Int = Options::OptionType_Int,
-		String = Options::OptionType_String
-	};
-
 	/**
 	* <summary>
 	* A class that manages program options read from XML files or the command line.

@@ -43,105 +43,12 @@
 #include "ValueDecimal.h"
 #include "Notification.h"
 #include "ZWValueID.h"
+#include "ZWEnums.h"
 
 using namespace OpenZWave;
 
 namespace OpenZWave
 {
-	/** <summary>Notification types.</summary>
-	  * <remarks>Notifications of various Z-Wave events sent to the watchers
-      * registered with the Manager::AddWatcher method.</remarks> */
-	public enum class NotificationType
-	{
-		/** <summary>A new node value has been added to OpenZWave's list. These notifications occur after a node has been discovered, and details of its command classes have been received.  Each command class may generate one or more values depending on the complexity of the item being represented.</summary> */
-		ValueAdded = Notification::Type_ValueAdded,
-		/** <summary>A node value has been removed from OpenZWave's list.  This only occurs when a node is removed.</summary> */
-		ValueRemoved = Notification::Type_ValueRemoved,
-		/** <summary>A node value has been updated from the Z-Wave network and it is different from the previous value.</summary> */
-		ValueChanged = Notification::Type_ValueChanged,
-		/** <summary>A node value has been updated from the Z-Wave network.</summary> */
-		ValueRefreshed = Notification::Type_ValueRefreshed,
-		/** <summary>The associations for the node have changed. The application should rebuild any group information it holds about the node.</summary> */
-		Group = Notification::Type_Group,
-		/** <summary>A new node has been found (not already stored in zwcfg*.xml file) </summary>*/
-		NodeNew = Notification::Type_NodeNew,
-		/** <summary>A new node has been added to OpenZWave's list.  This may be due to a device being added to the Z-Wave network, or because the application is initializing itself.</summary> */
-		NodeAdded = Notification::Type_NodeAdded,
-		/** <summary>A node has been removed from OpenZWave's list.  This may be due to a device being removed from the Z-Wave network, or because the application is closing.</summary> */
-		NodeRemoved = Notification::Type_NodeRemoved,
-		/** <summary>Basic node information has been received, such as whether the node is a listening device, a routing device and its baud rate and basic, generic and specific types. It is after this notification that you can call Manager::GetNodeType to obtain a label containing the device description.</summary> */
-		NodeProtocolInfo = Notification::Type_NodeProtocolInfo,
-		/** <summary> One of the node names has changed (name, manufacturer, product).</summary> */
-		NodeNaming = Notification::Type_NodeNaming,
-		/** <summary>A node has triggered an event.  This is commonly caused when a node sends a Basic_Set command to the controller.  The event value is stored in the notification.</summary> */
-		NodeEvent = Notification::Type_NodeEvent,
-		/** <summary></summary> */
-		PollingDisabled = Notification::Type_PollingDisabled,
-		/** <summary></summary> */
-		PollingEnabled = Notification::Type_PollingEnabled,
-		/** <summary></summary> */
-		SceneEvent = Notification::Type_SceneEvent,
-		/** <summary></summary> */
-		CreateButton = Notification::Type_CreateButton,
-		/** <summary></summary> */
-		DeleteButton = Notification::Type_DeleteButton,
-		/** <summary></summary> */
-		ButtonOn = Notification::Type_ButtonOn,
-		/** <summary></summary> */
-		ButtonOff = Notification::Type_ButtonOff,
-		/** <summary>A driver for a PC Z-Wave controller has been added and is ready to use.  The notification will contain the controller's Home ID, which is needed to call most of the Manager methods.</summary> */
-		DriverReady = Notification::Type_DriverReady,
-		/** <summary>Driver failed to load</summary> */
-		DriverFailed = Notification::Type_DriverFailed,
-		/** <summary>All nodes and values for this driver have been removed.  This is sent instead of potentially hundreds of individual node and value notifications.</summary> */
-		DriverReset = Notification::Type_DriverReset,
-		/** <summary>The queries on a node that are essential to its operation have been completed. The node can now handle incoming messages.</summary> */
-		EssentialNodeQueriesComplete = Notification::Type_EssentialNodeQueriesComplete,
-		/** <summary>All the initialization queries on a node have been completed.</summary> */
-		NodeQueriesComplete = Notification::Type_NodeQueriesComplete,
-		/** <summary></summary> */
-		AwakeNodesQueried = Notification::Type_AwakeNodesQueried,
-		/** <summary></summary> */
-		AllNodesQueriedSomeDead = Notification::Type_AllNodesQueriedSomeDead,
-		/** <summary></summary> */
-		AllNodesQueried = Notification::Type_AllNodesQueried,
-		/** <summary></summary> */
-		Notification = Notification::Type_Notification,
-		/** <summary></summary> */
-		DriverRemoved = Notification::Type_DriverRemoved,
-		/** <summary></summary> */
-		ControllerCommand = Notification::Type_ControllerCommand,
-		/** <summary>The Device has been reset and thus removed from the NodeList in OZW</summary> */
-		NodeReset = Notification::Type_NodeReset,
-		/** <summary>Warnings and Notifications Generated by the library that should be displayed to the user (eg, out of date config files) </summary>*/
-		UserAlerts = Notification::Type_UserAlerts,					
-		/** <summary>The ManufacturerSpecific Database Is Ready</summary> */
-		ManufacturerSpecificDBReady = Notification::Type_ManufacturerSpecificDBReady		
-	};
-
-	/**
-	* <summary>Notification codes.</summary>
-	* <remarks>Notifications of the type Type_Notification convey some
-	* extra information defined here.</remarks>
-	*/
-	public enum class NotificationCode
-	{
-		/** <summary>Completed messages</summary> */
-		MsgComplete = Notification::Code_MsgComplete,
-		/** <summary>Messages that timeout will send a Notification with this code.</summary> */
-		Timeout = Notification::Code_Timeout,
-		/** <summary>Report on NoOperation message sent completion.</summary> */
-		NoOperation = Notification::Code_NoOperation,
-		/** <summary>Report when a sleeping node wakes up.</summary> */
-		Awake = Notification::Code_Awake,
-		/** <summary>Report when a node goes to sleep.</summary> */
-		Sleep = Notification::Code_Sleep,
-		/** <summary>Report when a node is presumed dead.</summary> */
-		Dead = Notification::Code_Dead,
-		/** <summary>Report when a node is revived.</summary> */
-		Alive = Notification::Code_Alive
-	};
-
 	public ref class ZWNotification sealed
 	{
 	internal:
@@ -160,14 +67,14 @@ namespace OpenZWave
 		}
 
 	public:
-		NotificationType GetType() { return m_type; }
-		NotificationCode GetCode() { return (NotificationCode)m_byte; }
-		uint32 GetHomeId() { return m_valueId->GetHomeId(); }
-		uint8 GetNodeId() { return m_valueId->GetNodeId(); }
-		ZWValueID^ GetValueID() { return m_valueId; }
-		uint8 GetGroupIdx() { assert(NotificationType::Group == m_type); return m_byte; }
-		uint8 GetEvent() { return m_event; }
-		uint8 GetByte() { return m_byte; }
+		property NotificationType Type { NotificationType get() { return m_type; } }
+		property NotificationCode Code { NotificationCode get() { return (NotificationCode)m_byte; } }
+		property uint32 HomeId { uint32 get() { return m_valueId->HomeId; } }
+		property uint8 NodeId { uint8 get() { return m_valueId->NodeId; } }
+		property ZWValueID^ ValueID { ZWValueID^ get() { return m_valueId; } }
+		property uint8 GroupIdx { uint8 get() { assert(NotificationType::Group == m_type); return m_byte; } }
+		property uint8 Event { uint8 get() { return m_event; } }
+		property uint8 Byte { uint8 get() { return m_byte; } }
 
 	internal:
 		NotificationType		m_type;

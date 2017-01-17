@@ -31,50 +31,13 @@
 
 #pragma once
 
+#include "ZWEnums.h"
 #include "ValueID.h"
 
 using namespace OpenZWave;
 
 namespace OpenZWave
 {
-	/** <summary>The classification of a value to enable low level system or configuration parameters to be filtered by the application.</summary> */
-	public enum class ZWValueGenre
-	{
-		/** <summary>The 'level' as controlled by basic commands.  Usually duplicated by another command class.</summary> */
-		Basic = ValueID::ValueGenre_Basic,
-		/** <summary>Basic values an ordinary user would be interested in.</summary> */
-		User = ValueID::ValueGenre_User,
-		/** <summary>Device-specific configuration parameters.  These cannot be automatically discovered via Z-Wave, and are usually described in the user manual instead.</summary> */
-		Config = ValueID::ValueGenre_Config,
-		/** <summary>Values of significance only to users who understand the Z-Wave protocol.</summary> */
-		System = ValueID::ValueGenre_System
-	};
-
-	//* <summary>The type of data represented by the value object.</summary>
-	public enum class ZWValueType
-	{
-		//* <summary>Boolean, true or false</summary> */
-		Bool = ValueID::ValueType_Bool,
-		//* <summary>8-bit unsigned value</summary> */
-		Byte = ValueID::ValueType_Byte,			
-		//* <summary>Represents a non-integer value as a string, to avoid floating point accuracy issues.</summary> */
-		Decimal = ValueID::ValueType_Decimal,
-		//* <summary>32-bit signed value</summary> */
-		Int = ValueID::ValueType_Int,			   
-		//* <summary>List from which one item can be selected</summary> */
-		List = ValueID::ValueType_List,			   
-		//* <summary>Complex type used with the Climate Control Schedule command class</summary> */
-		Schedule = ValueID::ValueType_Schedule,
-		//* <summary>16-bit signed value</summary> */
-		Short = ValueID::ValueType_Short,
-		//* <summaryText string></summary> */
-		String = ValueID::ValueType_String,
-		//* <summary>A write-only value that is the equivalent of pressing a button to send a command to a device</summary> */
-		Button = ValueID::ValueType_Button,
-		//* <summary>A collection of bytes</summary> */
-		Raw = ValueID::ValueType_Raw		
-	};
-
     public ref class ZWValueID sealed
     {
     public:
@@ -105,17 +68,15 @@ namespace OpenZWave
 		)
 		{
 			m_valueId = new ValueID(homeId, nodeId, (ValueID::ValueGenre)genre, commandClassId, instance, valueIndex, (ValueID::ValueType)type);
-			
 		}
-
-		uint32		GetHomeId() { return m_valueId->GetHomeId(); }
-		uint8		GetNodeId() { return m_valueId->GetNodeId(); }
-		ZWValueGenre	GetGenre() { return (ZWValueGenre)m_valueId->GetGenre(); }
-		uint8		GetCommandClassId() { return m_valueId->GetCommandClassId(); }
-		uint8		GetInstance() { return m_valueId->GetInstance(); }
-		uint8		GetIndex() { return m_valueId->GetIndex(); }
-		ZWValueType	GetType() { return (ZWValueType)m_valueId->GetType(); }
-		uint64		GetId() { return m_valueId->GetId(); }
+		property uint32 HomeId { uint32 get() { return m_valueId->GetHomeId(); } }
+		property uint8	NodeId { uint8 get() { return m_valueId->GetNodeId(); } }
+		property ZWValueGenre Genre { ZWValueGenre get() { return (ZWValueGenre)m_valueId->GetGenre(); } }
+		property uint8 CommandClassId { uint8 get() { return m_valueId->GetCommandClassId(); } }
+		property uint8 Instance { uint8 get() { return m_valueId->GetInstance(); } }
+		property uint8 Index { uint8 get() { return m_valueId->GetIndex(); } }
+		property ZWValueType Type { ZWValueType get() { return (ZWValueType)m_valueId->GetType(); } }
+		property uint64	Id { uint64 get() { return m_valueId->GetId(); } }
 
 	private:
 		ValueID* m_valueId;

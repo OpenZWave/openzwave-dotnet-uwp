@@ -43,7 +43,7 @@ namespace OpenZWave
 	};
 
 	/// <summary>Controller Commands.</summary>
-	/// <remarks>Commands to be used with the <see cref="ZWManager.BeginControllerCommand"/> method.</remarks>
+	/// <remarks>Commands to be used with the BeginControllerCommand method.</remarks>
 	public enum class ZWControllerCommand
 	{
 		/// <summary>No command.</summary>
@@ -129,7 +129,7 @@ namespace OpenZWave
 	/// (like [associations and/or names] and dynamic information (like temperature or
 	/// on/off state) to be available.  Finally, after all nodes (whether listening or
 	/// sleeping) have been polled, an "AllNodesQueried" notification is sent.]
-	/// </para>
+	/// </para></remarks>
 	public ref class ZWManager sealed
 	{
 	public:
@@ -140,7 +140,7 @@ namespace OpenZWave
 		* callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
 		* \see Destroy, AddWatcher, AddDriver
 		* <seealso cref="Destroy" />
-		* <seealso cref="AddWatcher" />
+		* <seealso cref="OnNotification" />
 		* <seealso cref="AddDriver" />
 		*/
 		void Create();
@@ -148,37 +148,36 @@ namespace OpenZWave
 		/**
 		* <summary>Deletes the Manager and cleans up any associated objects.</summary>
 		* <seealso cref="Create" />
-		* <seealso cref="Get" />
 		*/
 		void Destroy() { Manager::Get()->Destroy(); }
 
 		/**
-		* \brief Get the Version Number of OZW as a string
+		* <summary>Get the Version Number of OZW as a string</summary>
 		* \return a String representing the version number as MAJOR.MINOR.REVISION
 		*/
 		String^ GetVersionAsString() { return ConvertString(Manager::Get()->getVersionAsString()); }
 
 		/**
-		* \brief Sets the library logging state.
+		* <summary>Sets the library logging state.</summary>
 		* \param bState True to enable logging; false to disable logging.
 		* \see GetLoggingState
 		*/
 		void SetLoggingState(bool bState) { Log::SetLoggingState(bState); }
 
 		/**
-		* \brief Gets the current library logging state.
+		* <summary>Gets the current library logging state.</summary>
 		* \return True if logging is enabled; false otherwise
 		* \see SetLoggingState
 		*/
 		bool GetLoggingState() { return Log::GetLoggingState(); }
 
 		/**
-		* \brief Sets the current library log file name to a new name
+		* <summary>Sets the current library log file name to a new name</summary>
 		*/
 		void SetLogFileName(String^ _filename) { Log::SetLogFileName(ConvertString(_filename)); }
 
 		/**
-		* \brief Sends current driver statistics to the log file
+		* <summary>Sends current driver statistics to the log file</summary>
 		*/
 		void LogDriverStatistics(uint32 homeId) { Manager::Get()->LogDriverStatistics(homeId); }
 
@@ -192,7 +191,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.
+		* <summary>Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.</summary>
 		*
 		* This method does not normally need to be called, since OpenZWave will save the state automatically
 		* during the shutdown process.  It is provided here only as an aid to development.
@@ -214,7 +213,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Creates a new driver for a Z-Wave controller.
+		* <summary>Creates a new driver for a Z-Wave controller.</summary>
 		*
 		* This method creates a Driver object for handling communications with a single Z-Wave controller.  In the background, the
 		* driver first tries to read configuration data saved during a previous run.  It then queries the controller directly for any
@@ -230,7 +229,7 @@ namespace OpenZWave
 		bool AddDriver(String^ serialPortName, ZWControllerInterface interfaceType) { return Manager::Get()->AddDriver(ConvertString(serialPortName), (Driver::ControllerInterface) interfaceType); }
 
 		/**
-		* \brief Removes the driver for a Z-Wave controller, and closes the serial port.
+		* <summary>Removes the driver for a Z-Wave controller, and closes the serial port.</summary>
 		*
 		* Drivers do not need to be explicitly removed before calling Destroy - this is handled automatically.
 		* @paaram serialPortName The same string as was passed in the original call to AddDriver.
@@ -240,21 +239,21 @@ namespace OpenZWave
 		bool RemoveDriver(String^ serialPortName) { return Manager::Get()->RemoveDriver(ConvertString(serialPortName)); }
 
 		/**
-		* \brief Get the node ID of the Z-Wave controller.
+		* <summary>Get the node ID of the Z-Wave controller.</summary>
 		* \param homeId The Home ID of the Z-Wave controller.
 		* \return the node ID of the Z-Wave controller.
 		*/
 		uint8 GetControllerNodeId(uint32 homeId) { return Manager::Get()->GetControllerNodeId(homeId); }
 
 		/**
-		* \brief Get the node ID of the Static Update Controller.
+		* <summary>Get the node ID of the Static Update Controller.</summary>
 		* \param homeId The Home ID of the Z-Wave controller.
 		* \return the node ID of the Z-Wave controller.
 		*/
 		uint8 GetSUCNodeId(uint32 homeId) { return Manager::Get()->GetSUCNodeId(homeId); }
 
 
-		/// <summary>brief Query if the controller is a primary controller.</summary>
+		/// <summary>Query if the controller is a primary controller.</summary>
 		/// <remarks>
 		/// <para>The primary controller is the main device used to configure and control a Z-Wave network.
 		/// There can only be one primary controller - all other controllers are secondary controllers.
@@ -264,7 +263,8 @@ namespace OpenZWave
 		/// better for the promary controller to be portable, since most devices must be added when
 		/// installed in their final location.
 		/// </para><para>
-		/// Calls to BeginControllerCommand will fail if the controller is not the primary.</para>
+		/// Calls to BeginControllerCommand will fail if the controller is not the primary.</para>\
+		/// </remarks>
 		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
 		/// <returns>true if it is a primary controller, false if not.<returns>
 		bool IsPrimaryController(uint32 homeId) { return Manager::Get()->IsPrimaryController(homeId); }
@@ -277,7 +277,7 @@ namespace OpenZWave
 		bool IsStaticUpdateController(uint32 homeId) { return Manager::Get()->IsStaticUpdateController(homeId); }
 
 		/**
-		* \brief Query if the controller is using the bridge controller library.
+		* <summary>Query if the controller is using the bridge controller library.</summary>
 		*
 		* A bridge controller is able to create virtual nodes that can be associated
 		* with other controllers to enable events to be passed on.
@@ -287,7 +287,7 @@ namespace OpenZWave
 		bool IsBridgeController(uint32 homeId) { return Manager::Get()->IsBridgeController(homeId); }
 
 		/**
-		* \brief Get the version of the Z-Wave API library used by a controller.
+		* <summary>Get the version of the Z-Wave API library used by a controller.</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller.
 		* \return a string containing the library version. For example, "Z-Wave 2.48".
@@ -295,7 +295,7 @@ namespace OpenZWave
 		String^ GetLibraryVersion(uint32 homeId) { return ConvertString(Manager::Get()->GetLibraryVersion(homeId)); }
 
 		/**
-		* \brief Get a string containing the Z-Wave API library type used by a controller.
+		* <summary>Get a string containing the Z-Wave API library type used by a controller.</summary>
 		*
 		* The possible library types are:
 		* - Static Controller
@@ -317,20 +317,20 @@ namespace OpenZWave
 		String^ GetLibraryTypeName(uint32 homeId) { return ConvertString(Manager::Get()->GetLibraryTypeName(homeId)); }
 
 		/**
-		* \brief Get count of messages in the outgoing send queue.
+		* <summary>Get count of messages in the outgoing send queue.</summary>
 		* \param homeId The Home ID of the Z-Wave controller.
 		* \return a integer message count
 		*/
 		int32 GetSendQueueCount(uint32 homeId) { return Manager::Get()->GetSendQueueCount(homeId); }
 
 		/**
-		* \brief Obtain controller interface type
+		* <summary>Obtain controller interface type</summary>
 		* \param homeId The Home ID of the Z-Wave controller.
 		*/
 		ZWControllerInterface GetControllerInterfaceType(uint32 homeId) { return (ZWControllerInterface)Manager::Get()->GetControllerInterfaceType(homeId); }
 
 		/**
-		* \brief Obtain controller interface path
+		* <summary>Obtain controller interface path</summary>
 		* \param homeId The Home ID of the Z-Wave controller.
 		*/
 		String^ GetControllerPath(uint32 homeId) { return ConvertString(Manager::Get()->GetControllerPath(homeId)); }
@@ -348,12 +348,12 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Get the time period between polls of a node's state.
+		* <summary>Get the time period between polls of a node's state.</summary>
 		*/
 		int32 GetPollInterval() { return Manager::Get()->GetPollInterval(); }
 
 		/**
-		* \brief Set the time period between polls of a node's state.
+		* <summary>Set the time period between polls of a node's state.</summary>
 		*
 		* Due to patent concerns, some devices do not report state changes automatically to the controller.
 		* These devices need to have their state polled at regular intervals.  The length of the interval
@@ -370,7 +370,7 @@ namespace OpenZWave
 		void SetPollInterval(int32 milliseconds, bool bIntervalBetweenPolls) { Manager::Get()->SetPollInterval(milliseconds, bIntervalBetweenPolls); }
 
 		/**
-		* \brief Enable the polling of a device's state.
+		* <summary>Enable the polling of a device's state.</summary>
 		*
 		* \param valueId The ID of the value to start polling.
 		* \return True if polling was enabled.
@@ -378,7 +378,7 @@ namespace OpenZWave
 		bool EnablePoll(ZWValueID^ valueId) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Enable the polling of a device's state.
+		* <summary>Enable the polling of a device's state.</summary>
 		*
 		* \param valueId The ID of the value to start polling.
 		* \param intensity, number of polling for one polling interval.
@@ -387,7 +387,7 @@ namespace OpenZWave
 		bool EnablePoll(ZWValueID^ valueId, uint8 intensity) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID(), intensity); }
 
 		/**
-		* \brief Disable the polling of a device's state.
+		* <summary>Disable the polling of a device's state.</summary>
 		*
 		* \param valueId The ID of the value to stop polling.
 		* \return True if polling was disabled.
@@ -395,21 +395,21 @@ namespace OpenZWave
 		bool DisablePoll(ZWValueID^ valueId) { return Manager::Get()->DisablePoll(valueId->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Determine the polling of a device's state.
+		* <summary>Determine the polling of a device's state.</summary>
 		* \param valueId The ID of the value to check polling.
 		* \return True if polling is active.
 		*/
 		bool IsPolled(ZWValueID^ valueId) { return Manager::Get()->isPolled(valueId->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Set the frequency of polling (0=none, 1=every time through the list, 2-every other time, etc)
+		* <summary>Set the frequency of polling (0=none, 1=every time through the list, 2-every other time, etc)</summary>
 		* \param valueId The ID of the value whose intensity should be set
 		* \param intensity The intensity to set
 		*/
 		void SetPollIntensity(ZWValueID^ valueId, uint8 intensity) { Manager::Get()->SetPollIntensity(valueId->CreateUnmanagedValueID(), intensity); }
 
 		/**
-		* \brief Get the polling intensity of a device's state.
+		* <summary>Get the polling intensity of a device's state.</summary>
 		* \param valueId The ID of the value to check polling.
 		* \return Intensity, number of polling for one polling interval.
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
@@ -428,7 +428,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Trigger the fetching of fixed data about a node.
+		* <summary>Trigger the fetching of fixed data about a node.</summary>
 		*
 		* Causes the node's data to be obtained from the Z-Wave network in the same way as if it had just been added.
 		* This method would normally be called automatically by OpenZWave, but if you know that a node has been
@@ -441,7 +441,7 @@ namespace OpenZWave
 		bool RefreshNodeInfo(uint32 homeId, uint8 nodeId) { return Manager::Get()->RefreshNodeInfo(homeId, nodeId); }
 
 		/**
-		* \brief Trigger the fetching of session and dynamic value data for a node.
+		* <summary>Trigger the fetching of session and dynamic value data for a node.</summary>
 		*
 		* Causes the node's values to be requested from the Z-Wave network.
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
@@ -451,7 +451,7 @@ namespace OpenZWave
 		void RequestNodeState(uint32 homeId, uint8 nodeId) { Manager::Get()->RequestNodeState(homeId, nodeId); }
 
 		/**
-		* \brief Trigger the fetching of just the dynamic value data for a node.
+		* <summary>Trigger the fetching of just the dynamic value data for a node.</summary>
 		* Causes the node's values to be requested from the Z-Wave network. This is the
 		* same as the query state starting from the dynamic state.
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
@@ -461,7 +461,7 @@ namespace OpenZWave
 		bool RequestNodeDynamic(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNodeDynamic(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node is a listening device that does not go to sleep.
+		* <summary>Get whether the node is a listening device that does not go to sleep.</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
@@ -470,8 +470,8 @@ namespace OpenZWave
 		bool IsNodeListeningDevice(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeListeningDevice(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node is a frequent listening device that goes to sleep but
-		* can be woken up by a beam. Useful to determine node and controller consistency.
+		* <summary>Get whether the node is a frequent listening device that goes to sleep but
+		* can be woken up by a beam. Useful to determine node and controller consistency.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return True if it is a frequent listening node.
@@ -479,7 +479,7 @@ namespace OpenZWave
 		bool IsNodeFrequentListeningDevice(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeFrequentListeningDevice(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node is a beam capable device.
+		* <summary>Get whether the node is a beam capable device.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return True if it is a frequent listening node.
@@ -487,7 +487,7 @@ namespace OpenZWave
 		bool IsNodeBeamingDevice(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeBeamingDevice(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node is a routing device that passes messages to other nodes.
+		* <summary>Get whether the node is a routing device that passes messages to other nodes.</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
@@ -496,7 +496,7 @@ namespace OpenZWave
 		bool IsNodeRoutingDevice(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeRoutingDevice(homeId, nodeId); }
 
 		/**
-		* \brief Get the security attribute for a node. True if node supports security features.
+		* <summary>Get the security attribute for a node. True if node supports security features.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return true if security features implemented.
@@ -504,7 +504,7 @@ namespace OpenZWave
 		bool IsNodeSecurityDevice(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeSecurityDevice(homeId, nodeId); }
 
 		/**
-		* \brief Get the maximum baud rate of a node's communications
+		* <summary>Get the maximum baud rate of a node's communications</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return the baud rate in bits per second.
@@ -512,7 +512,7 @@ namespace OpenZWave
 		uint32 GetNodeMaxBaudRate(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeMaxBaudRate(homeId, nodeId); }
 
 		/**
-		* \brief Get the version number of a node
+		* <summary>Get the version number of a node</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return the node's version number
@@ -520,7 +520,7 @@ namespace OpenZWave
 		uint8 GetNodeVersion(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeVersion(homeId, nodeId); }
 
 		/**
-		* \brief Get the security byte for a node.  Bit meanings are still to be determined.
+		* <summary>Get the security byte for a node.  Bit meanings are still to be determined.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return the node's security byte
@@ -528,7 +528,7 @@ namespace OpenZWave
 		uint8 GetNodeSecurity(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeSecurity(homeId, nodeId); }
 
 		/**
-		* \brief Get a node's "basic" type.
+		* <summary>Get a node's "basic" type.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return The basic type.
@@ -536,7 +536,7 @@ namespace OpenZWave
 		uint8 GetNodeBasic(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeBasic(homeId, nodeId); }
 
 		/**
-		* \brief Get a node's "generic" type.
+		* <summary>Get a node's "generic" type.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return The generic type.
@@ -544,7 +544,7 @@ namespace OpenZWave
 		uint8 GetNodeGeneric(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeGeneric(homeId, nodeId); }
 
 		/**
-		* \brief Get a node's "specific" type.
+		* <summary>Get a node's "specific" type.</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return The specific type.
@@ -552,7 +552,7 @@ namespace OpenZWave
 		uint8 GetNodeSpecific(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNodeSpecific(homeId, nodeId); }
 
 		/**
-		* \brief Get a human-readable label describing the node.
+		* <summary>Get a human-readable label describing the node.</summary>
 		*
 		* The label is taken from the Z-Wave specific, generic or basic type, depending on which of those values are specified by the node.
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
@@ -562,7 +562,7 @@ namespace OpenZWave
 		String^ GetNodeType(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeType(homeId, nodeId)); }
 
 		/**
-		* \brief Get the bitmap of this node's neighbors
+		* <summary>Get the bitmap of this node's neighbors</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
@@ -572,7 +572,7 @@ namespace OpenZWave
 		uint32 GetNodeNeighbors(uint32 homeId, uint8 nodeId, Platform::Array<byte>^ *o_associations);
 
 		/**
-		* \brief Get the manufacturer name of a device.
+		* <summary>Get the manufacturer name of a device.</summary>
 		*
 		* The manufacturer name would normally be handled by the Manufacturer Specific commmand class,
 		* taking the manufacturer ID reported by the device and using it to look up the name from the
@@ -588,7 +588,7 @@ namespace OpenZWave
 		String^ GetNodeManufacturerName(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeManufacturerName(homeId, nodeId)); }
 
 		/**
-		* \brief Get the product name of a device.
+		* <summary>Get the product name of a device.</summary>
 		*
 		* The product name would normally be handled by the Manufacturer Specific commmand class,
 		* taking the product Type and ID reported by the device and using it to look up the name from the
@@ -604,7 +604,7 @@ namespace OpenZWave
 		String^ GetNodeProductName(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeProductName(homeId, nodeId)); }
 
 		/**
-		* \brief Get the name of a node.
+		* <summary>Get the name of a node.</summary>
 		*
 		* The node name is a user-editable label for the node that would normally be handled by the
 		* Node Naming commmand class, but many devices do not support it.  So that a node can always
@@ -619,7 +619,7 @@ namespace OpenZWave
 		String^ GetNodeName(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeName(homeId, nodeId)); }
 
 		/**
-		* \brief Get the location of a node.
+		* <summary>Get the location of a node.</summary>
 		*
 		* The node location is a user-editable string that would normally be handled by the Node Naming
 		* commmand class, but many devices do not support it.  So that a node can always report its
@@ -633,7 +633,7 @@ namespace OpenZWave
 		String^ GetNodeLocation(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeLocation(homeId, nodeId)); }
 
 		/**
-		* \brief Get the manufacturer ID of a device.
+		* <summary>Get the manufacturer ID of a device.</summary>
 		*
 		* The manufacturer ID is a four digit hex code and would normally be handled by the Manufacturer
 		* Specific commmand class, but not all devices support it.  Although the value reported by this
@@ -649,7 +649,7 @@ namespace OpenZWave
 		String^ GetNodeManufacturerId(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeManufacturerId(homeId, nodeId)); }
 
 		/**
-		* \brief Get the product type of a device.
+		* <summary>Get the product type of a device.</summary>
 		*
 		* The product type is a four digit hex code and would normally be handled by the Manufacturer Specific
 		* commmand class, but not all devices support it.  Although the value reported by this method will
@@ -665,7 +665,7 @@ namespace OpenZWave
 		String^ GetNodeProductType(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeProductType(homeId, nodeId)); }
 
 		/**
-		* \brief Get the product ID of a device.
+		* <summary>Get the product ID of a device.</summary>
 		*
 		* The product ID is a four digit hex code and would normally be handled by the Manufacturer Specific
 		* commmand class, but not all devices support it.  Although the value reported by this method will
@@ -681,7 +681,7 @@ namespace OpenZWave
 		String^ GetNodeProductId(uint32 homeId, uint8 nodeId) { return ConvertString(Manager::Get()->GetNodeProductId(homeId, nodeId)); }
 
 		/**
-		* \brief Set the manufacturer name of a device.
+		* <summary>Set the manufacturer name of a device.</summary>
 		*
 		* The manufacturer name would normally be handled by the Manufacturer Specific commmand class,
 		* taking the manufacturer ID reported by the device and using it to look up the name from the
@@ -697,7 +697,7 @@ namespace OpenZWave
 		void SetNodeManufacturerName(uint32 homeId, uint8 nodeId, String^ manufacturerName) { Manager::Get()->SetNodeManufacturerName(homeId, nodeId, ConvertString(manufacturerName)); }
 
 		/**
-		* \brief Set the product name of a device.
+		* <summary>Set the product name of a device.</summary>
 		*
 		* The product name would normally be handled by the Manufacturer Specific commmand class,
 		* taking the product Type and ID reported by the device and using it to look up the name from the
@@ -713,7 +713,7 @@ namespace OpenZWave
 		void SetNodeProductName(uint32 homeId, uint8 nodeId, String^ productName) { Manager::Get()->SetNodeProductName(homeId, nodeId, ConvertString(productName)); }
 
 		/**
-		* \brief Set the name of a node.
+		* <summary>Set the name of a node.</summary>
 		*
 		* The node name is a user-editable label for the node that would normally be handled by the
 		* Node Naming commmand class, but many devices do not support it.  So that a node can always
@@ -729,7 +729,7 @@ namespace OpenZWave
 		void SetNodeName(uint32 homeId, uint8 nodeId, String^ nodeName) { Manager::Get()->SetNodeName(homeId, nodeId, ConvertString(nodeName)); }
 
 		/**
-		* \brief Set the location of a node.
+		* <summary>Set the location of a node.</summary>
 		*
 		* The node location is a user-editable string that would normally be handled by the Node Naming
 		* commmand class, but many devices do not support it.  So that a node can always report its
@@ -743,16 +743,14 @@ namespace OpenZWave
 		*/
 		void SetNodeLocation(uint32 homeId, uint8 nodeId, String^ location) { Manager::Get()->SetNodeLocation(homeId, nodeId, ConvertString(location)); }
 
-		/**
-		* \brief Get whether the node information has been received
-		* \param homeId The Home ID of the Z-Wave controller that manages the node.
-		* \param nodeId The ID of the node to query.
-		* \return True if the node information has been received yet
-		*/
+		/// <summary>Get whether the node information has been received</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to query.</param>
+		/// <returns>True if the node information has been received yet</returns>
 		bool IsNodeInfoReceived(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeInfoReceived(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node has the defined class available or not
+		* <summary>Get whether the node has the defined class available or not</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \param commandClassId Id of the class to test for
@@ -761,7 +759,7 @@ namespace OpenZWave
 		bool GetNodeClassInformation(uint32 homeId, uint8 nodeId, uint8 commandClassId, String^ *className, byte *classVersion);
 
 		/**
-		* \brief Get whether the node is awake or asleep
+		* <summary>Get whether the node is awake or asleep</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return True if the node is awake
@@ -769,7 +767,7 @@ namespace OpenZWave
 		bool IsNodeAwake(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeAwake(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node is working or has failed
+		* <summary>Get whether the node is working or has failed</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return True if the node has failed and is no longer part of the network
@@ -777,7 +775,7 @@ namespace OpenZWave
 		bool IsNodeFailed(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeFailed(homeId, nodeId); }
 
 		/**
-		* \brief Get whether the node's query stage as a string
+		* <summary>Get whether the node's query stage as a string</summary>
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to query.
 		* \return name of current query stage as a string.
@@ -798,7 +796,7 @@ namespace OpenZWave
 	public:
 
 		/**
-		* \brief Gets the user-friendly label for the value.
+		* <summary>Gets the user-friendly label for the value.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return The value label.
@@ -807,7 +805,7 @@ namespace OpenZWave
 		String^ GetValueLabel(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
 
 		/**
-		* \brief Sets the user-friendly label for the value.
+		* <summary>Sets the user-friendly label for the value.</summary>
 		* \param id The unique identifier of the value.
 		* \param value The new value of the label.
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
@@ -817,7 +815,7 @@ namespace OpenZWave
 		void SetValueLabel(ZWValueID^ id, String^ value) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Gets the units that the value is measured in.
+		* <summary>Gets the units that the value is measured in.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return The value units.
@@ -826,7 +824,7 @@ namespace OpenZWave
 		String^ GetValueUnits(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueUnits(id->CreateUnmanagedValueID())); }
 
 		/**
-		* \brief Gets a help string describing the value's purpose and usage.
+		* <summary>Gets a help string describing the value's purpose and usage.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return The value help text.
@@ -835,7 +833,7 @@ namespace OpenZWave
 		String^ GetValueHelp(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
 
 		/**
-		* \brief Test whether the value is read-only.
+		* <summary>Test whether the value is read-only.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return true if the value cannot be changed by the user.
@@ -844,7 +842,7 @@ namespace OpenZWave
 		bool IsValueReadOnly(ZWValueID^ id) { return Manager::Get()->IsValueReadOnly(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Test whether the value has been set.
+		* <summary>Test whether the value has been set.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return true if the value has actually been set by a status message from the device, rather than simply being the default.
@@ -853,7 +851,7 @@ namespace OpenZWave
 		bool IsValueSet(ZWValueID^ id) { return Manager::Get()->IsValueSet(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Test whether the value is currently being polled.
+		* <summary>Test whether the value is currently being polled.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \return true if the value is being polled, false otherwise.
@@ -862,7 +860,7 @@ namespace OpenZWave
 		bool IsValuePolled(ZWValueID^ id) { return Manager::Get()->IsValuePolled(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Gets a value as a bool.
+		* <summary>Gets a value as a bool.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value a Boolean that will be filled with the value.
@@ -872,7 +870,7 @@ namespace OpenZWave
 		bool GetValueAsBool(ZWValueID^ id, bool *o_value);
 
 		/**
-		* \brief Gets a value as an 8-bit unsigned integer.
+		* <summary>Gets a value as an 8-bit unsigned integer.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value a Byte that will be filled with the value.
@@ -882,7 +880,7 @@ namespace OpenZWave
 		bool GetValueAsByte(ZWValueID^ id, byte *o_value);
 
 		/**
-		* \brief Gets a value as a decimal.
+		* <summary>Gets a value as a decimal.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value a Decimal that will be filled with the value.
@@ -892,7 +890,7 @@ namespace OpenZWave
 		//bool GetValueAsDecimal(ZWValueID^ id, System::Decimal %o_value);
 
 		/**
-		* \brief Gets a value as a 32-bit signed integer.
+		* <summary>Gets a value as a 32-bit signed integer.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value an Int32 that will be filled with the value.
@@ -902,7 +900,7 @@ namespace OpenZWave
 		bool GetValueAsInt(ZWValueID^ id, int32 *o_value);
 
 		/**
-		* \brief Gets a value as a 16-bit signed integer.
+		* <summary>Gets a value as a 16-bit signed integer.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value an Int16 that will be filled with the value.
@@ -912,7 +910,7 @@ namespace OpenZWave
 		bool GetValueAsShort(ZWValueID^ id, int16 *o_value);
 
 		/**
-		* \brief Gets a value as a string.
+		* <summary>Gets a value as a string.</summary>
 		*
 		* Creates a string representation of a value, regardless of type.
 		* \param _id The unique identifier of the value.
@@ -923,7 +921,7 @@ namespace OpenZWave
 		bool GetValueAsString(ZWValueID^ id, String^ *o_value);
 
 		/**
-		* \brief Gets the selected item from a list value (as a string).
+		* <summary>Gets the selected item from a list value (as a string).</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value A String that will be filled with the selected item.
@@ -933,7 +931,7 @@ namespace OpenZWave
 		bool GetValueListSelection(ZWValueID^ id, String^ *o_value);
 
 		/**
-		* \brief Gets the selected item from a list value (as an integer).
+		* <summary>Gets the selected item from a list value (as an integer).</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value An integer that will be filled with the selected item.
@@ -943,7 +941,7 @@ namespace OpenZWave
 		bool GetValueListSelection(ZWValueID^ id, int32 *o_value);
 
 		/**
-		* \brief Gets the list of items from a list value.
+		* <summary>Gets the list of items from a list value.</summary>
 		*
 		* \param id The unique identifier of the value.
 		* \param o_value List that will be filled with list items.
@@ -953,7 +951,7 @@ namespace OpenZWave
 		bool GetValueListItems(ZWValueID^ id, Platform::Array<String^>^ *o_value);
 
 		/**
-		* \brief Gets the list of values from a list value.
+		* <summary>Gets the list of values from a list value.</summary>
 		*
 		* \param _id The unique identifier of the value.
 		* \param o_value Pointer to a vector of integers that will be filled with list items. The vector will be cleared before the items are added.
@@ -963,7 +961,7 @@ namespace OpenZWave
 		bool GetValueListValues(ZWValueID^ id, Platform::Array<int>^ *o_value);
 
 		/**
-		* \brief Sets the state of a bool.
+		* <summary>Sets the state of a bool.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -975,7 +973,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Sets the value of a byte.
+		* <summary>Sets the value of a byte.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -987,7 +985,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, uint8 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Sets the value of a decimal.
+		* <summary>Sets the value of a decimal.</summary>
 		*
 		* It is usually better to handle decimal values using strings rather than floats, to avoid floating point accuracy issues.
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
@@ -1000,7 +998,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, float value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Sets the value of a 32-bit signed integer.
+		* <summary>Sets the value of a 32-bit signed integer.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -1012,7 +1010,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, int32 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Sets the value of a 16-bit signed integer.
+		* <summary>Sets the value of a 16-bit signed integer.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -1024,7 +1022,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Sets the value from a string, regardless of type.
+		* <summary>Sets the value from a string, regardless of type.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -1036,7 +1034,7 @@ namespace OpenZWave
 		bool SetValue(ZWValueID^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Sets the selected item in a list.
+		* <summary>Sets the selected item in a list.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
 		* held by the node is updated directly.  This will be reverted by a future status message from the device
@@ -1049,25 +1047,25 @@ namespace OpenZWave
 		bool SetValueListSelection(ZWValueID^ id, String^ selectedItem) { return Manager::Get()->SetValueListSelection(id->CreateUnmanagedValueID(), ConvertString(selectedItem)); }
 
 		/**
-		* \brief Refreshes the specified value from the Z-Wave network.
+		* <summary>Refreshes the specified value from the Z-Wave network.
 		* A call to this function causes the library to send a message to the network to retrieve the current value
-		* of the specified ValueID (just like a poll, except only one-time, not recurring).
+		* of the specified ValueID (just like a poll, except only one-time, not recurring).</summary>
 		* \param _id The unique identifier of the value to be refreshed.
 		* \return true if the driver and node were found; false otherwise
 		*/
 		bool RefreshValue(ZWValueID^ id) { return Manager::Get()->RefreshValue(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Sets a flag indicating whether value changes noted upon a refresh should be verified.  If so, the
+		* <summary>Sets a flag indicating whether value changes noted upon a refresh should be verified.  If so, the
 		* library will immediately refresh the value a second time whenever a change is observed.  This helps to filter
-		* out spurious data reported occasionally by some devices.
+		* out spurious data reported occasionally by some devices.</summary>
 		* \param _id The unique identifier of the value whose changes should or should not be verified.
 		* \param _verify if true, verify changes; if false, don't verify changes.
 		*/
 		void SetChangeVerified(ZWValueID^ id, bool verify) { Manager::Get()->SetChangeVerified(id->CreateUnmanagedValueID(), verify); }
 
 		/**
-		* \brief Starts an activity in a device.
+		* <summary>Starts an activity in a device.</summary>
 		*
 		* Since buttons are write-only values that do not report a state, no notification callbacks are sent.
 		* \param id The unique identifier of the integer value.
@@ -1076,7 +1074,7 @@ namespace OpenZWave
 		bool PressButton(ZWValueID^ id) { return Manager::Get()->PressButton(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Stops an activity in a device.
+		* <summary>Stops an activity in a device.</summary>
 		*
 		* Since buttons are write-only values that do not report a state, no notification callbacks are sent.
 		* \param id The unique identifier of the integer value.
@@ -1104,14 +1102,14 @@ namespace OpenZWave
 		/*@{*/
 
 		/**
-		* \brief Get the number of switch points defined in a schedule.
+		* <summary>Get the number of switch points defined in a schedule.</summary>
 		* \param _id The unique identifier of the schedule value.
 		* \return the number of switch points defined in this schedule.  Returns zero if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.
 		*/
 		uint8 GetNumSwitchPoints(ZWValueID^ id) { return Manager::Get()->GetNumSwitchPoints(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Set a switch point in the schedule.
+		* <summary>Set a switch point in the schedule.</summary>
 		* Inserts a new switch point into the schedule, unless a switch point already exists at the specified
 		* time in which case that switch point is updated with the new setback value instead.
 		* A maximum of nine switch points can be set in the schedule.
@@ -1129,7 +1127,7 @@ namespace OpenZWave
 		bool SetSwitchPoint(ZWValueID^ id, uint8 hours, uint8 minutes, byte setback) { return Manager::Get()->SetSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes, setback); }
 
 		/**
-		* \brief Remove a switch point from the schedule.
+		* <summary>Remove a switch point from the schedule.</summary>
 		* Removes the switch point at the specified time from the schedule.
 		* \param id The unique identifier of the schedule value.
 		* \param hours The hours part of the time when the switch point will trigger.  The time is set using
@@ -1143,14 +1141,14 @@ namespace OpenZWave
 		bool RemoveSwitchPoint(ZWValueID^ id, uint8 hours, uint8 minutes) { return Manager::Get()->RemoveSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes); }
 
 		/**
-		* \brief Clears all switch points from the schedule.
+		* <summary>Clears all switch points from the schedule.</summary>
 		* \param id The unique identifier of the schedule value.
 		* \see GetNumSwitchPoints, SetSwitchPoint, RemoveSwitchPoint
 		*/
 		void ClearSwitchPoints(ZWValueID^ id) { Manager::Get()->ClearSwitchPoints(id->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Gets switch point data from the schedule.
+		* <summary>Gets switch point data from the schedule.</summary>
 		* Retrieves the time and setback values from a switch point in the schedule.
 		* \param _id The unique identifier of the schedule value.
 		* \param _idx The index of the switch point, between zero and one less than the value
@@ -1179,13 +1177,13 @@ namespace OpenZWave
 		/*@{*/
 
 		/**
-		* \brief Switch all devices on.
+		* <summary>Switch all devices on.
 		* All devices that support the SwitchAll command class will be turned on.
 		*/
 		void SwitchAllOn(uint32 homeId) { Manager::Get()->SwitchAllOn(homeId); }
 
 		/**
-		* \brief Switch all devices off.
+		* <summary>Switch all devices off.
 		* All devices that support the SwitchAll command class will be turned off.
 		*/
 		void SwitchAllOff(uint32 homeId) { Manager::Get()->SwitchAllOff(homeId); }
@@ -1206,7 +1204,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Set the value of a configurable parameter in a device.
+		* <summary>Set the value of a configurable parameter in a device.</summary>
 		*
 		* Some devices have various parameters that can be configured to control the device behaviour.
 		* These are not reported by the device over the Z-Wave network, but can usually be found in
@@ -1223,7 +1221,7 @@ namespace OpenZWave
 		bool SetConfigParam(uint32 homeId, uint8 nodeId, uint8 param, int32 value) { return Manager::Get()->SetConfigParam(homeId, nodeId, param, value); }
 
 		/**
-		* \brief Request the value of a configurable parameter from a device.
+		* <summary>Request the value of a configurable parameter from a device.</summary>
 		*
 		* Some devices have various parameters that can be configured to control the device behaviour.
 		* These are not reported by the device over the Z-Wave network, but can usually be found in
@@ -1241,7 +1239,7 @@ namespace OpenZWave
 		void RequestConfigParam(uint32 homeId, uint8 nodeId, uint8 param) { Manager::Get()->RequestConfigParam(homeId, nodeId, param); }
 
 		/**
-		* \brief Request the values of all known configurable parameters from a device.
+		* <summary>Request the values of all known configurable parameters from a device.</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to configure.
@@ -1259,7 +1257,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Gets the number of association groups reported by this node.
+		* <summary>Gets the number of association groups reported by this node.</summary>
 		*
 		* In Z-Wave, groups are numbered starting from one.  For example, if a call to GetNumGroups returns 4, the _groupIdx
 		* value to use in calls to GetAssociations, AddAssociation and RemoveAssociation will be a number between 1 and 4.
@@ -1271,7 +1269,7 @@ namespace OpenZWave
 		uint8 GetNumGroups(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNumGroups(homeId, nodeId); }
 
 		/**
-		* \brief Gets the associations for a group.
+		* <summary>Gets the associations for a group.</summary>
 		*
 		* Makes a copy of the list of associated nodes in the group, and returns it in an array of uint8's.
 		* The caller is responsible for freeing the array memory with a call to delete [].
@@ -1285,7 +1283,7 @@ namespace OpenZWave
 		uint32 GetAssociations(uint32 homeId, uint8 nodeId, uint8 groupIdx, Platform::Array<byte>^ *o_associations);
 
 		/**
-		* \brief Gets the maximum number of associations for a group.
+		* <summary>Gets the maximum number of associations for a group.</summary>
 		*
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node whose associations we are interested in.
@@ -1296,7 +1294,7 @@ namespace OpenZWave
 		uint8 GetMaxAssociations(uint32 homeId, uint8 nodeId, uint8 groupIdx) { return Manager::Get()->GetMaxAssociations(homeId, nodeId, groupIdx); }
 
 		/**
-		* \brief Adds a node to an association group.
+		* <summary>Adds a node to an association group.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
 		* held in this class is updated directly.  This will be reverted by a future Association message from the device
@@ -1310,7 +1308,7 @@ namespace OpenZWave
 		void AddAssociation(uint32 homeId, uint8 nodeId, uint8 groupIdx, uint8 targetNodeId) { return Manager::Get()->AddAssociation(homeId, nodeId, groupIdx, targetNodeId); }
 
 		/**
-		* \brief Removes a node from an association group.
+		* <summary>Removes a node from an association group.</summary>
 		*
 		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
 		* held in this class is updated directly.  This will be reverted by a future Association message from the device
@@ -1333,7 +1331,7 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Hard Reset a PC Z-Wave Controller.
+		* <summary>Hard Reset a PC Z-Wave Controller.</summary>
 		*
 		* Resets a controller and erases its network configuration settings.  The controller becomes a primary controller ready to add devices to a new network.
 		* \param homeId The Home ID of the Z-Wave controller to be reset.
@@ -1342,7 +1340,7 @@ namespace OpenZWave
 		void ResetController(uint32 homeId) { Manager::Get()->ResetController(homeId); }
 
 		/**
-		* \brief Soft Reset a PC Z-Wave Controller.
+		* <summary>Soft Reset a PC Z-Wave Controller.</summary>
 		*
 		* Resets a controller without erasing its network configuration settings.
 		* \param homeId The Home ID of the Z-Wave controller to be reset.
@@ -1363,8 +1361,8 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Test network node.
-		* Sends a series of messages to a network node for testing network reliability.
+		* <summary>Test network node.
+		* Sends a series of messages to a network node for testing network reliability.</summary>
 		* \param homeId The Home ID of the Z-Wave controller to be reset.
 		* \param count This is the number of test messages to send.
 		* \see TestNetwork
@@ -1372,8 +1370,8 @@ namespace OpenZWave
 		void TestNetworkNode(uint32 homeId, uint8 nodeId, uint32 count) { Manager::Get()->TestNetworkNode(homeId, nodeId, count); }
 
 		/**
-		* \brief Test network.
-		* Sends a series of messages to every node on the network for testing network reliability.
+		* <summary>Test network.
+		* Sends a series of messages to every node on the network for testing network reliability.</summary>
 		* \param homeId The Home ID of the Z-Wave controller to be reset.
 		* \param count This is the number of test messages to send.
 		* \see TestNetwork
@@ -1381,8 +1379,8 @@ namespace OpenZWave
 		void TestNetwork(uint32 homeId, uint32 count) { Manager::Get()->TestNetwork(homeId, count); }
 
 		/**
-		* \brief Heal network node by requesting the node rediscover their neighbors.
-		* Sends a ControllerCommand_RequestNodeNeighborUpdate to the node.
+		* <summary>Heal network node by requesting the node rediscover their neighbors.
+		* Sends a ControllerCommand_RequestNodeNeighborUpdate to the node.</summary>
 		* \param homeId The Home ID of the Z-Wave network to be healed.
 		* \param nodeId The node to heal.
 		* \param doRR Whether to perform return routes initialization.
@@ -1390,18 +1388,18 @@ namespace OpenZWave
 		void HealNetworkNode(uint32 homeId, uint8 nodeId, bool doRR) { Manager::Get()->HealNetworkNode(homeId, nodeId, doRR); }
 
 		/**
-		* \brief Heal network by requesting node's rediscover their neighbors.
+		* <summary>Heal network by requesting node's rediscover their neighbors.
 		* Sends a ControllerCommand_RequestNodeNeighborUpdate to every node.
-		* Can take a while on larger networks.
+		* Can take a while on larger networks.</summary>
 		* \param homeId The Home ID of the Z-Wave network to be healed.
 		* \param doRR Whether to perform return routes initialization.
 		*/
 		void HealNetwork(uint32 homeId, bool doRR) { Manager::Get()->HealNetwork(homeId, doRR); }
 
 		/**
-		* \brief Start the Inclusion Process to add a Node to the Network.
+		* <summary>Start the Inclusion Process to add a Node to the Network.
 		* The Status of the Node Inclusion is communicated via Notifications. Specifically, you should
-		* monitor ControllerCommand Notifications.
+		* monitor ControllerCommand Notifications.</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1413,9 +1411,9 @@ namespace OpenZWave
 		bool AddNode(uint32 homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
 
 		/**
-		* \brief Remove a Device from the Z-Wave Network
+		* <summary>Remove a Device from the Z-Wave Network
 		* The Status of the Node Removal is communicated via Notifications. Specifically, you should
-		* monitor ControllerCommand Notifications.
+		* monitor ControllerCommand Notifications.</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1426,10 +1424,10 @@ namespace OpenZWave
 		bool RemoveNode(uint32 homeId) { return Manager::Get()->RemoveNode(homeId); }
 
 		/**
-		* \brief Remove a Failed Device from the Z-Wave Network
+		* <summary>Remove a Failed Device from the Z-Wave Network
 		* This Command will remove a failed node from the network. The Node should be on the Controllers Failed
 		* Node List, otherwise this command will fail. You can use the HasNodeFailed function below to test if the Controller
-		* believes the Node has Failed.
+		* believes the Node has Failed.</summary>
 		* The Status of the Node Removal is communicated via Notifications. Specifically, you should
 		* monitor ControllerCommand Notifications.
 		*
@@ -1443,11 +1441,11 @@ namespace OpenZWave
 		bool RemoveFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->RemoveFailedNode(homeId, nodeId); }
 
 		/**
-		* \brief Check if the Controller Believes a Node has Failed.
+		* <summary>Check if the Controller Believes a Node has Failed.
 		* This is different from the IsNodeFailed call in that we test the Controllers Failed Node List, whereas the IsNodeFailed is testing
 		* our list of Failed Nodes, which might be different.
 		* The Results will be communicated via Notifications. Specifically, you should monitor the ControllerCommand notifications
-		*
+		* </summary>
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
 		*
@@ -1458,8 +1456,8 @@ namespace OpenZWave
 		bool HasNodeFailed(uint32 homeId, uint8 nodeId) { return Manager::Get()->HasNodeFailed(homeId, nodeId); }
 
 		/**
-		* \brief Ask a Node to update its update its Return Route to the Controller
-		* This command will ask a Node to update its Return Route to the Controller
+		* <summary>Ask a Node to update its update its Return Route to the Controller
+		* This command will ask a Node to update its Return Route to the Controller</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1471,8 +1469,8 @@ namespace OpenZWave
 		bool AssignReturnRoute(uint32 homeId, uint8 nodeId) { return Manager::Get()->AssignReturnRoute(homeId, nodeId); }
 
 		/**
-		* \brief Ask a Node to update its Neighbor Tables
-		* This command will ask a Node to update its Neighbor Tables.
+		* <summary>Ask a Node to update its Neighbor Tables
+		* This command will ask a Node to update its Neighbor Tables.</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1484,8 +1482,8 @@ namespace OpenZWave
 		bool RequestNodeNeighborUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNodeNeighborUpdate(homeId, nodeId); }
 
 		/**
-		* \brief Ask a Node to delete all Return Route.
-		* This command will ask a Node to delete all its return routes, and will rediscover when needed.
+		* <summary>Ask a Node to delete all Return Route.
+		* This command will ask a Node to delete all its return routes, and will rediscover when needed.</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1497,8 +1495,8 @@ namespace OpenZWave
 		bool DeleteAllReturnRoutes(uint32 homeId, uint8 nodeId) { return Manager::Get()->DeleteAllReturnRoutes(homeId, nodeId); }
 
 		/**
-		* \brief Send a NIF frame from the Controller to a Node.
-		* This command send a NIF frame from the Controller to a Node
+		* <summary>Send a NIF frame from the Controller to a Node.
+		* This command send a NIF frame from the Controller to a Node</summary>
 		*
 		* Results of the AddNode Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1510,9 +1508,9 @@ namespace OpenZWave
 		bool SendNodeInformation(uint32 homeId, uint8 nodeId) { return Manager::Get()->SendNodeInformation(homeId, nodeId); }
 
 		/**
-		* \brief Create a new primary controller when old primary fails. Requires SUC.
+		* <summary>Create a new primary controller when old primary fails. Requires SUC.
 		* This command Creates a new Primary Controller when the Old Primary has Failed. Requires a SUC on the network to function
-		*
+		* </summary>
 		* Results of the CreateNewPrimary Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
 		*
@@ -1523,8 +1521,8 @@ namespace OpenZWave
 		bool CreateNewPrimary(uint32 homeId) { return Manager::Get()->CreateNewPrimary(homeId); }
 
 		/**
-		* \brief Receive network configuration information from primary controller. Requires secondary.
-		* This command prepares the controller to recieve Network Configuration from a Secondary Controller.
+		* <summary>Receive network configuration information from primary controller. Requires secondary.
+		* This command prepares the controller to recieve Network Configuration from a Secondary Controller.</summary>
 		*
 		* Results of the ReceiveConfiguration Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1536,7 +1534,7 @@ namespace OpenZWave
 		bool ReceiveConfiguration(uint32 homeId) { return Manager::Get()->ReceiveConfiguration(homeId); }
 
 		/**
-		* \brief Replace a failed device with another.
+		* <summary>Replace a failed device with another.</summary>
 		* If the node is not in the controller's failed nodes list, or the node responds, this command will fail.
 		* You can check if a Node is in the Controllers Failed node list by using the HasNodeFailed method
 		*
@@ -1552,7 +1550,7 @@ namespace OpenZWave
 		bool ReplaceFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplaceFailedNode(homeId, nodeId); }
 
 		/**
-		* \brief Add a new controller to the network and make it the primary.
+		* <summary>Add a new controller to the network and make it the primary.</summary>
 		* The existing primary will become a secondary controller.
 		*
 		* Results of the TransferPrimaryRole Command will be send as a Notification with the Notification type as
@@ -1565,7 +1563,7 @@ namespace OpenZWave
 		bool TransferPrimaryRole(uint32 homeId) { return Manager::Get()->TransferPrimaryRole(homeId); }
 
 		/**
-		* \brief Update the controller with network information from the SUC/SIS.
+		* <summary>Update the controller with network information from the SUC/SIS.</summary>
 		*
 		* Results of the RequestNetworkUpdate Command will be send as a Notification with the Notification type asc
 		* Notification::Type_ControllerCommand
@@ -1578,7 +1576,7 @@ namespace OpenZWave
 		bool RequestNetworkUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNetworkUpdate(homeId, nodeId); }
 
 		/**
-		* \brief Send information from primary to secondary
+		* <summary>Send information from primary to secondary</summary>
 		*
 		* Results of the ReplicationSend Command will be send as a Notification with the Notification type as
 		* Notification::Type_ControllerCommand
@@ -1591,7 +1589,7 @@ namespace OpenZWave
 		bool ReplicationSend(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplicationSend(homeId, nodeId); }
 
 		/**
-		* \brief Create a handheld button id.
+		* <summary>Create a handheld button id.</summary>
 		*
 		* Only intended for Bridge Firmware Controllers.
 		*
@@ -1608,7 +1606,7 @@ namespace OpenZWave
 
 
 		/**
-		* \brief Delete a handheld button id.
+		* <summary>Delete a handheld button id.</summary>
 		*
 		* Only intended for Bridge Firmware Controllers.
 		*
@@ -1632,14 +1630,14 @@ namespace OpenZWave
 		/*@{*/
 	public:
 		/**
-		* \brief Gets the number of scenes that have been defined.
+		* <summary>Gets the number of scenes that have been defined.</summary>
 		* \return The number of scenes.
 		* \see GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
 		uint8 GetNumScenes() { return Manager::Get()->GetNumScenes(); }
 
 		/**
-		* \brief Gets a list of all the SceneIds.
+		* <summary>Gets a list of all the SceneIds.</summary>
 		* \param sceneIds returns an array of bytes containing the ids if the existing scenes.
 		* \return The number of scenes.
 		* \see GetNumScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
@@ -1647,7 +1645,7 @@ namespace OpenZWave
 		uint8 GetAllScenes(Platform::WriteOnlyArray<byte>^ sceneIds);
 
 		/**
-		* \brief Create a new Scene passing in Scene ID
+		* <summary>Create a new Scene passing in Scene ID</summary>
 		* \return uint8 Scene ID used to reference the scene. 0 is failure result.
 		* \see GetNumScenes, GetAllScenes, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 
@@ -1655,7 +1653,7 @@ namespace OpenZWave
 		uint8 CreateScene() { return Manager::Get()->CreateScene(); }
 
 		/**
-		* \brief Remove an existing Scene.
+		* <summary>Remove an existing Scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID to be removed.
 		* \return true if scene was removed.
 		* \see GetNumScenes, GetAllScenes, CreateScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
@@ -1663,7 +1661,7 @@ namespace OpenZWave
 		bool RemoveScene(uint8 sceneId) { return Manager::Get()->RemoveScene(sceneId); }
 
 		/**
-		* \brief Add a bool Value ID to an existing scene.
+		* <summary>Add a bool Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the bool value to be saved.
@@ -1673,7 +1671,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, bool value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Add a byte Value ID to an existing scene.
+		* <summary>Add a byte Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the byte value to be saved.
@@ -1683,7 +1681,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, uint8 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Add a decimal Value ID to an existing scene.
+		* <summary>Add a decimal Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the float value to be saved.
@@ -1693,7 +1691,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, float value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Add a 32-bit signed integer Value ID to an existing scene.
+		* <summary>Add a 32-bit signed integer Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the int32 value to be saved.
@@ -1703,7 +1701,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Add a 16-bit signed integer Value ID to an existing scene.
+		* <summary>Add a 16-bit signed integer Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the int16 value to be saved.
@@ -1713,7 +1711,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, int16 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Add a string Value ID to an existing scene.
+		* <summary>Add a string Value ID to an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the string value to be saved.
@@ -1723,7 +1721,7 @@ namespace OpenZWave
 		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Add the selected item list Value ID to an existing scene (as a string).
+		* <summary>Add the selected item list Value ID to an existing scene (as a string).</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the string value to be saved.
@@ -1733,7 +1731,7 @@ namespace OpenZWave
 		bool AddSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Add the selected item list Value ID to an existing scene (as a integer).
+		* <summary>Add the selected item list Value ID to an existing scene (as a integer).</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the integer value to be saved.
@@ -1743,7 +1741,7 @@ namespace OpenZWave
 		bool AddSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Remove the Value ID from an existing scene.
+		* <summary>Remove the Value ID from an existing scene.</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be removed.
 		* \return true if Value ID was removed.
@@ -1752,7 +1750,7 @@ namespace OpenZWave
 		bool RemoveSceneValue(uint8 sceneId, ZWValueID^ valueId) { return Manager::Get()->RemoveSceneValue(sceneId, valueId->CreateUnmanagedValueID()); }
 
 		/**
-		* \brief Retrieves the scene's list of values.
+		* <summary>Retrieves the scene's list of values.
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param o_value an array of ValueIDs.
 		* \return The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.
@@ -1761,7 +1759,7 @@ namespace OpenZWave
 		int SceneGetValues(uint8 sceneId, Platform::WriteOnlyArray<ZWValueID^>^ o_values);
 
 		/**
-		* \brief Retrieves a scene's value as a bool.
+		* <summary>Retrieves a scene's value as a bool.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param boolean that will be filled with the returned value.
@@ -1771,7 +1769,7 @@ namespace OpenZWave
 		bool SceneGetValueAsBool(uint8 sceneId, ZWValueID^ valueId, bool *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as an 8-bit unsigned integer.
+		* <summary>Retrieves a scene's value as an 8-bit unsigned integer.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Byte that will be filled with the returned value.
@@ -1781,7 +1779,7 @@ namespace OpenZWave
 		bool SceneGetValueAsByte(uint8 sceneId, ZWValueID^ valueId, byte *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a decimal.
+		* <summary>Retrieves a scene's value as a decimal.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value decimal that will be filled with the returned value.
@@ -1791,7 +1789,7 @@ namespace OpenZWave
 		// bool SceneGetValueAsDecimal(uint8 sceneId, ZWValueID^ valueId, [Out] System::Decimal %o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a 32-bit signed integer.
+		* <summary>Retrieves a scene's value as a 32-bit signed integer.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Int32 that will be filled with the returned value.
@@ -1801,7 +1799,7 @@ namespace OpenZWave
 		bool SceneGetValueAsInt(uint8 sceneId, ZWValueID^ valueId, int *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a 16-bit signed integer.
+		* <summary>Retrieves a scene's value as a 16-bit signed integer.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Int16 that will be filled with the returned value.
@@ -1811,7 +1809,7 @@ namespace OpenZWave
 		bool SceneGetValueAsShort(uint8 sceneId, ZWValueID^ valueId, int16 *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a string.
+		* <summary>Retrieves a scene's value as a string.</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Pointer to a string that will be filled with the returned value.
@@ -1821,7 +1819,7 @@ namespace OpenZWave
 		bool SceneGetValueAsString(uint8 sceneId, ZWValueID^ valueId, String^ *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a list (as a string).
+		* <summary>Retrieves a scene's value as a list (as a string).</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Pointer to a string that will be filled with the returned value.
@@ -1831,7 +1829,7 @@ namespace OpenZWave
 		bool SceneGetValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ *o_value);
 
 		/**
-		* \brief Retrieves a scene's value as a list (as a integer).
+		* <summary>Retrieves a scene's value as a list (as a integer).</summary>
 		* \param sceneId The Scene ID of the scene to retrieve the value from.
 		* \param valueId The Value ID of the value to retrieve.
 		* \param o_value Pointer to a integer that will be filled with the returned value.
@@ -1841,7 +1839,7 @@ namespace OpenZWave
 		bool SceneGetValueListSelection(uint8 sceneId, ZWValueID^ valueId, int *o_value);
 
 		/**
-		* \brief Set a bool Value ID to an existing scene's ValueID
+		* <summary>Set a bool Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the bool value to be saved.
@@ -1851,7 +1849,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, bool value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Set a byte Value ID to an existing scene's ValueID
+		* <summary>Set a byte Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the byte value to be saved.
@@ -1861,7 +1859,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, uint8 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Set a decimal Value ID to an existing scene's ValueID
+		* <summary>Set a decimal Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the float value to be saved.
@@ -1871,7 +1869,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, float value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Set a 32-bit signed integer Value ID to an existing scene's ValueID
+		* <summary>Set a 32-bit signed integer Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the int32 value to be saved.
@@ -1881,7 +1879,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Set a 16-bit integer Value ID to an existing scene's ValueID
+		* <summary>Set a 16-bit integer Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the int16 value to be saved.
@@ -1891,7 +1889,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, int16 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Set a string Value ID to an existing scene's ValueID
+		* <summary>Set a string Value ID to an existing scene's ValueID</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the string value to be saved.
@@ -1901,7 +1899,7 @@ namespace OpenZWave
 		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Set the list selected item Value ID to an existing scene's ValueID (as a string).
+		* <summary>Set the list selected item Value ID to an existing scene's ValueID (as a string).</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the string value to be saved.
@@ -1911,7 +1909,7 @@ namespace OpenZWave
 		bool SetSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
-		* \brief Set the list selected item Value ID to an existing scene's ValueID (as a integer).
+		* <summary>Set the list selected item Value ID to an existing scene's ValueID (as a integer).</summary>
 		* \param sceneId is an integer representing the unique Scene ID.
 		* \param valueId is the Value ID to be added.
 		* \param value is the integer value to be saved.
@@ -1921,35 +1919,26 @@ namespace OpenZWave
 		bool SetSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
-		* \brief Returns a label for the particular scene.
+		* <summary>Returns a label for the particular scene.</summary>
 		* \param sceneId The Scene ID
 		* \return The label string.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, SetSceneLabel, SceneExists, ActivateScene
 		*/
 		String^ GetSceneLabel(uint8 sceneId) { return ConvertString(Manager::Get()->GetSceneLabel(sceneId)); }
 
-		/**
-		* \brief Sets a label for the particular scene.
-		* \param sceneId The Scene ID
-		* \param value The new value of the label.
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Sets a label for the particular scene.</summary>
+		/// <param name="sceneId">The Scene ID</param>
+		/// <param name="value">The new value of the label.</param>
 		void SetSceneLabel(uint8 sceneId, String^ value) { return Manager::Get()->SetSceneLabel(sceneId, ConvertString(value)); }
 
-		/**
-		* \brief Check if a Scene ID is defined.
-		* \param sceneId The Scene ID.
-		* \return true if Scene ID exists.
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, ActivateScene
-		*/
+		/// <summary>Check if a Scene ID is defined.</summary>
+		/// <param name="sceneId">The Scene ID.</param>
+		/// <returns>true if Scene ID exists.</param>
 		bool SceneExists(uint8 sceneId) { return Manager::Get()->SceneExists(sceneId); }
 
-		/**
-		* \brief Activate given scene to perform all its actions.
-		* \param sceneId The Scene ID.
-		* \return true if it is successful.
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists
-		*/
+		/// <summary>Activate given scene to perform all its actions.</summary>
+		/// <param name="sceneId">The Scene ID.</param>
+		/// <returns>true if it is successful.</returns>
 		bool ActivateScene(uint8 sceneId) { return Manager::Get()->ActivateScene(sceneId); }
 
 		/*@}*/
