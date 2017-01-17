@@ -25,12 +25,11 @@ namespace OZWAppx
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        
+
         public MainPage()
         {
             this.InitializeComponent();
-            VM = new MainViewModel(this.Dispatcher);
-            VM.Initialize();
+            VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
             GetSerialPorts();
         }
 
@@ -79,6 +78,11 @@ namespace OZWAppx
         private void PowerOff_ContextMenuClick(object sender, RoutedEventArgs e)
         {
             //m_manager.SetNodeOff(m_homeId, m_rightClickNode);
+        }
+
+        private void NodeGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(Views.DeviceView), e.ClickedItem);
         }
     }
 }

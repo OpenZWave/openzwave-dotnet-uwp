@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -49,7 +50,21 @@ namespace OZWAppx
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
+                rootFrame.Navigated += (s, args) =>
+                {
+                    if (rootFrame.CanGoBack)
+                    {
+                        // Show UI in title bar if opted-in and in-app backstack is not empty.
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            AppViewBackButtonVisibility.Visible;
+                    }
+                    else
+                    {
+                        // Remove the UI from the title bar if in-app back stack is empty.
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            AppViewBackButtonVisibility.Collapsed;
+                    }
+                };
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
@@ -71,6 +86,14 @@ namespace OZWAppx
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+            {
+                if (rootFrame.CanGoBack && args.Handled == false)
+                {
+                    args.Handled = true;
+                    rootFrame.GoBack();
+                }
+            };
         }
 
         /// <summary>
