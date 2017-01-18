@@ -37,9 +37,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Converter={StaticResource conv}, ConverterParameter=Help}">
-                        <TextBlock Text="{Binding Genre}" />
-                        <TextBlock Text="{Binding Type}" Margin="10,0,0,0" />
-                        <TextBlock Text="{Binding Converter={StaticResource conv}, ConverterParameter=Label}" Margin="10,0,0,0" />
+                        <TextBlock Text="{Binding Genre}" Width="100" />
+                        <TextBlock Text="{Binding Type}" Width="100" Margin="10,0,0,0" />
+                        <TextBlock Text="{Binding Converter={StaticResource conv}, ConverterParameter=Label}" Width="200"  Margin="10,0,0,0" />
                         <TextBlock Text="{Binding Converter={StaticResource conv}}" Margin="10,0,0,0" />
                         <TextBlock Text="{Binding Converter={StaticResource conv}, ConverterParameter=Units}" Margin="10,0,0,0" />
                     </StackPanel>
