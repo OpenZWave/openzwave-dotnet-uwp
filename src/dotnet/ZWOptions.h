@@ -26,10 +26,12 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
+#include "pch.h"
 #include "ZWEnums.h"
 
 using namespace OpenZWave;
-
+using namespace System;
+using namespace Runtime::InteropServices;
 
 namespace OpenZWave
 {
