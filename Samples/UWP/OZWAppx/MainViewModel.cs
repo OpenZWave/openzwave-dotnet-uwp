@@ -8,7 +8,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+#if NETFX_CORE
 using Windows.UI.Core;
+#else
+using CoreDispatcher = System.Windows.Threading.Dispatcher;
+#endif
 
 namespace OZWAppx
 {
@@ -17,7 +21,7 @@ namespace OZWAppx
         public static MainViewModel Instance { get; private set; }
 
         private CoreDispatcher Dispatcher { get; }
-
+        
         public MainViewModel(CoreDispatcher dispatcher)
         {
             if (Instance != null)
@@ -31,7 +35,11 @@ namespace OZWAppx
         {
             ZWManager manager = new ZWManager();
             m_options = new ZWOptions();
+#if NETFX_CORE
             var userPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+#else
+            var userPath = "";
+#endif
             m_options.Create(@"config\", userPath, @"");
 
             // Add any app specific options here...
@@ -73,10 +81,18 @@ namespace OZWAppx
         {
             // Handle the notification on a thread that can safely
             // modify the controls without throwing an exception.
+#if NETFX_CORE
             var _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+#else
+            Dispatcher.BeginInvoke(new Action(() =>
+#endif
             {
                 NotificationHandler(notification);
-            });
+            }
+#if !NETFX_CORE
+            )
+#endif
+            );
         }
 
         private List<ZWaveRequest> PendingRequests = new List<ZWaveRequest>();

@@ -71,43 +71,9 @@ namespace OpenZWave
 	// Events
 	//-----------------------------------------------------------------------------
 	private:
-		ManagedNotificationsHandler^ m_notificationEvent;
-		event ManagedNotificationsHandler^ ZWOnNotification
-		{
-			void add( ManagedNotificationsHandler ^ d )
-			{ 
-				m_notificationEvent += d;
-			} 
-			
-			void remove(ManagedNotificationsHandler ^ d)
-			{ 
-				m_notificationEvent -= d;
-			} 
-			
-			void raise(ZWNotification^ notification)
-			{ 
-				ManagedNotificationsHandler^ tmp = m_notificationEvent; 
-				if (tmp)
-				{ 
-					tmp->Invoke( notification );
-				} 
-			} 
-		}
 
 	public:
-		//event ManagedNotificationsHandler^ OnNotification;
-
-		property ManagedNotificationsHandler^ OnNotification
-		{
-			ManagedNotificationsHandler^ get()
-			{
-				return m_notificationEvent;
-			}
-			void set( ManagedNotificationsHandler^ value )
-			{
-				m_notificationEvent = value;
-			}
-		}
+		event ManagedNotificationsHandler^ OnNotification;
 
 	private:
 		ManagedControllerStateChangedHandler^ m_controllerStateChangedEvent;

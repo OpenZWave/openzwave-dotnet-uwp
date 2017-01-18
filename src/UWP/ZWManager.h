@@ -741,7 +741,6 @@ namespace OpenZWave
 
 		/*@}*/
 
-
 		//-----------------------------------------------------------------------------
 		// Values
 		//-----------------------------------------------------------------------------
@@ -757,7 +756,7 @@ namespace OpenZWave
 		*
 		* \param id The unique identifier of the value.
 		* \return The value label.
-		* \see ValueID
+		 * \see ZWValueID
 		*/
 		String^ GetValueLabel(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
 
@@ -767,7 +766,7 @@ namespace OpenZWave
 		* \param value The new value of the label.
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_HOMEID if the Driver cannot be found
-		* \see ValueID
+		 * \see ZWValueID
 		*/
 		void SetValueLabel(ZWValueID^ id, String^ value) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
@@ -776,7 +775,7 @@ namespace OpenZWave
 		*
 		* \param id The unique identifier of the value.
 		* \return The value units.
-		* \see ValueID
+		 * \see ZWValueID
 		*/
 		String^ GetValueUnits(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueUnits(id->CreateUnmanagedValueID())); }
 
@@ -785,7 +784,7 @@ namespace OpenZWave
 		*
 		* \param id The unique identifier of the value.
 		* \return The value help text.
-		* \see ValueID
+		* \see ZWValueID
 		*/
 		String^ GetValueHelp(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
 
@@ -794,7 +793,7 @@ namespace OpenZWave
 		*
 		* \param id The unique identifier of the value.
 		* \return true if the value cannot be changed by the user.
-		* \see ValueID
+		 * \see ZWValueID
 		*/
 		bool IsValueReadOnly(ZWValueID^ id) { return Manager::Get()->IsValueReadOnly(id->CreateUnmanagedValueID()); }
 
@@ -1007,7 +1006,7 @@ namespace OpenZWave
 		* <summary>Refreshes the specified value from the Z-Wave network.
 		* A call to this function causes the library to send a message to the network to retrieve the current value
 		* of the specified ValueID (just like a poll, except only one-time, not recurring).</summary>
-		* \param _id The unique identifier of the value to be refreshed.
+		* \param id The unique identifier of the value to be refreshed.
 		* \return true if the driver and node were found; false otherwise
 		*/
 		bool RefreshValue(ZWValueID^ id) { return Manager::Get()->RefreshValue(id->CreateUnmanagedValueID()); }
@@ -1107,8 +1106,8 @@ namespace OpenZWave
 		/**
 		* <summary>Gets switch point data from the schedule.</summary>
 		* Retrieves the time and setback values from a switch point in the schedule.
-		* \param _id The unique identifier of the schedule value.
-		* \param _idx The index of the switch point, between zero and one less than the value
+		 * \param id The unique identifier of the schedule value.
+		 * \param idx The index of the switch point, between zero and one less than the value
 		* returned by GetNumSwitchPoints.
 		* \param o_hours a pointer to a uint8 that will be filled with the hours part of the switch point data.
 		* \param o_minutes a pointer to a uint8 that will be filled with the minutes part of the switch point data.
@@ -1170,7 +1169,7 @@ namespace OpenZWave
 		* change has been made.
 		* \param homeId The Home ID of the Z-Wave controller that manages the node.
 		* \param nodeId The ID of the node to configure.
-		* \param _param The index of the parameter.
+		 * \param param The index of the parameter.
 		* \param value The value to which the parameter should be set.
 		* \return true if the a message setting the value was sent to the device.
 		* \see RequestConfigParam
@@ -1306,7 +1305,6 @@ namespace OpenZWave
 		void SoftReset(uint32 homeId) { Manager::Get()->SoftReset(homeId); }
 
 		/*@}*/
-
 
 		//-----------------------------------------------------------------------------
 		// Network commands
@@ -1605,7 +1603,6 @@ namespace OpenZWave
 		* <summary>Create a new Scene passing in Scene ID</summary>
 		* \return uint8 Scene ID used to reference the scene. 0 is failure result.
 		* \see GetNumScenes, GetAllScenes, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-
 		*/
 		uint8 CreateScene() { return Manager::Get()->CreateScene(); }
 

@@ -63,7 +63,7 @@ void ZWManager::OnNotificationFromUnmanaged
 )
 {
 	ZWNotification^ notification = gcnew ZWNotification( _notification );
-	ZWOnNotification(notification);
+	OnNotification(notification);
 }
 
 //-----------------------------------------------------------------------------

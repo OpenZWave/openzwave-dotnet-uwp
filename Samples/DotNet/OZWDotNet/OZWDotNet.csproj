@@ -59,6 +59,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\..\UWP\OZWAppx\MainViewModel.cs">
+      <Link>MainViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UWP\OZWAppx\Node.cs">
+      <Link>Node.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
