@@ -27,52 +27,15 @@
 
 #pragma once
 
-#include <Windows.h>
-#include <stdio.h>
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
-
+#include "ZWEnums.h"
 #include "ZWValueID.h"
 #include "ZWNotification.h"
 
-#include "Manager.h"
-#include "ValueID.h"
-#include "Notification.h"
-#include "Driver.h"
-#include "Log.h"
-
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
-using namespace Runtime::InteropServices;
 using namespace OpenZWave;
 
 
-namespace OpenZWaveDotNet
+namespace OpenZWave
 {
-	// Delegate for handling notification callbacks
-	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
-
-	[UnmanagedFunctionPointer(CallingConvention::Cdecl)]
-	private delegate void OnNotificationFromUnmanagedDelegate(Notification* _notification, void* _context);
-
-	// Logging levels
-	public enum class ZWLogLevel
-	{
-		Invalid		= LogLevel_Invalid,
-		None		= LogLevel_None,
-		Always		= LogLevel_Always,
-		Fatal		= LogLevel_Fatal,
-		Error		= LogLevel_Error,
-		Warning		= LogLevel_Warning,
-		Alert		= LogLevel_Alert,
-		Info		= LogLevel_Info,
-		Detail		= LogLevel_Detail,
-		Debug		= LogLevel_Debug,
-		StreamDetail= LogLevel_StreamDetail,
-		Internal	= LogLevel_Internal
-	};
-
 	// Delegate for handling controller command callbacks
 	public enum class ZWControllerState
 	{
@@ -89,34 +52,11 @@ namespace OpenZWaveDotNet
 		NodeFailed	= Driver::ControllerState_NodeFailed							/**< Used only with HasNodeFailed to indicate that the controller thinks the node has failed. */
 	};
 
-	// Controller interface types
-	public enum class ZWControllerInterface
-	{
-		Unknown		= Driver::ControllerInterface_Unknown,
-		Serial		= Driver::ControllerInterface_Serial,
-		Hid			= Driver::ControllerInterface_Hid
-	};
+	// Delegate for handling notification callbacks
+	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
-	public enum class ZWControllerCommand
-	{
-		None						= Driver::ControllerCommand_None,						/**< No command. */
-		AddDevice					= Driver::ControllerCommand_AddDevice,					/**< Add a new device (but not a controller) to the Z-Wave network. */
-		CreateNewPrimary			= Driver::ControllerCommand_CreateNewPrimary,			/**< Add a new controller to the Z-Wave network.  The new controller will be the primary, and the current primary will become a secondary controller. */
-		ReceiveConfiguration		= Driver::ControllerCommand_ReceiveConfiguration,		/**< Receive Z-Wave network configuration information from another controller. */
-		RemoveDevice				= Driver::ControllerCommand_RemoveDevice,				/**< Remove a new device (but not a controller) from the Z-Wave network. */
-		RemoveFailedNode			= Driver::ControllerCommand_RemoveFailedNode,			/**< Move a node to the controller's failed nodes list. This command will only work if the node cannot respond. */
-		HasNodeFailed				= Driver::ControllerCommand_HasNodeFailed,				/**< Check whether a node is in the controller's failed nodes list. */
-		ReplaceFailedNode			= Driver::ControllerCommand_ReplaceFailedNode,			/**< Replace a non-responding device with another. */
-		TransferPrimaryRole			= Driver::ControllerCommand_TransferPrimaryRole,		/**< Make a different controller the primary. */
-		RequestNetworkUpdate		= Driver::ControllerCommand_RequestNetworkUpdate,		/**< Request network information from the SUC/SIS. */
-		RequestNodeNeighborUpdate	= Driver::ControllerCommand_RequestNodeNeighborUpdate,	/**< Get a node to rebuild its neighbour list.  This method also does ControllerCommand_RequestNodeNeighbors */
-		AssignReturnRoute			= Driver::ControllerCommand_AssignReturnRoute,			/**< Assign a network return route to a device. */
-		DeleteAllReturnRoutes		= Driver::ControllerCommand_DeleteAllReturnRoutes,		/**< Delete all network return routes from a device. */
-		SendNodeInformation			= Driver::ControllerCommand_SendNodeInformation,		/**< Send a node information frame */
-		ReplicationSend				= Driver::ControllerCommand_ReplicationSend,			/**< Send information from primary to secondary */
-		CreateButton				= Driver::ControllerCommand_CreateButton,				/**< Create an id that tracks handheld button presses */
-		DeleteButton				= Driver::ControllerCommand_DeleteButton				/**< Delete id that tracks handheld button presses */
-	};
+	[UnmanagedFunctionPointer(CallingConvention::Cdecl)]
+	private delegate void OnNotificationFromUnmanagedDelegate(Notification* _notification, void* _context);
 
 	public delegate void ManagedControllerStateChangedHandler( ZWControllerState _state);
 

@@ -27,46 +27,16 @@
 
 
 #pragma once
-#include "Windows.h"
-#include "ValueID.h"
-#include "stdio.h"
+#include "ZWEnums.h"
 
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
-
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
 using namespace OpenZWave;
-using namespace Runtime::InteropServices;
 
-namespace OpenZWaveDotNet 
+namespace OpenZWave
 {
-	public ref class ZWValueID
+	public ref class ZWValueID sealed
 	{
 	public:
-		enum class ValueGenre
-		{
-			Basic	= ValueID::ValueGenre_Basic,
-			User	= ValueID::ValueGenre_User,	
-			Config	= ValueID::ValueGenre_Config,	
-			System	= ValueID::ValueGenre_System
-		};
-
-		enum class ValueType
-		{
-			Bool		= ValueID::ValueType_Bool,
-			Byte		= ValueID::ValueType_Byte,
-			Decimal		= ValueID::ValueType_Decimal,
-			Int			= ValueID::ValueType_Int,
-			List		= ValueID::ValueType_List,
-			Schedule	= ValueID::ValueType_Schedule,
-			Short		= ValueID::ValueType_Short,
-			String		= ValueID::ValueType_String,
-			Button		= ValueID::ValueType_Button,
-			Raw		= ValueID::ValueType_Raw
-		};
-
+		
 		/**
 		 * Create a ZWValue ID from its component parts.
 		 * This method is provided only to allow ValueIDs to be saved and recreated by the application.  Only
@@ -85,39 +55,39 @@ namespace OpenZWaveDotNet
 		( 
 			uint32 homeId,
 			uint8 nodeId,
-			ZWValueID::ValueGenre genre,
+			ZWValueGenre genre,
 			uint8 commandClassId,
 			uint8 instance,
 			uint8 valueIndex,
-			ZWValueID::ValueType type,
+			ZWValueType type,
 			uint8 pollIntensity
 		)
 		{
 			m_valueId = new ValueID( homeId, nodeId, (ValueID::ValueGenre)genre, commandClassId, instance, valueIndex, (ValueID::ValueType)type );
 		}
 
-		ZWValueID( ValueID const& valueId )
-		{ 
-			m_valueId = new ValueID( valueId );
-		}
+		property uint32 HomeId { uint32 get() { return m_valueId->GetHomeId(); } }
+		property uint8	NodeId { uint8 get() { return m_valueId->GetNodeId(); } }
+		property ZWValueGenre Genre { ZWValueGenre get() { return (ZWValueGenre)m_valueId->GetGenre(); } }
+		property uint8 CommandClassId { uint8 get() { return m_valueId->GetCommandClassId(); } }
+		property uint8 Instance { uint8 get() { return m_valueId->GetInstance(); } }
+		property uint8 Index { uint8 get() { return m_valueId->GetIndex(); } }
+		property ZWValueType Type { ZWValueType get() { return (ZWValueType)m_valueId->GetType(); } }
+		property uint64	Id { uint64 get() { return m_valueId->GetId(); } }
 
-
+    private:
 		~ZWValueID()
 		{ 
 			delete m_valueId;
 		}
 
+    internal:
+		ZWValueID( ValueID const& valueId )
+		{ 
+			m_valueId = new ValueID( valueId );
+		}
 
 		ValueID CreateUnmanagedValueID(){ return ValueID( *m_valueId ); }
-
-		uint32		GetHomeId()			{ return m_valueId->GetHomeId(); }
-		uint8		GetNodeId()			{ return m_valueId->GetNodeId(); }
-		ValueGenre	GetGenre()			{ return (ValueGenre)Enum::ToObject( ValueGenre::typeid, m_valueId->GetGenre() ); }
-		uint8		GetCommandClassId()	{ return m_valueId->GetCommandClassId(); }
-		uint8		GetInstance()		{ return m_valueId->GetInstance(); }
-		uint8		GetIndex()			{ return m_valueId->GetIndex(); }
-		ValueType	GetType()			{ return (ValueType)Enum::ToObject( ValueType::typeid, m_valueId->GetType() ); }
-		uint64		GetId()				{ return m_valueId->GetId(); }
 
 		// Comparison Operators
 		bool operator ==	( ZWValueID^ _other ){ return( (*m_valueId) == (*_other->m_valueId) ); }
@@ -125,7 +95,7 @@ namespace OpenZWaveDotNet
 		bool operator <		( ZWValueID^ _other ){ return( (*m_valueId) < (*_other->m_valueId) ); }
 		bool operator >		( ZWValueID^ _other ){ return( (*m_valueId) > (*_other->m_valueId) ); }
 
-	internal:
+	private:
 		ValueID* m_valueId;
 	};
 }

@@ -149,7 +149,7 @@ bool ZWOptions::GetOptionAsString
 	std::string name = ConvertString(_name);
 	if (Options::Get()->GetOptionAsString(name, &value))
 	{
-		*o_value = ConvertString(value);
+		*o_value = ConvertStdString(value);
 		return true;
 	}
 	return false;

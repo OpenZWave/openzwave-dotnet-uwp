@@ -30,20 +30,8 @@
 
 
 #pragma once
-
-#include "Manager.h"
-#include "Value.h"
-#include "ValueStore.h"
-#include "ValueID.h"
-#include "ValueBool.h"
-#include "ValueInt.h"
-#include "ValueByte.h"
-#include "ValueString.h"
-#include "ValueShort.h"
-#include "ValueDecimal.h"
-#include "Notification.h"
-#include "ZWValueID.h"
 #include "ZWEnums.h"
+#include "ZWValueID.h"
 
 using namespace OpenZWave;
 
@@ -76,7 +64,7 @@ namespace OpenZWave
 		property uint8 Event { uint8 get() { return m_event; } }
 		property uint8 Byte { uint8 get() { return m_byte; } }
 
-	internal:
+	private:
 		NotificationType		m_type;
 		ZWValueID^	m_valueId;
 		uint8		m_byte;

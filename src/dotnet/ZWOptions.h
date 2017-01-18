@@ -26,31 +26,13 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
+#include "ZWEnums.h"
 
-#include <Windows.h>
-#include <stdio.h>
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
-
-#include "Options.h"
-
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
-using namespace Runtime::InteropServices;
 using namespace OpenZWave;
 
 
-namespace OpenZWaveDotNet
+namespace OpenZWave
 {
-	public enum class ZWOptionType
-	{
-		Invalid = Options::OptionType_Invalid,
-		Bool	= Options::OptionType_Bool,
-		Int		= Options::OptionType_Int,
-		String	= Options::OptionType_String
-	};
-
 	/** 
 	* <summary>
 	 * A class that manages program options read from XML files or the command line.
@@ -81,7 +63,7 @@ namespace OpenZWaveDotNet
 	 * 4) Create the OpenZWave Manager object.
 	* </remarks>
 	 */
-	public ref class ZWOptions
+	public ref class ZWOptions sealed
 	{
 	public:
    		/**
@@ -218,5 +200,14 @@ namespace OpenZWaveDotNet
 		* <seealso cref="Lock" />
 		 */
 		bool AreLocked(){ return Options::Get()->AreLocked(); }
+
+		private:
+			std::string ConvertString(String^ value) {
+				return msclr::interop::marshal_as<std::string>(value);
+			}
+
+			String^ ConvertStdString(std::string value) {
+				return gcnew String(value.c_str());
+			}
 	};
 }

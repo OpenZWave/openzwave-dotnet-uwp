@@ -1,87 +1,44 @@
+//-----------------------------------------------------------------------------
+//
+//      ZWManager.h
+//
+//      UWP wrapper for the C++ OpenZWave Manager class
+//
+//      Original Work by:
+//      Copyright (c) 2010 ) Amer Harb <harb_amer@hotmail.com> (
+//      Intial UWP Port by Donald Hanson - https://github.com/donald-hanson
+//      Maintained by Morten Nielsen https://github.com/dotMorten
+//
+//      SOFTWARE NOTICE AND LICENSE
+//
+//      This file is part of OpenZWave.
+//
+//      OpenZWave is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU Lesser General Public License as published
+//      by the Free Software Foundation, either version 3 of the License,
+//      or (at your option) any later version.
+//
+//      OpenZWave is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU Lesser General Public License for more details.
+//
+//      You should have received a copy of the GNU Lesser General Public License
+//      along with OpenZWave.  If not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+
 #pragma once
 
-#include <locale>
-#include <codecvt>
-#include <string>
-
+#include "ZWEnums.h"
 #include "ZWValueID.h"
 #include "ZWNotification.h"
-
-#include "Manager.h"
-#include "ValueID.h"
-#include "Notification.h"
-#include "Driver.h"
-#include "Log.h"
 
 using namespace OpenZWave;
 using namespace Platform;
 
 namespace OpenZWave
 {
-	/// <summary>Various LogLevels available to the Application</summary>
-	public enum class ZWLogLevel
-	{
-		None = LogLevel_None,
-		Always = LogLevel_Always,
-		Fatal = LogLevel_Fatal,
-		Error = LogLevel_Error,
-		Warning = LogLevel_Warning,
-		Alert = LogLevel_Alert,
-		Info = LogLevel_Info,
-		Detail = LogLevel_Detail,
-		Debug = LogLevel_Debug,
-		StreamDetail = LogLevel_StreamDetail,
-		Internal = LogLevel_Internal
-	};
-
-	// Controller interface types
-	public enum class ZWControllerInterface
-	{
-		Unknown = Driver::ControllerInterface_Unknown,
-		Serial = Driver::ControllerInterface_Serial,
-		Hid = Driver::ControllerInterface_Hid
-	};
-
-	/// <summary>Controller Commands.</summary>
-	/// <remarks>Commands to be used with the BeginControllerCommand method.</remarks>
-	public enum class ZWControllerCommand
-	{
-		/// <summary>No command.</summary>
-		None = Driver::ControllerCommand_None,												
-		/// <summary>Add a new device (but not a controller) to the Z-Wave network.</summary>
-		AddDevice = Driver::ControllerCommand_AddDevice,
-		/// <summary>Add a new controller to the Z-Wave network.  The new controller will be the primary, and the current primary will become a secondary controller.</summary>
-		CreateNewPrimary = Driver::ControllerCommand_CreateNewPrimary,
-		/// <summary>Receive Z-Wave network configuration information from another controller.</summary>
-		ReceiveConfiguration = Driver::ControllerCommand_ReceiveConfiguration,
-		/// <summary>Remove a new device (but not a controller) from the Z-Wave network.</summary>
-		RemoveDevice = Driver::ControllerCommand_RemoveDevice,
-		/// <summary>Move a node to the controller's failed nodes list. This command will only work if the node cannot respond.</summary>
-		RemoveFailedNode = Driver::ControllerCommand_RemoveFailedNode,
-		/// <summary>Check whether a node is in the controller's failed nodes list.</summary>
-		HasNodeFailed = Driver::ControllerCommand_HasNodeFailed,
-		/// <summary>Replace a non-responding device with another.</summary>
-		ReplaceFailedNode = Driver::ControllerCommand_ReplaceFailedNode,
-		/// <summary>Make a different controller the primary.</summary>
-		TransferPrimaryRole = Driver::ControllerCommand_TransferPrimaryRole,
-		/// <summary>Request network information from the SUC/SIS.</summary>
-		RequestNetworkUpdate = Driver::ControllerCommand_RequestNetworkUpdate,
-		/// <summary>Get a node to rebuild its neighbour list.  This method also does ControllerCommand_RequestNodeNeighbors</summary>
-		RequestNodeNeighborUpdate = Driver::ControllerCommand_RequestNodeNeighborUpdate,
-		/// <summary>Assign a network return route to a device.</summary>
-		AssignReturnRoute = Driver::ControllerCommand_AssignReturnRoute,
-		/// <summary>Delete all network return routes from a device.</summary>
-		DeleteAllReturnRoutes = Driver::ControllerCommand_DeleteAllReturnRoutes,
-		/// <summary>Send a node information frame</summary>
-		SendNodeInformation = Driver::ControllerCommand_SendNodeInformation,
-		/// <summary>Send information from primary to secondary</summary>
-		ReplicationSend = Driver::ControllerCommand_ReplicationSend,
-		/// <summary>Create an id that tracks handheld button presses</summary>
-		CreateButton = Driver::ControllerCommand_CreateButton,
-		/// <summary>Delete id that tracks handheld button presses</summary>
-		DeleteButton = Driver::ControllerCommand_DeleteButton
-	};
-
 	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
 	private delegate void OnNotificationFromUnmanagedDelegate(void *_notification, void* _context);

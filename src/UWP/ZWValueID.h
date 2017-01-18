@@ -30,9 +30,7 @@
 
 
 #pragma once
-
 #include "ZWEnums.h"
-#include "ValueID.h"
 
 using namespace OpenZWave;
 
@@ -41,6 +39,7 @@ namespace OpenZWave
     public ref class ZWValueID sealed
     {
     public:
+		
 		/**
 		 * Create a ZWValue ID from its component parts.
 		 * This method is provided only to allow ValueIDs to be saved and recreated by the application.  Only
@@ -69,6 +68,7 @@ namespace OpenZWave
 		{
 			m_valueId = new ValueID(homeId, nodeId, (ValueID::ValueGenre)genre, commandClassId, instance, valueIndex, (ValueID::ValueType)type);
 		}
+
 		property uint32 HomeId { uint32 get() { return m_valueId->GetHomeId(); } }
 		property uint8	NodeId { uint8 get() { return m_valueId->GetNodeId(); } }
 		property ZWValueGenre Genre { ZWValueGenre get() { return (ZWValueGenre)m_valueId->GetGenre(); } }
@@ -79,7 +79,6 @@ namespace OpenZWave
 		property uint64	Id { uint64 get() { return m_valueId->GetId(); } }
 
 	private:
-		ValueID* m_valueId;
 		~ZWValueID()
 		{
 			delete m_valueId;
@@ -98,5 +97,8 @@ namespace OpenZWave
 		bool operator !=	(ZWValueID^ _other) { return((*m_valueId) != (*_other->m_valueId)); }
 		bool operator <		(ZWValueID^ _other) { return((*m_valueId) < (*_other->m_valueId)); }
 		bool operator >		(ZWValueID^ _other) { return((*m_valueId) > (*_other->m_valueId)); }
+
+	private:
+		ValueID* m_valueId;
     };
 }

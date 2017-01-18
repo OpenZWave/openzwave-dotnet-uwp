@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0DD42424-B4AB-45C3-897C-774D1C5917C3}</ProjectGuid>
-    <RootNamespace>OpenZWaveDotNet</RootNamespace>
+    <RootNamespace>OpenZWave</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -57,14 +57,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src\command_classes;..\..\open-zwave\cpp\src\platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(OutDir)\OpenZWave.lib;Ws2_32.lib;dnsapi.lib;</AdditionalDependencies>
@@ -75,13 +78,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src\command_classes;..\..\open-zwave\cpp\src\platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(OutDir)\OpenZWave.lib;Ws2_32.lib;dnsapi.lib;</AdditionalDependencies>
@@ -104,12 +110,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ZWManager.cpp" />
     <ClCompile Include="ZWOptions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ZWEnums.h" />
     <ClInclude Include="ZWManager.h" />
     <ClInclude Include="ZWNotification.h" />
     <ClInclude Include="ZWOptions.h" />

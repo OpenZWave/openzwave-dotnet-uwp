@@ -1,8 +1,13 @@
-﻿#pragma once
+#pragma once
 
 // Platform includes
 #include "Windows.h"
 #include "stdio.h"
+
+// .NET CLR/CLI includes
+#include <msclr/auto_gcroot.h>
+#include <msclr/lock.h>
+#include <msclr/marshal_cppstd.h>
 
 // OpenZWave includes
 #include "Manager.h"
@@ -21,8 +26,3 @@
 #include "Driver.h"
 #include "Log.h"
 
-//UWP
-
-#include <locale>
-#include <codecvt>
-#include <string>

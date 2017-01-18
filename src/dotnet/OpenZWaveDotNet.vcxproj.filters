@@ -20,6 +20,9 @@
     <ClCompile Include="ZWOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -37,6 +40,8 @@
     <ClInclude Include="ZWOptions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ZWEnums.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico">

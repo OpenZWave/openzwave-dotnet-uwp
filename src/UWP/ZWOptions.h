@@ -29,12 +29,7 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
-
-#include "Options.h"
 #include "ZWEnums.h"
-#include <locale>
-#include <codecvt>
-#include <string>
 
 using namespace OpenZWave;
 using namespace Platform;
@@ -208,13 +203,14 @@ namespace OpenZWave
 		* <seealso cref="Lock" />
 		*/
 		bool AreLocked() { return Options::Get()->AreLocked(); }
+
 	private:
 		std::string ConvertString(String^ value) {
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			return convert.to_bytes(value->Data());
 		}
 
-		String^ ConvertString(std::string value) {
+		String^ ConvertStdString(std::string value) {
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
 			return ref new Platform::String(intermediateForm.c_str());

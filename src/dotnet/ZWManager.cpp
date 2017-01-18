@@ -27,7 +27,6 @@
 
 #include "ZWManager.h"
 
-using namespace OpenZWaveDotNet;
 using namespace OpenZWave;
 using namespace Runtime::InteropServices;
 
