@@ -144,7 +144,6 @@ namespace OZWAppx
             }
         }
 
-        private ObservableCollection<ZWValueID> m_values = new ObservableCollection<ZWValueID>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -159,10 +158,10 @@ namespace OZWAppx
         /// <value>
         /// The values.
         /// </value>
-        public IList<ZWValueID> Values
-        {
-            get { return m_values; }
-        }
+        public IList<ZWValueID> BasicValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueID> UserValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueID> SystemValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueID> ConfigValues { get; } = new ObservableCollection<ZWValueID>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
@@ -177,14 +176,17 @@ namespace OZWAppx
         /// <param name="valueID">The value identifier.</param>
         public void AddValue(ZWValueID valueID)
         {
-            var id = m_values.Where(v => v.Genre == valueID.Genre && v.CommandClassId == valueID.CommandClassId && v.Id == valueID.Id).FirstOrDefault();
+            IList<ZWValueID> list = GetValues(valueID.Genre);
+           
+
+            var id = list.Where(v => v.CommandClassId == valueID.CommandClassId && v.Id == valueID.Id).FirstOrDefault();
             if (id != null)
             {
-                m_values[m_values.IndexOf(id)] = valueID;
+                list[list.IndexOf(id)] = valueID;
             }
             else
             {
-                m_values.Add(valueID);
+                list.Add(valueID);
             }
         }
 
@@ -194,7 +196,20 @@ namespace OZWAppx
         /// <param name="valueID">The value identifier.</param>
         public void RemoveValue(ZWValueID valueID)
         {
-            m_values.Remove(valueID);
+            var values = GetValues(valueID.Genre);
+            values.Remove(valueID);
+        }
+        private IList<ZWValueID> GetValues(ZWValueGenre genre)
+        {
+            if (genre == ZWValueGenre.Basic)
+                return BasicValues;
+            else if (genre == ZWValueGenre.Config)
+                return ConfigValues;
+            else if (genre == ZWValueGenre.System)
+                return SystemValues;
+            else if (genre == ZWValueGenre.User)
+                return UserValues;
+            return null;
         }
     }
 }

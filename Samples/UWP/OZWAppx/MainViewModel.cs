@@ -123,15 +123,15 @@ namespace OZWAppx
 
             Action<ZWValueID> debugWriteValueID = (v) =>
             {
-                Debug.WriteLine("  Node : " + nodeId.ToString());
-                Debug.WriteLine("  CC   : " + v.CommandClassId.ToString());
-                Debug.WriteLine("  Type : " + type.ToString());
-                Debug.WriteLine("  Index: " + v.Index.ToString());
-                Debug.WriteLine("  Inst : " + v.Instance.ToString());
-                Debug.WriteLine("  Value: " + GetValue(v).ToString());
-                Debug.WriteLine("  Label: " + m_manager.GetValueLabel(v));
-                Debug.WriteLine("  Help : " + m_manager.GetValueHelp(v));
-                Debug.WriteLine("  Units: " + m_manager.GetValueUnits(v));
+                // Debug.WriteLine("  Node : " + nodeId.ToString());
+                // Debug.WriteLine("  CC   : " + v.CommandClassId.ToString());
+                // Debug.WriteLine("  Type : " + type.ToString());
+                // Debug.WriteLine("  Index: " + v.Index.ToString());
+                // Debug.WriteLine("  Inst : " + v.Instance.ToString());
+                // Debug.WriteLine("  Value: " + GetValue(v).ToString());
+                // Debug.WriteLine("  Label: " + m_manager.GetValueLabel(v));
+                // Debug.WriteLine("  Help : " + m_manager.GetValueHelp(v));
+                // Debug.WriteLine("  Units: " + m_manager.GetValueUnits(v));
             };
 
             foreach(var item in PendingRequests.ToArray())
@@ -150,7 +150,7 @@ namespace OZWAppx
             // NodeQueriesComplete : When all nodes has reported back
             // NodeAdded : Node now exists in the system. Very little useful info
             // NodeProtocolInfo: We now know what type of node it is
-            Debug.WriteLine($"Notification Received: {homeID}:{nodeId} = {type}");
+            // Debug.WriteLine($"Notification Received: {homeID}:{nodeId} = {type}");
             switch (notification.Type)
             {
                 case NotificationType.ValueAdded:

@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -33,21 +34,42 @@
             <TextBox Header="Product" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Product, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
         </StackPanel>
 
-        <ListView ItemsSource="{x:Bind VM.Node.Values}" Grid.Row="2">
+        <ListBox Grid.Row="2" Grid.ColumnSpan="2" x:Name="TabBar" SelectedIndex="0">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <TextBlock Text="User" Tag="{x:Bind VM.Node.UserValues}" />
+            <TextBlock Text="Basic" Tag="{x:Bind VM.Node.BasicValues}" />
+            <TextBlock Text="Configuration" Tag="{x:Bind VM.Node.ConfigValues}" />
+            <TextBlock Text="System" Tag="{x:Bind VM.Node.SystemValues}" />
+        </ListBox>
+        <ListView ItemsSource="{Binding SelectedItem.Tag, ElementName=TabBar}" Grid.Row="3" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  HorizontalContentAlignment="Stretch"
+                  >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Converter={StaticResource conv}, ConverterParameter=Help}">
-                        <TextBlock Text="{Binding Genre}" Width="100" />
-                        <TextBlock Text="{Binding Type}" Width="100" Margin="10,0,0,0" />
-                        <TextBlock Text="{Binding Converter={StaticResource conv}, ConverterParameter=Label}" Width="200"  Margin="10,0,0,0" />
-                        <TextBlock Text="{Binding Converter={StaticResource conv}}" Margin="10,0,0,0" />
-                        <TextBlock Text="{Binding Converter={StaticResource conv}, ConverterParameter=Units}" Margin="10,0,0,0" />
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Converter={StaticResource conv}, ConverterParameter=Label}" ToolTipService.ToolTip="{Binding Converter={StaticResource conv}, ConverterParameter=Help}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Converter={StaticResource conv}}" HorizontalAlignment="Right" ToolTipService.ToolTip="{Binding Type}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Converter={StaticResource conv}, ConverterParameter=Units}" Margin="5,0,0,0" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
             <Button Content="Remove" Click="RemoveButton_Click" IsEnabled="{x:Bind VM.Node.HasNodeFailed, Mode=OneWay}" />
         </StackPanel>
     </Grid>

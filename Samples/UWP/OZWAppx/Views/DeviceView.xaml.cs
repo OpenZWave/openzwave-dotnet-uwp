@@ -121,15 +121,12 @@ namespace OZWAppx.Views
                     m_manager.GetValueAsInt(v, out r4);
                     return r4.ToString();
                 case ZWValueType.List:
-                    string[] r5;
-                    m_manager.GetValueListItems(v, out r5);
-                    string r6 = "";
-                    foreach (string s in r5)
-                    {
-                        r6 += s;
-                        r6 += "/";
-                    }
-                    return r6;
+                    string value;
+                    m_manager.GetValueListSelection(v, out value);
+                    return value;
+                    // string[] r5;
+                    // m_manager.GetValueListItems(v, out r5);
+                    // return string.Join("|", r5);
                 case ZWValueType.Schedule:
                     return "Schedule";
                 case ZWValueType.Short:
