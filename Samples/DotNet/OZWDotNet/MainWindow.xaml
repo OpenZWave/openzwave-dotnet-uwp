@@ -7,6 +7,81 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0,2" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="Serial port:" />
+                <ComboBox x:Name="SerialPortList" HorizontalAlignment="Stretch" />
+                <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
+                <Button Content="Create New Primary Controller" />
+                <Button Content="Transfer Primary Role" />
+                <Button Content="Add Device" />
+                <Button Content="Add Secure Device" />
+                <Button Content="Remove Device" />
+                <Button Content="Receive Configuration" />
+                <Button Content="Request Network Update" />
+                <Button Content="Reset Controller (soft)" />
+                <Button Content="Reset Controller (Erase All)" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <ListView x:Name="NodeGridView" ItemsSource="{Binding VM.Nodes}" Grid.Column="1" SelectionChanged="NodeGridView_ItemClick">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <Grid Margin="5" Width="200" Background="CornflowerBlue">
+                        <!--<FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Power On" Click="PowerOn_ContextMenuClick" />
+                                <MenuFlyoutItem Text="Power Off" Click="PowerOff_ContextMenuClick" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Request Node Neighbor Update" />
+                                <MenuFlyoutItem Text="Assign Return Route" />
+                                <MenuFlyoutItem Text="Delete All Return Routes" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Has Node Failed" />
+                                <MenuFlyoutItem Text="Mark Node As Failed" />
+                                <MenuFlyoutItem Text="Remove Failed Node" />
+                                <MenuFlyoutItem Text="Replace Failed Node" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Properties..." />
+
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>-->
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="3" Text="{Binding Label, Mode=OneWay}" />
+                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="2" Text="{Binding Name, Mode=OneWay}" />
+                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="4" Text="{Binding Manufacturer, Mode=OneWay}" />
+                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="5" Text="{Binding Product, Mode=OneWay}" />
+                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="1" Text="{Binding Location, Mode=OneWay}" />
+                            <!--<TextBlock Grid.Column="6" Text="{x:Bind Level}" />-->
+                            <!--<ToggleSwitch Grid.Column="7" IsOn="{x:Bind Power}" />-->
+
+                        </StackPanel>
+                        <ProgressBar IsIndeterminate="{Binding IsLoading, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+                        <TextBlock Grid.Column="0" Text="{Binding ID, Mode=OneWay}" HorizontalAlignment="Right" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock x:Name="toolStripStatusLabel1" Text="Initializing..." Grid.ColumnSpan="2" Grid.Row="1" />
+
+
+
     </Grid>
 </Window>
