@@ -40,7 +40,7 @@ namespace OZWAppx
         {
             get
             {
-                return MainViewModel.Instance.Manager.HasNodeFailed(HomeID, ID);
+                return ZWManager.Instance.HasNodeFailed(HomeID, ID);
             }
         }
         
@@ -65,7 +65,7 @@ namespace OZWAppx
                 {
                     m_name = value;
                     OnPropertyChanged();
-                    MainViewModel.Instance.Manager.SetNodeName(HomeID, ID, value);
+                    ZWManager.Instance.SetNodeName(HomeID, ID, value);
                 }
             }
         }
@@ -74,14 +74,14 @@ namespace OZWAppx
         {
             get
             {
-                return MainViewModel.Instance.Manager.GetNodeGeneric(HomeID, ID);
+                return ZWManager.Instance.GetNodeGeneric(HomeID, ID);
             }
         }
         public byte SpecificType
         {
             get
             {
-                return MainViewModel.Instance.Manager.GetNodeSpecific(HomeID, ID);
+                return ZWManager.Instance.GetNodeSpecific(HomeID, ID);
             }
         }
 
@@ -101,7 +101,7 @@ namespace OZWAppx
                 {
                     m_location = value;
                     OnPropertyChanged();
-                    MainViewModel.Instance.Manager.SetNodeLocation(HomeID, ID, value);
+                    ZWManager.Instance.SetNodeLocation(HomeID, ID, value);
                 }
             }
         }

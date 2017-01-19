@@ -89,7 +89,13 @@ namespace OpenZWave
 	/// </para></remarks>
 	public ref class ZWManager sealed
 	{
+	private:
+
+		ZWManager() { }
+
 	public:
+		static property ZWManager^ Instance { ZWManager^ get(); }
+
 		/** <summary>Creates the Manager singleton object.</summary>
 		* <remarks>
 		* The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
@@ -1912,7 +1918,6 @@ namespace OpenZWave
 		static void OnNotificationFromUnmanaged(OpenZWave::Notification const * _notification, void * _context);
 
 	private:
-		
 		std::string ConvertString(String^ value) {
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			return convert.to_bytes(value->Data());

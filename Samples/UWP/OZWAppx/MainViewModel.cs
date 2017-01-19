@@ -33,7 +33,6 @@ namespace OZWAppx
 
         private void Initialize()
         {
-            ZWManager manager = new ZWManager();
             m_options = new ZWOptions();
 #if NETFX_CORE
             var userPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
@@ -57,7 +56,7 @@ namespace OZWAppx
             m_options.Lock();
 
             // Create the OpenZWave Manager
-            m_manager = new ZWManager();
+            m_manager = ZWManager.Instance;
             m_manager.Create();
             m_manager.OnNotification += OnNodeNotification;
         }
@@ -421,11 +420,6 @@ namespace OZWAppx
         }
 
         private ZWManager m_manager = null;
-
-        public ZWManager Manager
-        {
-            get { return m_manager; }
-        }
 
         private bool m_securityEnabled = false;
 

@@ -33,13 +33,20 @@
 
 using namespace OpenZWave;
 
+static ZWManager^ s_instance = nullptr;
+
+ZWManager^ ZWManager::Instance::get()
+{
+	if (s_instance == nullptr)
+		s_instance = ref new ZWManager();
+	return s_instance;
+}
+
 //-----------------------------------------------------------------------------
 //	<ZWManager::Create>
 //	Create the unmanaged Manager singleton object, and add a watcher
 //-----------------------------------------------------------------------------
-void ZWManager::Create
-(
-)
+void ZWManager::Create()
 {
 	// Create the Manager singleton
 	Manager::Create();

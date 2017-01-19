@@ -38,13 +38,13 @@ namespace OZWAppx.Views
         {
             if (Value.Type == ZWValueType.String)
             {
-                MainViewModel.Instance.Manager.SetValue(Value, textBox.Text);
+                ZWManager.Instance.SetValue(Value, textBox.Text);
             }
             else if (Value.Type == ZWValueType.Decimal)
             {
                 Decimal d;
                 if (Decimal.TryParse(textBox.Text, out d))
-                    MainViewModel.Instance.Manager.SetValue(Value, textBox.Text);
+                    ZWManager.Instance.SetValue(Value, textBox.Text);
                 else
                     Rebuild();
             }
@@ -52,7 +52,7 @@ namespace OZWAppx.Views
             {
                 int d;
                 if (int.TryParse(textBox.Text, out d))
-                    MainViewModel.Instance.Manager.SetValue(Value, d);
+                    ZWManager.Instance.SetValue(Value, d);
                 else
                     Rebuild();
             }
@@ -60,7 +60,7 @@ namespace OZWAppx.Views
             {
                 short d;
                 if (short.TryParse(textBox.Text, out d))
-                    MainViewModel.Instance.Manager.SetValue(Value, d);
+                    ZWManager.Instance.SetValue(Value, d);
                 else
                     Rebuild();
             }
@@ -68,7 +68,7 @@ namespace OZWAppx.Views
             {
                 byte d;
                 if (byte.TryParse(textBox.Text, out d))
-                    MainViewModel.Instance.Manager.SetValue(Value, d);
+                    ZWManager.Instance.SetValue(Value, d);
                 else
                     Rebuild();
             }
@@ -82,13 +82,13 @@ namespace OZWAppx.Views
                 return;
             var newValue = e.AddedItems?.FirstOrDefault() as string;
             if(newValue != null)
-                MainViewModel.Instance.Manager.SetValueListSelection(Value, newValue);
+                ZWManager.Instance.SetValueListSelection(Value, newValue);
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if(!updating)
-                MainViewModel.Instance.Manager.SetValue(Value, checkBox.IsChecked.Value);
+                ZWManager.Instance.SetValue(Value, checkBox.IsChecked.Value);
         }
 
         private void Rebuild()
@@ -100,12 +100,12 @@ namespace OZWAppx.Views
             else
             {
                 updating = true;
-                bool isReadOnly = MainViewModel.Instance.Manager.IsValueReadOnly(Value);
+                bool isReadOnly = ZWManager.Instance.IsValueReadOnly(Value);
                 var value = GetStringValue(Value);
                 if(Value.Type == ZWValueType.List && !isReadOnly)
                 {
                     string[] values;
-                    MainViewModel.Instance.Manager.GetValueListItems(Value, out values);
+                    ZWManager.Instance.GetValueListItems(Value, out values);
                     comboBox.ItemsSource = values;
                     if(values != null)
                     {
@@ -121,7 +121,7 @@ namespace OZWAppx.Views
                 }
                 else
                 {
-                    var unit = MainViewModel.Instance.Manager.GetValueUnits(Value);
+                    var unit = ZWManager.Instance.GetValueUnits(Value);
                      //TextBlock tb = new TextBlock() { Text = stringValue };
                     if(isReadOnly)
                         Content = new TextBlock() { Text = $"{value} {unit}".Trim(), HorizontalAlignment = HorizontalAlignment.Right };
@@ -159,42 +159,42 @@ namespace OZWAppx.Views
 
         private object GetStringValue(ZWValueID v)
         {
-            var m_manager = MainViewModel.Instance.Manager;
+            var manager = ZWManager.Instance;
             switch (v.Type)
             {
                 case ZWValueType.Bool:
                     bool r1;
-                    m_manager.GetValueAsBool(v, out r1);
+                    manager.GetValueAsBool(v, out r1);
                     return r1;
                 case ZWValueType.Byte:
                     byte r2;
-                    m_manager.GetValueAsByte(v, out r2);
+                    manager.GetValueAsByte(v, out r2);
                     return r2;
                 case ZWValueType.Decimal:
                     decimal r3;
                     string r3s;
-                    m_manager.GetValueAsString(v, out r3s);
+                    manager.GetValueAsString(v, out r3s);
                     return r3s;
                 //throw new NotImplementedException("Decimal");
                 //m_manager.GetValueAsDecimal(v, out r3);
                 //return r3.ToString();
                 case ZWValueType.Int:
                     Int32 r4;
-                    m_manager.GetValueAsInt(v, out r4);
+                    manager.GetValueAsInt(v, out r4);
                     return r4;
                 case ZWValueType.List:
                     string value;
-                    m_manager.GetValueListSelection(v, out value);
+                    manager.GetValueListSelection(v, out value);
                     return value;
                 case ZWValueType.Schedule:
                     return "Schedule";
                 case ZWValueType.Short:
                     short r7;
-                    m_manager.GetValueAsShort(v, out r7);
+                    manager.GetValueAsShort(v, out r7);
                     return r7;
                 case ZWValueType.String:
                     string r8;
-                    m_manager.GetValueAsString(v, out r8);
+                    manager.GetValueAsString(v, out r8);
                     return r8;
                 default:
                     return "";

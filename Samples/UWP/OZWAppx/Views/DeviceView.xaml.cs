@@ -69,7 +69,7 @@ namespace OZWAppx.Views
         {
             if (Node.HasNodeFailed)
             {
-                MainViewModel.Instance.Manager.RemoveFailedNode(Node.HomeID, Node.ID);
+                ZWManager.Instance.RemoveFailedNode(Node.HomeID, Node.ID);
             }
         }
     }
@@ -81,11 +81,11 @@ namespace OZWAppx.Views
             if (v != null)
             {
                 if (parameter as string == "Units")
-                    return MainViewModel.Instance.Manager.GetValueUnits(v);
+                    return ZWManager.Instance.GetValueUnits(v);
                 if (parameter as string == "Help")
-                    return MainViewModel.Instance.Manager.GetValueHelp(v);
+                    return ZWManager.Instance.GetValueHelp(v);
                 if (parameter as string == "Label")
-                    return MainViewModel.Instance.Manager.GetValueLabel(v);
+                    return ZWManager.Instance.GetValueLabel(v);
                 return GetValue(v);
             }
             return value;
@@ -103,32 +103,32 @@ namespace OZWAppx.Views
         /// <returns></returns>
         private string GetValue(ZWValueID v)
         {
-            var m_manager = MainViewModel.Instance.Manager;
+            var manager = ZWManager.Instance;
             switch (v.Type)
             {
                 case ZWValueType.Bool:
                     bool r1;
-                    m_manager.GetValueAsBool(v, out r1);
+                    manager.GetValueAsBool(v, out r1);
                     return r1.ToString();
                 case ZWValueType.Byte:
                     byte r2;
-                    m_manager.GetValueAsByte(v, out r2);
+                    manager.GetValueAsByte(v, out r2);
                     return r2.ToString();
                 case ZWValueType.Decimal:
                     decimal r3;
                     string r3s;
-                    m_manager.GetValueAsString(v, out r3s);
+                    manager.GetValueAsString(v, out r3s);
                     return r3s;
                 //throw new NotImplementedException("Decimal");
                 //m_manager.GetValueAsDecimal(v, out r3);
                 //return r3.ToString();
                 case ZWValueType.Int:
                     Int32 r4;
-                    m_manager.GetValueAsInt(v, out r4);
+                    manager.GetValueAsInt(v, out r4);
                     return r4.ToString();
                 case ZWValueType.List:
                     string value;
-                    m_manager.GetValueListSelection(v, out value);
+                    manager.GetValueListSelection(v, out value);
                     return value;
                     // string[] r5;
                     // m_manager.GetValueListItems(v, out r5);
@@ -137,11 +137,11 @@ namespace OZWAppx.Views
                     return "Schedule";
                 case ZWValueType.Short:
                     short r7;
-                    m_manager.GetValueAsShort(v, out r7);
+                    manager.GetValueAsShort(v, out r7);
                     return r7.ToString();
                 case ZWValueType.String:
                     string r8;
-                    m_manager.GetValueAsString(v, out r8);
+                    manager.GetValueAsString(v, out r8);
                     return r8;
                 default:
                     return "";
