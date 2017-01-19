@@ -180,6 +180,12 @@ namespace OZWAppx
                         Debug.WriteLine("Value Changed");
                         ZWValueID value = notification.ValueID;
                         debugWriteValueID(value);
+
+                        Node node = GetNode(homeID, nodeId);
+                        if (node != null)
+                        {
+                            node.AddValue(value);
+                        }
                         break;
                     }
 
@@ -194,10 +200,7 @@ namespace OZWAppx
                         // if not, the NodeNew notification should already have been received
                         if (GetNode(homeID, nodeId) == null)
                         {
-                            Node node = new Node();
-                            node.ID = nodeId;
-                            node.HomeID = homeID;
-                            m_nodeList.Add(node);
+                            m_nodeList.Add(new Node(nodeId, homeID));
                         }
                         break;
                     }
@@ -205,10 +208,7 @@ namespace OZWAppx
                 case NotificationType.NodeNew:
                     {
                         // Add the new node to our list (and flag as uninitialized)
-                        Node node = new Node();
-                        node.ID = nodeId;
-                        node.HomeID = homeID;
-                        m_nodeList.Add(node);
+                        m_nodeList.Add(new Node(nodeId, homeID));
                         break;
                     }
 

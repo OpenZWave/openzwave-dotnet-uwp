@@ -15,18 +15,18 @@ namespace OZWAppx
     /// </summary>
     public class Node : INotifyPropertyChanged
     {
-        private Byte m_id = 0;
+        public Node(byte nodeId, uint homeId)
+        {
+            ID = nodeId;
+            HomeID = homeId;
+        }
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>
         /// The identifier.
         /// </value>
-        public Byte ID
-        {
-            get { return m_id; }
-            set { m_id = value; OnPropertyChanged(); }
-        }
+        public Byte ID { get; }
 
         private bool m_isLoading = true;
 
@@ -43,27 +43,19 @@ namespace OZWAppx
                 return MainViewModel.Instance.Manager.HasNodeFailed(HomeID, ID);
             }
         }
-
-        private UInt32 m_homeId = 0;
+        
         /// <summary>
         /// Gets or sets the home identifier.
         /// </summary>
         /// <value>
         /// The home identifier.
         /// </value>
-        public UInt32 HomeID
-        {
-            get { return m_homeId; }
-            set { m_homeId = value; OnPropertyChanged(); }
-        }
+        public UInt32 HomeID { get; }
 
         private String m_name = "";
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         public String Name
         {
             get { return m_name; }
@@ -73,8 +65,23 @@ namespace OZWAppx
                 {
                     m_name = value;
                     OnPropertyChanged();
-                    MainViewModel.Instance.Manager.SetNodeName(m_homeId, m_id, value);
+                    MainViewModel.Instance.Manager.SetNodeName(HomeID, ID, value);
                 }
+            }
+        }
+
+        public byte GenericType
+        {
+            get
+            {
+                return MainViewModel.Instance.Manager.GetNodeGeneric(HomeID, ID);
+            }
+        }
+        public byte SpecificType
+        {
+            get
+            {
+                return MainViewModel.Instance.Manager.GetNodeSpecific(HomeID, ID);
             }
         }
 
@@ -94,7 +101,7 @@ namespace OZWAppx
                 {
                     m_location = value;
                     OnPropertyChanged();
-                    MainViewModel.Instance.Manager.SetNodeLocation(m_homeId, m_id, value);
+                    MainViewModel.Instance.Manager.SetNodeLocation(HomeID, ID, value);
                 }
             }
         }

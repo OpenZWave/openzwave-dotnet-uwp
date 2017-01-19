@@ -57,6 +57,12 @@ namespace OZWAppx.Views
             Node = node;
         }
 
+        private static string[] GetDeviceClasses()
+        {
+            //TODO
+            return null;
+        }
+
         public Node Node { get; }
 
         public void Remove()
