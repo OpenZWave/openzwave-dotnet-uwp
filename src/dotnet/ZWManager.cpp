@@ -28,15 +28,19 @@
 #include "ZWManager.h"
 
 using namespace OpenZWave;
-using namespace Runtime::InteropServices;
+
+ZWManager^ ZWManager::Instance::get()
+{
+	if (ZWManager::s_instance == nullptr)
+		ZWManager::s_instance = gcnew ZWManager();
+	return ZWManager::s_instance;
+}
 
 //-----------------------------------------------------------------------------
 //	<ZWManager::Create>
 //	Create the unmanaged Manager singleton object, and add a watcher
 //-----------------------------------------------------------------------------
-void ZWManager::Create
-(
-)
+void ZWManager::Create()
 {
 	// Create the Manager singleton
 	Manager::Create();

@@ -76,6 +76,10 @@ namespace OpenZWave
 		event ManagedNotificationsHandler^ OnNotification;
 
 	private:
+		static ZWManager^ s_instance = nullptr;
+
+		ZWManager() { }
+
 		ManagedControllerStateChangedHandler^ m_controllerStateChangedEvent;
 		event ManagedControllerStateChangedHandler^ ZWOnControllerStateChanged
 		{
@@ -102,6 +106,8 @@ namespace OpenZWave
 		ManagedControllerStateChangedHandler^ m_onControllerStateChanged;
 
 	public:
+		static property ZWManager^ Instance { ZWManager^ get(); }
+
 		property ManagedControllerStateChangedHandler^ OnControllerStateChanged
 		{
 			ManagedControllerStateChangedHandler^ get()
@@ -2234,9 +2240,6 @@ namespace OpenZWave
 		bool ActivateScene( uint8 sceneId ){ return Manager::Get()->ActivateScene( sceneId ); }
 
 	/*@}*/
-
-	public:
-		ZWManager(){}
 
 	private:
 
