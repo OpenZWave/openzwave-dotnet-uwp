@@ -32,11 +32,24 @@
 
 using namespace OpenZWave;
 
+static ZWOptions^ s_instance = nullptr;
+
+ZWOptions^ ZWOptions::Instance::get()
+{
+	if (s_instance == nullptr)
+		s_instance = ref new ZWOptions();
+	return s_instance;
+}
 //-----------------------------------------------------------------------------
 //	<ZWOptions::Create>
 //	Create the unmanaged Options singleton object
 //-----------------------------------------------------------------------------
-void ZWOptions::Create
+void ZWOptions::Initialize()
+{
+	Initialize("config/", Windows::Storage::ApplicationData::Current->LocalFolder->Path, "");
+}
+
+void ZWOptions::Initialize
 (
 	String^ _configPath,
 	String^	_userPath,

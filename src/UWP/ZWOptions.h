@@ -68,7 +68,10 @@ namespace OpenZWave
 	*/
 	public ref class ZWOptions sealed
 	{
+	private:
+		ZWOptions() { }
 	public:
+		static property ZWOptions^ Instance { ZWOptions^ get(); }
 		/**
 		* <summary>Creates an object to manage the program options.</summary>
 		* <param name="_configPath">a string containing the path to the OpenZWave library config
@@ -103,7 +106,8 @@ namespace OpenZWave
 		* <seealso cref="GetOptionsAs" />
 		* <seealso cref="Lock" />
 		*/
-		void Create(String^ _configPath, String^ _userPath, String^ _commandLine);
+		void Initialize(String^ _configPath, String^ _userPath, String^ _commandLine);
+		void Initialize();
 
 		/** <summary>
 		* Deletes the Options and cleans up any associated objects.
@@ -206,14 +210,18 @@ namespace OpenZWave
 
 	private:
 		std::string ConvertString(String^ value) {
+//#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			return convert.to_bytes(value->Data());
+//#endif
 		}
 
 		String^ ConvertStdString(std::string value) {
+//#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
 			return ref new Platform::String(intermediateForm.c_str());
+//#endif
 		}
 	};
 }

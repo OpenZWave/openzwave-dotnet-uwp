@@ -46,12 +46,15 @@ ZWManager^ ZWManager::Instance::get()
 //	<ZWManager::Create>
 //	Create the unmanaged Manager singleton object, and add a watcher
 //-----------------------------------------------------------------------------
-void ZWManager::Create()
+void ZWManager::Initialize()
 {
+	if (m_isInitialized)
+		return;
 	// Create the Manager singleton
 	Manager::Create();
 
 	Manager::Get()->AddWatcher(OnNotificationFromUnmanaged, reinterpret_cast<void*>(this));
+	m_isInitialized = true;
 }
 
 //-----------------------------------------------------------------------------

@@ -90,7 +90,7 @@ namespace OpenZWave
 	public ref class ZWManager sealed
 	{
 	private:
-
+		bool m_isInitialized = false;
 		ZWManager() { }
 
 	public:
@@ -106,13 +106,13 @@ namespace OpenZWave
 		* <seealso cref="OnNotification" />
 		* <seealso cref="AddDriver" />
 		*/
-		void Create();
+		void Initialize();
 
 		/**
 		* <summary>Deletes the Manager and cleans up any associated objects.</summary>
 		* <seealso cref="Create" />
 		*/
-		void Destroy() { Manager::Get()->Destroy(); }
+		void Destroy() { Manager::Get()->Destroy(); m_isInitialized = false; }
 
 		/**
 		* <summary>Get the Version Number of OZW as a string</summary>
