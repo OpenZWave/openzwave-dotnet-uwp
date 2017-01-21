@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="OZWAppx.Views.DevicesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OZWAppx"
+    xmlns:views="using:OZWAppx.Views"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <toolkit:MasterDetailsView ItemsSource="{x:Bind VM.Nodes}" 
+                                   MasterPaneWidth="350" HorizontalContentAlignment="Stretch"
+                                   NoSelectionContent="Select a device to view details">
+
+            <toolkit:MasterDetailsView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </toolkit:MasterDetailsView.ItemContainerStyle>
+            
+            <toolkit:MasterDetailsView.ItemTemplate>
+                <DataTemplate x:DataType="local:Node">
+                    <RelativePanel Margin="0,5" HorizontalAlignment="Stretch">
+                        <Ellipse x:Name="FromEllipse" Height="50" Width="50" Margin="0,0,5,0" Fill="CornflowerBlue" />
+                        <TextBlock x:Name="LabelField" Text="{x:Bind Label, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                        <TextBlock x:Name="NameField" Text="{x:Bind Name, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="CornflowerBlue" RelativePanel.Below="LabelField" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                        <TextBlock x:Name="ManufacturerField" Text="{x:Bind ManufacturerAndProduct, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" RelativePanel.RightOf="FromEllipse" RelativePanel.Below="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                        <TextBlock x:Name="LocationField" Text="{x:Bind Location, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="NoWrap" RelativePanel.RightOf="FromEllipse" RelativePanel.Below="ManufacturerField" TextTrimming="CharacterEllipsis" />
+                        <Image RelativePanel.AlignHorizontalCenterWith="FromEllipse" Margin="0,0,5,0" RelativePanel.AlignVerticalCenterWith="FromEllipse" Width="50" Height="50" >
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind DeviceIcon, Mode=OneWay}" />
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Foreground="Gray" FontSize="9" FontWeight="Bold" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" Text="{x:Bind ID, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
+                    </RelativePanel>
+                </DataTemplate>
+            </toolkit:MasterDetailsView.ItemTemplate>
+            
+            <toolkit:MasterDetailsView.MasterHeader>
+                <Border Margin="-12,0" Height="48" Background="CornflowerBlue">
+                    <TextBlock Text="Devices" FontWeight="Bold" FontSize="24" Margin="20,5" Foreground="White" />
+                </Border>
+            </toolkit:MasterDetailsView.MasterHeader>
+            
+            <toolkit:MasterDetailsView.DetailsTemplate>
+                <DataTemplate>
+                    <views:DeviceView Node="{Binding}" />
+                </DataTemplate>
+            </toolkit:MasterDetailsView.DetailsTemplate>
+            
+            <toolkit:MasterDetailsView.NoSelectionContentTemplate>
+                <DataTemplate>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <SymbolIcon Symbol="SwitchApps" RenderTransformOrigin=".5,.5">
+                            <SymbolIcon.RenderTransform>
+                                <CompositeTransform ScaleX="2" ScaleY="2"/>
+                            </SymbolIcon.RenderTransform>
+                        </SymbolIcon>
+                        <TextBlock Text="{Binding}" FontSize="24" Margin="0,12"/>
+                    </StackPanel>
+                </DataTemplate>
+            </toolkit:MasterDetailsView.NoSelectionContentTemplate>
+
+        </toolkit:MasterDetailsView>
+        
+    </Grid>
+</Page>

@@ -1,6 +1,7 @@
 ﻿using OpenZWave;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,21 +23,48 @@ namespace OZWAppx.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DeviceView : Page
+    public sealed partial class DeviceView : UserControl
     {
         public DeviceView()
         {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    Node node = e.Parameter as Node;
+        //    VM = new DeviceViewVM(node);
+        //}
+
+
+        public Node Node
         {
-            base.OnNavigatedTo(e);
-            Node node = e.Parameter as Node;
-            VM = new DeviceViewVM(node);
+            get { return (Node)GetValue(NodeProperty); }
+            set { SetValue(NodeProperty, value); }
         }
 
-        public DeviceViewVM VM { get; private set; }
+        public static readonly DependencyProperty NodeProperty =
+            DependencyProperty.Register("Node", typeof(Node), typeof(DeviceView), new PropertyMetadata(null, OnNodePropertyChanged));
+
+        private static void OnNodePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as DeviceView).VM.UpdateNode(e.NewValue as Node);
+        }
+
+        public DeviceViewVM VM { get; private set; } = new DeviceViewVM(null);
+
+
+        private void PowerOn_ContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            //var value = new ZWValueID(Node.HomeID, Node.Id, ZWValueGenre.Basic, 0x20,  )
+            //m_manager.SetValue(value, 0x255);
+        }
+
+        private void PowerOff_ContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            //m_manager.SetNodeOff(Node.HomeId, Node.Id);
+        }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,12 +78,14 @@ namespace OZWAppx.Views
         }
     }
 
-    public class DeviceViewVM
+    public class DeviceViewVM : INotifyPropertyChanged
     {
         public DeviceViewVM(Node node)
         {
             Node = node;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private static string[] GetDeviceClasses()
         {
@@ -63,11 +93,16 @@ namespace OZWAppx.Views
             return null;
         }
 
-        public Node Node { get; }
+        public void UpdateNode(Node node)
+        {
+            Node = node;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Node)));
+        }
+        public Node Node { get; private set;}
 
         public void Remove()
         {
-            if (Node.HasNodeFailed)
+            if (Node != null && Node.HasNodeFailed)
             {
                 ZWManager.Instance.RemoveFailedNode(Node.HomeID, Node.ID);
             }

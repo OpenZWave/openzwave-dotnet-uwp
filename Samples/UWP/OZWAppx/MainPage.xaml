@@ -3,99 +3,54 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:OZWAppx"
+    xmlns:views="using:OZWAppx.Views"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <DataTemplate x:Key="HamburgerMenuItem"  x:DataType="toolkit:HamburgerMenuGlyphItem">
+            <Grid Width="240" Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <FontIcon Grid.Column="0" 
+                          Margin="12,12,11,12" 
+                          FontFamily="Segoe MDL2 Assets" 
+                          Glyph="{Binding Glyph}" />
+                <TextBlock Grid.Column="1" 
+                           Text="{x:Bind Label}" 
+                           FontSize="16" 
+                           VerticalAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <toolkit:HamburgerMenu x:Name="hamburgerMenu" 
+                           ItemClick="HamburgerMenu_ItemClick"
+                           OptionsItemClick="HamburgerMenu_ItemClick"
+                           ItemTemplate="{StaticResource HamburgerMenuItem}"
+                           PaneBackground="LightGray">
+        <toolkit:HamburgerMenu.ItemsSource>
+            <toolkit:HamburgerMenuItemCollection>
+                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:DevicesView" Label="Devices" Glyph=""/>
+                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:SettingsView" Label="Settings" Glyph=""/>
+                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:ControllerView" Label="Controller" Glyph=""  />
+            </toolkit:HamburgerMenuItemCollection>
+        </toolkit:HamburgerMenu.ItemsSource>
+        
+        <!--Options-->
+        <toolkit:HamburgerMenu.OptionsItemsSource>
+            <toolkit:HamburgerMenuItemCollection>
+                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:AboutView" Label="About" Glyph=""/>
+            </toolkit:HamburgerMenuItemCollection>
+        </toolkit:HamburgerMenu.OptionsItemsSource>
+        
+        <!--Content-->
+        <Frame x:Name="frame"/>
 
-        <ScrollViewer>
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                        <Setter Property="Margin" Value="0,2" />
-                    </Style>
-                </StackPanel.Resources>
-                <ComboBox x:Name="SerialPortList" Header="Serial port:" HorizontalAlignment="Stretch" >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
-                <Button Content="Create New Primary Controller" />
-                <Button Content="Transfer Primary Role" />
-                <Button Content="Add Device" />
-                <Button Content="Add Secure Device" />
-                <Button Content="Remove Device" />
-                <Button Content="Receive Configuration" />
-                <Button Content="Request Network Update" />
-                <Button Content="Reset Controller (soft)" />
-                <Button Content="Reset Controller (Erase All)" />
-            </StackPanel>
-        </ScrollViewer>
+    </toolkit:HamburgerMenu>
 
-        <GridView x:Name="NodeGridView" ItemsSource="{x:Bind VM.Nodes}" Grid.Column="1" IsItemClickEnabled="True" ItemClick="NodeGridView_ItemClick">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="local:Node">
-                    <Grid Margin="5" Width="200" Background="CornflowerBlue" RequestedTheme="Dark" Padding="5">
-                        <FlyoutBase.AttachedFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Power On" Click="PowerOn_ContextMenuClick" />
-                                <MenuFlyoutItem Text="Power Off" Click="PowerOff_ContextMenuClick" />
-                                <MenuFlyoutSeparator />
-                                <MenuFlyoutItem Text="Request Node Neighbor Update" />
-                                <MenuFlyoutItem Text="Assign Return Route" />
-                                <MenuFlyoutItem Text="Delete All Return Routes" />
-                                <MenuFlyoutSeparator />
-                                <MenuFlyoutItem Text="Has Node Failed" />
-                                <MenuFlyoutItem Text="Mark Node As Failed" />
-                                <MenuFlyoutItem Text="Remove Failed Node" />
-                                <MenuFlyoutItem Text="Replace Failed Node" />
-                                <MenuFlyoutSeparator />
-                                <MenuFlyoutItem Text="Properties..." />
-
-                            </MenuFlyout>
-                        </FlyoutBase.AttachedFlyout>
-                        <!--<Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="75" />
-                        </Grid.ColumnDefinitions>-->
-                        <StackPanel>
-                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="3" Text="{x:Bind Label, Mode=OneWay}" />
-                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="2" Text="{x:Bind Name, Mode=OneWay}" />
-                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="4" Text="{x:Bind Manufacturer, Mode=OneWay}" />
-                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="5" Text="{x:Bind Product, Mode=OneWay}" />
-                            <TextBlock FontWeight="Bold" FontSize="15" Grid.Column="1" Text="{x:Bind Location, Mode=OneWay}" />
-                            <!--<TextBlock Grid.Column="6" Text="{x:Bind Level}" />-->
-                            <!--<ToggleSwitch Grid.Column="7" IsOn="{x:Bind Power}" />-->
-
-                        </StackPanel>
-                        <ProgressRing IsActive="{x:Bind IsLoading, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                        <TextBlock Grid.Column="0" Text="{x:Bind ID, Mode=OneWay}" HorizontalAlignment="Right" />
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
-
-        <TextBlock x:Name="toolStripStatusLabel1" Text="Initializing..." Grid.ColumnSpan="2" Grid.Row="1" />
-
-    </Grid>
 </Page>

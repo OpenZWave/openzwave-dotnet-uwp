@@ -77,6 +77,15 @@ namespace OZWAppx
                 return ZWManager.Instance.GetNodeGeneric(HomeID, ID);
             }
         }
+
+        public Uri DeviceIcon
+        {
+            get
+            {
+                return new Uri($"ms-appx:///DeviceIcons/{GenericType}.png");
+            }
+        }
+
         public byte SpecificType
         {
             get
@@ -151,6 +160,20 @@ namespace OZWAppx
             }
         }
 
+        public string ManufacturerAndProduct
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Manufacturer) && !string.IsNullOrEmpty(Product))
+                {
+                    return $"{Manufacturer} - {Product}";
+                }
+                else if (!string.IsNullOrEmpty(Manufacturer))
+                    return Manufacturer;
+                else return Product;
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -184,7 +207,6 @@ namespace OZWAppx
         public void AddValue(ZWValueID valueID)
         {
             IList<ZWValueID> list = GetValues(valueID.Genre);
-           
 
             var id = list.Where(v => v.CommandClassId == valueID.CommandClassId && v.Id == valueID.Id).FirstOrDefault();
             if (id != null)

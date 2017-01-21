@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
 #if NETFX_CORE
 using Windows.UI.Core;
 #else
@@ -27,19 +28,17 @@ namespace OZWAppx
             if (Instance != null)
                 throw new InvalidOperationException("Only one manager instance can be created");
             Dispatcher = dispatcher;
-            Instance = this;
-            Initialize();
+            Instance = this;            
         }
 
-        private void Initialize()
+        public async Task Initialize()
         {
-            m_options = new ZWOptions();
 #if NETFX_CORE
             var userPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
 #else
             var userPath = "";
 #endif
-            m_options.Create(@"config\", userPath, @"");
+            ZWOptions.Instance.Initialize();
 
             // Add any app specific options here...
 
@@ -53,24 +52,45 @@ namespace OZWAppx
             //m_options.AddOptionInt("DumpTriggerLevel", (int)ZWLogLevel.Error);
 
             // Lock the options
-            m_options.Lock();
+            ZWOptions.Instance.Lock();
 
             // Create the OpenZWave Manager
-            m_manager = ZWManager.Instance;
-            m_manager.Create();
-            m_manager.OnNotification += OnNodeNotification;
-        }
+            ZWManager.Instance.Initialize();
+            ZWManager.Instance.OnNotification += OnNodeNotification;
 
-        public void SaveConfig()
+            var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
+            var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
+            foreach (var item in devices)
+            {
+                SerialPorts.Add(new SerialPortInfo(item));
+            }
+        }
+        
+        public ObservableCollection<SerialPortInfo> SerialPorts { get; } = new ObservableCollection<SerialPortInfo>();
+
+        public class SerialPortInfo
         {
-            m_manager.WriteConfig(m_homeId);
-        }
+            public SerialPortInfo(DeviceInformation info)
+            {
+                PortID = info.Id;
+                Name = info.Name;
+            }
+            public string PortID { get; }
+            public string Name { get; }
+            private bool _isActive;
 
-        public void AddDriver(string portId)
-        {
-            m_manager.AddDriver(portId);
+            public bool IsActive
+            {
+                get { return _isActive; }
+                set {
+                    _isActive = value;
+                    if (value)
+                        ZWManager.Instance.AddDriver(PortID);
+                    else
+                        ZWManager.Instance.RemoveDriver(PortID);
+                }
+            }
         }
-
 
         /// <summary>
         /// The notifications handler.
@@ -229,7 +249,7 @@ namespace OZWAppx
                         Node node = GetNode(homeID, nodeId);
                         if (node != null)
                         {
-                            node.Label = m_manager.GetNodeType(homeID, node.ID);
+                            node.Label = ZWManager.Instance.GetNodeType(homeID, node.ID);
                             node.IsLoading = false;
                         }
                         break;
@@ -240,10 +260,10 @@ namespace OZWAppx
                         Node node = GetNode(homeID, nodeId);
                         if (node != null)
                         {
-                            node.Manufacturer = m_manager.GetNodeManufacturerName(homeID, node.ID);
-                            node.Product = m_manager.GetNodeProductName(homeID, node.ID);
-                            node.Location = m_manager.GetNodeLocation(homeID, node.ID);
-                            node.Name = m_manager.GetNodeName(homeID, node.ID);
+                            node.Manufacturer = ZWManager.Instance.GetNodeManufacturerName(homeID, node.ID);
+                            node.Product = ZWManager.Instance.GetNodeProductName(homeID, node.ID);
+                            node.Location = ZWManager.Instance.GetNodeLocation(homeID, node.ID);
+                            node.Name = ZWManager.Instance.GetNodeName(homeID, node.ID);
                         }
                         break;
                     }
@@ -267,8 +287,19 @@ namespace OZWAppx
 
                 case NotificationType.DriverReady:
                     {
-                        m_homeId = notification.HomeId;
                         CurrentStatus = $"Initializing...driver with Home ID 0x{notification.HomeId.ToString("X8")} is ready.";
+                        break;
+                    }
+                case NotificationType.DriverFailed:
+                    {
+                        Debug.WriteLine("Driver failed for HomeID " + homeID.ToString());
+                        break;
+                    }
+                case NotificationType.DriverRemoved:
+                    {
+                        var nodes = GetNodes(homeID).ToArray();
+                        foreach (var node in nodes)
+                            m_nodeList.Remove(node);
                         break;
                     }
                 case NotificationType.NodeQueriesComplete:
@@ -295,19 +326,19 @@ namespace OZWAppx
                 case NotificationType.AllNodesQueried:
                     {
                         CurrentStatus = "Ready:  All nodes queried.";
-                        m_manager.WriteConfig(homeID);
+                        ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
                 case NotificationType.AllNodesQueriedSomeDead:
                     {
                         CurrentStatus = "Ready:  All nodes queried but some are dead.";
-                        m_manager.WriteConfig(homeID);
+                        ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
                 case NotificationType.AwakeNodesQueried:
                     {
                         CurrentStatus = "Ready:  Awake nodes queried (but not some sleeping nodes).";
-                        m_manager.WriteConfig(homeID);
+                        ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
                 default:
@@ -321,7 +352,6 @@ namespace OZWAppx
             //NodeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             //NodeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
-
         private string m_CurrentStatus;
 
         public string CurrentStatus
@@ -347,27 +377,27 @@ namespace OZWAppx
             {
                 case ZWValueType.Bool:
                     bool r1;
-                    m_manager.GetValueAsBool(v, out r1);
+                    ZWManager.Instance.GetValueAsBool(v, out r1);
                     return r1.ToString();
                 case ZWValueType.Byte:
                     byte r2;
-                    m_manager.GetValueAsByte(v, out r2);
+                    ZWManager.Instance.GetValueAsByte(v, out r2);
                     return r2.ToString();
                 case ZWValueType.Decimal:
                     decimal r3;
                     string r3s;
-                    m_manager.GetValueAsString(v, out r3s);
+                    ZWManager.Instance.GetValueAsString(v, out r3s);
                     return r3s;
                 //throw new NotImplementedException("Decimal");
                 //m_manager.GetValueAsDecimal(v, out r3);
                 //return r3.ToString();
                 case ZWValueType.Int:
                     Int32 r4;
-                    m_manager.GetValueAsInt(v, out r4);
+                    ZWManager.Instance.GetValueAsInt(v, out r4);
                     return r4.ToString();
                 case ZWValueType.List:
                     string[] r5;
-                    m_manager.GetValueListItems(v, out r5);
+                    ZWManager.Instance.GetValueListItems(v, out r5);
                     string r6 = "";
                     foreach (string s in r5)
                     {
@@ -379,11 +409,11 @@ namespace OZWAppx
                     return "Schedule";
                 case ZWValueType.Short:
                     short r7;
-                    m_manager.GetValueAsShort(v, out r7);
+                    ZWManager.Instance.GetValueAsShort(v, out r7);
                     return r7.ToString();
                 case ZWValueType.String:
                     string r8;
-                    m_manager.GetValueAsString(v, out r8);
+                    ZWManager.Instance.GetValueAsString(v, out r8);
                     return r8;
                 default:
                     return "";
@@ -409,17 +439,17 @@ namespace OZWAppx
 
             return null;
         }
-
-
-
-        private ZWOptions m_options = null;
-
-        public ZWOptions Options
+        private IEnumerable<Node> GetNodes(UInt32 homeId)
         {
-            get { return m_options; }
+            foreach (Node node in m_nodeList)
+            {
+                if (node.HomeID == homeId)
+                {
+                    yield return node;
+                }
+            }
         }
 
-        private ZWManager m_manager = null;
 
         private bool m_securityEnabled = false;
 
@@ -428,9 +458,7 @@ namespace OZWAppx
             get { return m_securityEnabled; }
         }
 
-        private UInt32 m_homeId = 0;
         private ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
-        private Byte m_rightClickNode = 0xff;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

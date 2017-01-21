@@ -17,6 +17,7 @@ using OpenZWave;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.Devices.Enumeration;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace OZWAppx
 {
@@ -30,59 +31,39 @@ namespace OZWAppx
         {
             this.InitializeComponent();
             VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
-            GetSerialPorts();
+            VM.Initialize().ContinueWith((t) =>
+            {
+                GetSerialPorts();
+            }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public MainViewModel VM { get; }
 
-        private async void GetSerialPorts()
+        private void GetSerialPorts()
         {
-            var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
-            var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
-            var serialPorts = new List<DeviceInformation>();
-            foreach(var item in devices)
-            {
-                serialPorts.Add(item);
-            }
-            SerialPortList.ItemsSource = serialPorts;
-            SerialPortList.SelectionChanged += SerialPortList_SelectionChanged;
-            if (!serialPorts.Any())
+            if (!VM.SerialPorts.Any())
             {
                 var _ = new Windows.UI.Popups.MessageDialog("No serial ports found").ShowAsync();
             }
-            else if (serialPorts.Count == 1)
-                SerialPortList.SelectedIndex = 0;
-        }
-
-        private void SerialPortList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var di = e.AddedItems?.FirstOrDefault() as DeviceInformation;
-            if(di != null)
+            else if (VM.SerialPorts.Count == 1)
             {
-                VM.AddDriver(di.Id);
+                hamburgerMenu.SelectedIndex = 0;
+                VM.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
+                (hamburgerMenu.Content as Frame).Navigate(typeof(Views.DevicesView));
+            }
+            else
+            {
+                hamburgerMenu.SelectedIndex = 1;
+                (hamburgerMenu.Content as Frame).Navigate(typeof(Views.SettingsView));
             }
         }
 
-        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
+        private void HamburgerMenu_ItemClick(object sender, ItemClickEventArgs e)
         {
-            VM.SaveConfig();
-        }
-
-        private void PowerOn_ContextMenuClick(object sender, RoutedEventArgs e)
-        {
-            var node = (sender as FrameworkElement).DataContext as Node;
-            //var value = new ZWValueID(node.HomeID, node.ID, ZWValueGenre.Basic, 0x20,  )
-            //m_manager.SetValue(value, 0x255);
-        }
-
-        private void PowerOff_ContextMenuClick(object sender, RoutedEventArgs e)
-        {
-            //m_manager.SetNodeOff(m_homeId, m_rightClickNode);
-        }
-
-        private void NodeGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Frame.Navigate(typeof(Views.DeviceView), e.ClickedItem);
+            var menu = sender as HamburgerMenu;
+            var item = e.ClickedItem as HamburgerMenuItem;
+            if (item.TargetPageType != null)
+                (menu.Content as Frame).Navigate(item.TargetPageType);
         }
     }
 }
