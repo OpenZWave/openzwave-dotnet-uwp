@@ -20,24 +20,58 @@
             <TextBlock Text="Controller" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="20,5" />
         </Border>
         <ScrollViewer Grid.Row="1">
-            <StackPanel>
+            <StackPanel MaxWidth="650" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
                         <Setter Property="Margin" Value="0,2" />
                     </Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="0,0,0,24" />
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                    </Style>
                 </StackPanel.Resources>
 
                 <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
-                <Button Content="Create New Primary Controller" />
-                <Button Content="Transfer Primary Role" />
-                <Button Content="Add Device" />
-                <Button Content="Add Secure Device" />
-                <Button Content="Remove Device" />
-                <Button Content="Receive Configuration" />
-                <Button Content="Request Network Update" />
-                <Button Content="Reset Controller (soft)" />
-                <Button Content="Reset Controller (Erase All)" />
+                <TextBlock>
+                    Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder. This method does not normally need to be called, since OpenZWave will save the state automatically during the shutdown process. It is provided here only as an aid to development. The configuration of each PC Controller's Z-Wave network is stored in a separate file. The filename consists of the 8 digit hexadecimal version of the controller's Home ID, prefixed with the string 'zwcfg_'. This convention allows OpenZWave to find the correct configuration file for a controller, even if it is attached to a different serial port, USB device path, etc.
+                </TextBlock>
+                <Button Content="Create New Primary Controller" Click="NewPrimary_Click" />
+                <TextBlock>
+                    Create a new primary controller when old primary fails. Requires SUC.
+                </TextBlock>
+                <Button Content="Transfer Primary Role" Click="TransferPrimary_Click" />
+                <TextBlock>
+                    Add a new controller to the network and make it the primary. The existing primary will become a secondary controller.
+                </TextBlock>
+                <Button Content="Add Device" Click="AddDevice_Click" />
+                <TextBlock>
+                    Start the Inclusion Process to add a Node to the Network. The Status of the Node Inclusion is communicated via Notifications. Specifically, you should monitor ControllerCommand Notifications. 
+                    Results of the AddNode Command will be send as a Notification with the Notification type as Notification::Type_ControllerCommand
+                </TextBlock>
+                <Button Content="Add Secure Device" Click="AddSecureDevice_Click" />
+                <TextBlock>
+                    Start the Inclusion Process to add a Node that supports the supports Secure CC to the Network. The Status of the Node Inclusion is communicated via Notifications. Specifically, you should monitor ControllerCommand Notifications. 
+                    Results of the AddNode Command will be send as a Notification with the Notification type as Notification::Type_ControllerCommand
+                </TextBlock>
+                <Button Content="Remove Device" Click="RemoveNode_Click" />
+                <TextBlock>
+                    Remove a Device from the Z-Wave Network The Status of the Node Removal is communicated via Notifications. Specifically, you should monitor ControllerCommand Notifications. 
+Results of the RemoveNode Command will be send as a Notification with the Notification type as Notification::Type_ControllerCommand
+                </TextBlock>
+                <Button Content="Receive Configuration" Click="ReceiveConfig_Click" />
+                <TextBlock>
+                    Receive network configuration information from primary controller. Requires secondary. This command prepares the controller to receive Network Configuration from a Secondary Controller. 
+Results of the ReceiveConfiguration Command will be send as a Notification with the Notification type as Notification::Type_ControllerCommand
+                </TextBlock>
+                <Button Content="Reset Controller (soft)" Click="ResetSoft_Click" />
+                <TextBlock>
+                    Soft Reset a PC Z-Wave Controller. Resets a controller without erasing its network configuration settings.
+                </TextBlock>
+                <Button Content="Reset Controller (Erase All)" Click="ResetHard_Click" />
+                <TextBlock>
+                    Hard Reset a PC Z-Wave Controller. Resets a controller and erases its network configuration settings. The controller becomes a primary controller ready to add devices to a new network.
+                </TextBlock>
             </StackPanel>
         </ScrollViewer> 
     </Grid>

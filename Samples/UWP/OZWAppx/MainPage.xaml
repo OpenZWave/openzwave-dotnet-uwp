@@ -32,6 +32,7 @@
                            ItemClick="HamburgerMenu_ItemClick"
                            OptionsItemClick="HamburgerMenu_ItemClick"
                            ItemTemplate="{StaticResource HamburgerMenuItem}"
+                           OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
                            PaneBackground="LightGray">
         <toolkit:HamburgerMenu.ItemsSource>
             <toolkit:HamburgerMenuItemCollection>

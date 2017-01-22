@@ -196,8 +196,8 @@ namespace OZWAppx
 
                 case NotificationType.ValueChanged:
                     {
-                        Debug.WriteLine("Value Changed");
                         ZWValueID value = notification.ValueID;
+                        Debug.WriteLine($"Value Changed. Node {nodeId}: {ZWManager.Instance.GetValueLabel(value)} = {GetValue(value)} {ZWManager.Instance.GetValueUnits(value)}");
                         debugWriteValueID(value);
 
                         Node node = GetNode(homeID, nodeId);

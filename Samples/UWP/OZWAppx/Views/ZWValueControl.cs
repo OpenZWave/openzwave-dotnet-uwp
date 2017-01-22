@@ -25,7 +25,7 @@ namespace OZWAppx.Views
             checkBox.Unchecked += CheckBox_Checked;
             comboBox.SelectionChanged += ComboBox_SelectionChanged;
             textBox.TextChanged += TextBox_TextChanged;
-
+            textBox.LostFocus += TextBox_LostFocus;
             g = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
             g.ColumnDefinitions.Add(new ColumnDefinition());
             g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
@@ -36,6 +36,14 @@ namespace OZWAppx.Views
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            textChanged = true;
+        }
+        bool textChanged;
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!textChanged)
+                return;
+            textChanged = false;
             if (Value.Type == ZWValueType.String)
             {
                 ZWManager.Instance.SetValue(Value, textBox.Text);

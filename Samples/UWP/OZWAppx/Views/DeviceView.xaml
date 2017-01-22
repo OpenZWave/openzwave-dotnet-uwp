@@ -65,12 +65,10 @@
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Converter={StaticResource conv}, ConverterParameter=Label}" ToolTipService.ToolTip="{Binding Converter={StaticResource conv}, ConverterParameter=Help}"/>
-                        <!--<TextBlock Grid.Column="1" Text="{Binding Converter={StaticResource conv}}" HorizontalAlignment="Right" ToolTipService.ToolTip="{Binding Type}" />
-                        <TextBlock Grid.Column="2" Text="{Binding Converter={StaticResource conv}, ConverterParameter=Units}" Margin="5,0,0,0" />-->
                         <local:ZWValueControl Value="{Binding}" Grid.Column="1" />
                     </Grid>
                 </DataTemplate>
@@ -84,15 +82,16 @@
                     <MenuFlyoutItem Text="Power On" Click="PowerOn_ContextMenuClick" />
                     <MenuFlyoutItem Text="Power Off" Click="PowerOff_ContextMenuClick" />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Text="Request Node Neighbor Update" />
-                    <MenuFlyoutItem Text="Assign Return Route" />
-                    <MenuFlyoutItem Text="Delete All Return Routes" />
+                    <MenuFlyoutItem Text="Request Node Neighbor Update" IsEnabled="False" />
+                    <MenuFlyoutItem Text="Assign Return Route" IsEnabled="False" />
+                    <MenuFlyoutItem Text="Delete All Return Routes" IsEnabled="False" />
+                    <MenuFlyoutItem Text="Request Network Update" IsEnabled="False" />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Text="Has Node Failed" />
-                    <MenuFlyoutItem Text="Mark Node As Failed" />
+                    <MenuFlyoutItem Text="Has Node Failed" IsEnabled="False" />
+                    <MenuFlyoutItem Text="Mark Node As Failed" IsEnabled="False" />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Text="Remove Failed Node" />
-                    <MenuFlyoutItem Text="Replace Failed Node" />
+                    <MenuFlyoutItem Text="Remove Failed Node" IsEnabled="False" />
+                    <MenuFlyoutItem Text="Replace Failed Node" IsEnabled="False" />
                     <MenuFlyoutItem Text="Remove" Click="RemoveButton_Click" IsEnabled="{x:Bind VM.Node.HasNodeFailed, Mode=OneWay}" />
                 </MenuFlyout>
             </Button.Flyout>
