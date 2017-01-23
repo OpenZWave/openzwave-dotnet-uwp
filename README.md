@@ -22,3 +22,21 @@ ZWManager.Instance.AddDriver(serialPort); //Add the serial port (you can have mu
 
 ### UWP Sample app:
 ![UWP Sample app](https://github.com/dotMorten/openzwave-dotnet-uwp/blob/master/Samples/UWP/OZWAppxScreenshot.png)
+
+### Configuring the app
+It's important that you deploy all the XML configuration files from `\open-zwave\config\**\*.*` into the /config/ folder of your app. The sample apps uses a `DeployConfigFiles.targets` file to do this by including this in your project:
+```
+  <Import Project="DeployConfigFiles.targets" />
+```
+Note, that if you use the nuget package this will automatically happen, as this .targets file is automatically included.
+
+In UWP you also need to allow the usage of serial ports. To do this, you must add the following section to the Capabilities part of the `Package.appxmanifest`:
+```xml
+  <Capabilities>
+    <DeviceCapability Name="serialcommunication">
+      <Device Id="any">
+        <Function Type="name:serialPort" />
+      </Device>
+    </DeviceCapability>
+  </Capabilities>
+```
