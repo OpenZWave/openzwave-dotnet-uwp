@@ -99,38 +99,38 @@
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <TargetName>OpenZWave</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -149,7 +149,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\x86\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -169,7 +169,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\x86\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -188,7 +188,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\$(Platform)\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -208,7 +208,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\$(Platform)\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -227,7 +227,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\$(Platform)\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -247,7 +247,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>$(OutDir)..\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)\$(Platform)\$(Configuration)\OpenZWave\OpenZWave.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

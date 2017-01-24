@@ -8,8 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Devices.Enumeration;
 #if NETFX_CORE
+using Windows.Devices.Enumeration;
 using Windows.UI.Core;
 #else
 using CoreDispatcher = System.Windows.Threading.Dispatcher;
@@ -58,23 +58,39 @@ namespace OZWAppx
             ZWManager.Instance.Initialize();
             ZWManager.Instance.OnNotification += OnNodeNotification;
 
+#if NETFX_CORE
             var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
             var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
             foreach (var item in devices)
             {
                 SerialPorts.Add(new SerialPortInfo(item));
             }
+#else
+            foreach(var item in System.IO.Ports.SerialPort.GetPortNames())
+            {
+                SerialPorts.Add(new SerialPortInfo(item));
+            }
+
+#endif
         }
-        
+
         public ObservableCollection<SerialPortInfo> SerialPorts { get; } = new ObservableCollection<SerialPortInfo>();
 
         public class SerialPortInfo
         {
+#if NETFX_CORE
             public SerialPortInfo(DeviceInformation info)
             {
                 PortID = info.Id;
                 Name = info.Name;
             }
+#else
+            public SerialPortInfo(string id)
+            {
+                PortID = id;
+                Name = id;
+            }
+#endif
             public string PortID { get; }
             public string Name { get; }
             private bool _isActive;

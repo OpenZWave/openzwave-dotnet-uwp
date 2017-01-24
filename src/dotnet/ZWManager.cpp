@@ -31,17 +31,19 @@ using namespace OpenZWave;
 
 ZWManager^ ZWManager::Instance::get()
 {
-	if (ZWManager::s_instance == nullptr)
-		ZWManager::s_instance = gcnew ZWManager();
-	return ZWManager::s_instance;
+	if (s_instance == nullptr)
+		s_instance = gcnew ZWManager();
+	return s_instance;
 }
 
 //-----------------------------------------------------------------------------
 //	<ZWManager::Create>
 //	Create the unmanaged Manager singleton object, and add a watcher
 //-----------------------------------------------------------------------------
-void ZWManager::Create()
+void ZWManager::Initialize()
 {
+	if (m_isInitialized)
+		return;
 	// Create the Manager singleton
 	Manager::Create();
 
@@ -54,6 +56,8 @@ void ZWManager::Create()
 	// Add a controller state changed handler
 	m_onStateChanged = gcnew OnControllerStateChangedFromUnmanagedDelegate( this, &ZWManager::OnControllerStateChangedFromUnmanaged );
 	m_gchControllerState = GCHandle::Alloc( m_onStateChanged ); 
+
+	m_isInitialized = true;
 }
 
 //-----------------------------------------------------------------------------

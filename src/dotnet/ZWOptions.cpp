@@ -29,11 +29,22 @@
 using namespace OpenZWave;
 using namespace Runtime::InteropServices;
 
+ZWOptions^ ZWOptions::Instance::get()
+{
+	if (s_instance == nullptr)
+		s_instance = gcnew ZWOptions();
+	return s_instance;
+}
 //-----------------------------------------------------------------------------
 //	<ZWOptions::Create>
 //	Create the unmanaged Options singleton object
 //-----------------------------------------------------------------------------
-void ZWOptions::Create
+void ZWOptions::Initialize()
+{
+	Initialize("config/", Environment::GetFolderPath(Environment::SpecialFolder::LocalApplicationData), "");
+}
+
+void ZWOptions::Initialize
 (
 	String^ _configPath,
 	String^	_userPath,

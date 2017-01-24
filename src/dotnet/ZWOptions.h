@@ -67,7 +67,12 @@ namespace OpenZWave
 	 */
 	public ref class ZWOptions sealed
 	{
+	private:
+		static ZWOptions^ s_instance = nullptr;
+
+		ZWOptions() { }
 	public:
+		static property ZWOptions^ Instance { ZWOptions^ get(); }
    		/**
 		* <summary>Creates an object to manage the program options.</summary>
 		* <param name="_configPath">a string containing the path to the OpenZWave library config
@@ -102,7 +107,8 @@ namespace OpenZWave
 		* <seealso cref="GetOptionsAs" />
 		* <seealso cref="Lock" />
 		 */
-		void Create( String^ _configPath, String^ _userPath, String^ _commandLine );
+		void Initialize( String^ _configPath, String^ _userPath, String^ _commandLine );
+		void Initialize();
 
 		/** <summary>
 		 * Deletes the Options and cleans up any associated objects.

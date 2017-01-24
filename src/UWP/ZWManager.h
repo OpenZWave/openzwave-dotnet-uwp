@@ -39,6 +39,7 @@ using namespace Platform;
 
 namespace OpenZWave
 {
+	// Delegate for handling notification callbacks
 	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
 	private delegate void OnNotificationFromUnmanagedDelegate(void *_notification, void* _context);
@@ -90,12 +91,15 @@ namespace OpenZWave
 	public ref class ZWManager sealed
 	{
 	private:
+
 		bool m_isInitialized = false;
+
 		ZWManager() { }
 
 	public:
 		static property ZWManager^ Instance { ZWManager^ get(); }
 
+		event ManagedNotificationsHandler^ OnNotification;
 		/** <summary>Creates the Manager singleton object.</summary>
 		* <remarks>
 		* The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
@@ -110,7 +114,7 @@ namespace OpenZWave
 
 		/**
 		* <summary>Deletes the Manager and cleans up any associated objects.</summary>
-		* <seealso cref="Create" />
+		* <seealso cref="Initialize" />
 		*/
 		void Destroy() { Manager::Get()->Destroy(); m_isInitialized = false; }
 
@@ -132,8 +136,7 @@ namespace OpenZWave
 		* \return True if logging is enabled; false otherwise
 		* \see SetLoggingState
 		*/
-		bool GetLoggingState() {
-			return Log::GetLoggingState(); }
+		bool GetLoggingState() { return Log::GetLoggingState(); }
 
 		/**
 		* <summary>Sets the current library log file name to a new name</summary>
@@ -142,6 +145,7 @@ namespace OpenZWave
 
 		/**
 		* <summary>Sends current driver statistics to the log file</summary>
+		* <param name="homeId">The Home ID of the Z-Wave controller.</param>
 		*/
 		void LogDriverStatistics(uint32 homeId) { Manager::Get()->LogDriverStatistics(homeId); }
 
@@ -1911,8 +1915,6 @@ namespace OpenZWave
 		bool ActivateScene(uint8 sceneId) { return Manager::Get()->ActivateScene(sceneId); }
 
 		/*@}*/
-
-		event ManagedNotificationsHandler^ OnNotification;
 
 	internal:
 		static void OnNotificationFromUnmanaged(OpenZWave::Notification const * _notification, void * _context);

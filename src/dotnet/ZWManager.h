@@ -65,17 +65,55 @@ namespace OpenZWave
 	[UnmanagedFunctionPointer(CallingConvention::Cdecl)]
 	private delegate void OnControllerStateChangedFromUnmanagedDelegate(Driver::ControllerState _state, void* _context);
 
+	/// <summary>The main public interface to OpenZWave.</summary>
+	/// <remarks><para>
+	/// A singleton class providing the main public interface to OpenZWave.
+	/// The Manager class exposes all the functionality required to add
+	/// Z-Wave support to an application.  It handles the sending and receiving
+	/// of Z-Wave messages as well as the configuration of a Z-Wave network
+	/// and its devices, freeing the library user from the burden of learning
+	/// the low-level details of the Z-Wave protocol.
+	/// </para><para>
+	/// All Z-Wave functionality is accessed via the Manager class.  While this
+	/// does not make for the most efficient code structure, it does enable
+	/// the library to handle potentially complex and hard-to-debug issues
+	/// such as multi-threading and object lifespans behind the scenes.
+	/// Application development is therefore simplified and less prone to bugs.
+	/// </para><para>
+	/// There can be only one instance of the Manager class, and all applications
+	/// will start by calling Manager::Create static method to create that instance.
+	/// From then on, a call to the Manager::Get static method will return the
+	/// pointer to the Manager object.  On application exit, Manager::Destroy
+	/// should be called to allow OpenZWave to clean up and delete any other
+	/// objects it has created.
+	/// </para><para>
+	/// Once the Manager has been created, a call should be made to Manager::AddWatcher
+	/// to install a notification callback handler.  This handler will receive
+	/// notifications of Z-Wave network changes and updates to device values, and is
+	/// an essential element of OpenZWave.
+	/// </para><para>
+	/// Next, a call should be made to Manager::AddDriver for each Z-Wave controller
+	/// attached to the PC.  Each Driver will handle the sending and receiving of
+	/// messages for all the devices in its controller's Z-Wave network.  The Driver
+	/// will read any previously saved configuration and then query the Z-Wave controller
+	/// for any missing information.  Once that process is complete, a DriverReady
+	/// notification callback will be sent containing the Home ID of the controller,
+	/// which is required by most of the other Manager class methods.
+	/// </para><para>
+	/// [After the DriverReady notification is sent, the Driver will poll each node on
+	/// the network to update information about each node.  After all "awake" nodes
+	/// have been polled, an "AllAwakeNodesQueried" notification is sent.  This is when
+	/// a client application can expect all of the node information (both static
+	/// information, like the physical device's capabilities, session information
+	/// (like [associations and/or names] and dynamic information (like temperature or
+	/// on/off state) to be available.  Finally, after all nodes (whether listening or
+	/// sleeping) have been polled, an "AllNodesQueried" notification is sent.]
+	/// </para></remarks>
 	public ref class ZWManager sealed
 	{
-	//-----------------------------------------------------------------------------
-	// Events
-	//-----------------------------------------------------------------------------
 	private:
 
-	public:
-		event ManagedNotificationsHandler^ OnNotification;
-
-	private:
+		bool m_isInitialized = false;
 		static ZWManager^ s_instance = nullptr;
 
 		ZWManager() { }
@@ -108,6 +146,8 @@ namespace OpenZWave
 	public:
 		static property ZWManager^ Instance { ZWManager^ get(); }
 
+		event ManagedNotificationsHandler^ OnNotification;
+
 		property ManagedControllerStateChangedHandler^ OnControllerStateChanged
 		{
 			ManagedControllerStateChangedHandler^ get()
@@ -120,36 +160,26 @@ namespace OpenZWave
 			}
 		}
 
-	//-----------------------------------------------------------------------------
-	// Construction
-	//-----------------------------------------------------------------------------
-	/** \name Construction
-	 *  For creating and destroying the Manager singleton.
-	 */
-	/*@{*/
-	public:
-   		/**
-		 * \brief Creates the Manager singleton object.
-		 *
-		 * The Manager provides the public interface to OpenZWave, exposing all the functionality required
-		 * to add Z-Wave support to an application. There can be only one Manager in an OpenZWave application.
-		 * An Options object must be created and Locked first, otherwise the call to Manager::Create will
-		 * fail. Once the Manager has been created, attach event handler on notification event,
-		 * and then call the AddDriver method for each attached PC Z-Wave controller in turn.
-		 * \throws OZWException with Type OZWException::OZWEXCEPTION_OPTIONS if the Options Class is not setup and Locked
-		 * \see Options, Destroy, AddWatcher, AddDriver
+		/** <summary>Creates the Manager singleton object.</summary>
+		 * <remarks>
+		 * The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
+		 * There can be only one Manager in an OpenZWave application.  Once the Manager has been created, call AddWatcher to install a notification
+		 * callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
+		 * \see Destroy, AddWatcher, AddDriver
+		 * <seealso cref="Destroy" />
+		 * <seealso cref="OnNotification" />
+		 * <seealso cref="AddDriver" />
 		 */
-		void Create();
+		void Initialize();
+
+	 	/**
+	     * <summary>Deletes the Manager and cleans up any associated objects.</summary>
+	     * <seealso cref="Initialize" />
+		 */
+		void Destroy(){ Manager::Get()->Destroy(); m_isInitialized = false; }
 
 		/**
-		 * \brief Deletes the Manager and cleans up any associated objects.  
-		 *
-		 * \see Create, Get
-		 */
-		void Destroy(){ Manager::Get()->Destroy(); }
-
-		/**
-		 * \brief Get the Version Number of OZW as a string
+         * <summary>Get the Version Number of OZW as a string</summary>
 		 * \return a String representing the version number as MAJOR.MINOR.REVISION
 		 */
 		String^ GetVersionAsString() { return gcnew String(Manager::Get()->getVersionAsString().c_str()); }
@@ -168,28 +198,28 @@ namespace OpenZWave
 
 
 		/**
-		 * \brief Sets the library logging state.
+		 * <summary>Sets the library logging state.</summary>
 		 * \param bState True to enable logging; false to disable logging.
 		 * \see GetLoggingState
 		 */
 		void SetLoggingState(bool bState){ Log::SetLoggingState(bState); }
 
 		/**
-		 * \brief Gets the current library logging state.
+		 * <summary>Gets the current library logging state.</summary>
 		 * \return True if logging is enabled; false otherwise
 		 * \see SetLoggingState
 		 */
 		bool GetLoggingState() { return Log::GetLoggingState(); }
 
 		/**
-		 * \brief Sets the current library log file name to a new name
+		* <summary>Sets the current library log file name to a new name</summary>
 		 */
 		void SetLogFileName( String^ _filename ) { Log::SetLogFileName((const char*)(Marshal::StringToHGlobalAnsi(_filename)).ToPointer()); }
 
 		/**
-		 * \brief Sends current driver statistics to the log file
-		 * \param homeId The Home ID of the Z-Wave controller.
-		 */
+		* <summary>Sends current driver statistics to the log file</summary>
+ 		* <param name="homeId">The Home ID of the Z-Wave controller.</param>
+        */
 		void LogDriverStatistics(uint32 const homeId ) { Manager::Get()->LogDriverStatistics(homeId); }
 	/*@}*/					   
 
@@ -203,7 +233,7 @@ namespace OpenZWave
 	/*@{*/
 	public:
 		/**
-		 * \brief Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.
+		* <summary>Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.</summary>
 		 *
 		 * This method does not normally need to be called, since OpenZWave will save the state automatically
 		 * during the shutdown process.  It is provided here only as an aid to development.
@@ -225,7 +255,7 @@ namespace OpenZWave
 	/*@{*/
 	public:
 		/**
-		 * \brief Creates a new driver for a Z-Wave controller.
+		* <summary>Creates a new driver for a Z-Wave controller.</summary>
 		 *
 		 * This method creates a Driver object for handling communications with a single Z-Wave controller.  In the background, the  
 		 * driver first tries to read configuration data saved during a previous run.  It then queries the controller directly for any

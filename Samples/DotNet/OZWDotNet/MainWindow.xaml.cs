@@ -25,40 +25,41 @@ namespace OZWDotNet
         {
             InitializeComponent();
             VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
-            GetSerialPorts();
             DataContext = this;
+            VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
+            VM.Initialize().ContinueWith((t) =>
+            {
+                GetSerialPorts();
+            }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public MainViewModel VM { get; }
 
         private void GetSerialPorts()
         {
-            var serialPorts = System.IO.Ports.SerialPort.GetPortNames();
-            SerialPortList.ItemsSource = serialPorts;
-            SerialPortList.SelectionChanged += SerialPortList_SelectionChanged;
-            if (!serialPorts.Any())
+            if (!VM.SerialPorts.Any())
             {
                 MessageBox.Show("No serial ports found");
             }
-            else if (serialPorts.Length == 1)
-                SerialPortList.SelectedIndex = 0;
-        }
-
-        private void SerialPortList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var portName = e.AddedItems?.OfType<string>().FirstOrDefault() as string;
-            if (portName != null)
+            else if (VM.SerialPorts.Count == 1)
             {
-                VM.AddDriver(portName);
+                //hamburgerMenu.SelectedIndex = 0;
+                VM.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
+                //(hamburgerMenu.Content as Frame).Navigate(typeof(Views.DevicesView));
+            }
+            else
+            {
+                // hamburgerMenu.SelectedIndex = 1;
+                // (hamburgerMenu.Content as Frame).Navigate(typeof(Views.SettingsView));
             }
         }
 
-        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
+        private void NodeGridView_ItemClick(object sender, SelectionChangedEventArgs e)
         {
-            VM.SaveConfig();
+
         }
 
-        private void NodeGridView_ItemClick(object sender, SelectionChangedEventArgs e)
+        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
         {
 
         }
