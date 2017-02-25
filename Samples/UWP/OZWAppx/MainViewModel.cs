@@ -266,7 +266,7 @@ namespace OZWAppx
                         if (node != null)
                         {
                             node.Label = ZWManager.Instance.GetNodeType(homeID, node.ID);
-                            node.IsLoading = false;
+                            
                         }
                         break;
                     }
@@ -320,8 +320,10 @@ namespace OZWAppx
                     }
                 case NotificationType.NodeQueriesComplete:
                     {
+                        Debug.WriteLine("Node queries complete");
                         // as an example, enable query of BASIC info (CommandClass = 0x20)
                         Node node = GetNode(homeID, nodeId);
+                        node.IsLoading = false;
                         //if (node != null)
                         //{
                         //    foreach (ZWValueID vid in node.Values)
@@ -341,12 +343,14 @@ namespace OZWAppx
                     }
                 case NotificationType.AllNodesQueried:
                     {
+                        Debug.WriteLine("All nodes queried");
                         CurrentStatus = "Ready:  All nodes queried.";
                         ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
                 case NotificationType.AllNodesQueriedSomeDead:
                     {
+                        Debug.WriteLine("All nodes queried (some dead)");
                         CurrentStatus = "Ready:  All nodes queried but some are dead.";
                         ZWManager.Instance.WriteConfig(homeID);
                         break;
@@ -412,15 +416,9 @@ namespace OZWAppx
                     ZWManager.Instance.GetValueAsInt(v, out r4);
                     return r4.ToString();
                 case ZWValueType.List:
-                    string[] r5;
-                    ZWManager.Instance.GetValueListItems(v, out r5);
-                    string r6 = "";
-                    foreach (string s in r5)
-                    {
-                        r6 += s;
-                        r6 += "/";
-                    }
-                    return r6;
+                    string r5;
+                    ZWManager.Instance.GetValueListSelection(v, out r5);
+                    return r5;
                 case ZWValueType.Schedule:
                     return "Schedule";
                 case ZWValueType.Short:

@@ -23,6 +23,8 @@
             <toolkit:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="local:Node">
                     <RelativePanel Margin="0,5" HorizontalAlignment="Stretch">
+                        <ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" RelativePanel.AlignBottomWithPanel="True"
+                                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" />
                         <Ellipse x:Name="FromEllipse" Height="50" Width="50" Margin="0,0,5,0" Fill="CornflowerBlue" />
                         <TextBlock x:Name="LabelField" Text="{x:Bind Label, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                         <TextBlock x:Name="NameField" Text="{x:Bind Name, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="CornflowerBlue" RelativePanel.Below="LabelField" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
