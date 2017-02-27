@@ -1,4 +1,6 @@
-An Open-ZWave wrapper for use with .NET or UWP apps
+An Open-ZWave wrapper for use with .NET or UWP apps.
+
+This library was based on the OpenZWave .NET Library, but refactored to greatly simplify its use, as well as adding UWP Support.
 
 ### Usage
 ```csharp
