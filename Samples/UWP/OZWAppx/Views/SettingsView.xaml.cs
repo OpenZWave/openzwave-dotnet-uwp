@@ -23,6 +23,6 @@ namespace OZWAppx.Views
         {
             this.InitializeComponent();
         }
-        public MainViewModel VM => MainViewModel.Instance;
+        public NodeWatcher VM => NodeWatcher.Instance;
     }
 }

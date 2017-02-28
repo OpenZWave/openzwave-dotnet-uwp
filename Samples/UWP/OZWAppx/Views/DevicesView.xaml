@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <toolkit:MasterDetailsView ItemsSource="{x:Bind VM.Nodes}" 
+        <toolkit:MasterDetailsView ItemsSource="{x:Bind Watcher.Nodes}" 
                                    MasterPaneWidth="350" HorizontalContentAlignment="Stretch"
                                    NoSelectionContent="Select a device to view details">
 

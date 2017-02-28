@@ -28,18 +28,18 @@
         </Border>
         <toolkit:DropShadowPanel Margin="20" Grid.Row="1" BlurRadius="20" ShadowOpacity=".5">
             <Border Background="White" Padding="12" >
-            <StackPanel >
-                <TextBox Header="Name" MaxLength="16" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Name, Mode=TwoWay}" BorderThickness="1" BorderBrush="LightGray" />
-                <TextBox Header="Location" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Location, Mode=TwoWay}" BorderThickness="1" BorderBrush="LightGray" />
-            </StackPanel>
+                <StackPanel>
+                    <TextBox Header="Name" MaxLength="16" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Name, Mode=TwoWay}" BorderThickness="1" BorderBrush="LightGray" />
+                    <TextBox Header="Location" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Location, Mode=TwoWay}" BorderThickness="1" BorderBrush="LightGray" />
+                </StackPanel>
             </Border>
         </toolkit:DropShadowPanel>
         <toolkit:DropShadowPanel Margin="20" Grid.Row="1" Grid.Column="1" BlurRadius="20" ShadowOpacity=".5" >
             <Border Background="White" Padding="12" >
                 <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBox Header="Manufacturer" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Manufacturer, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
-            <TextBox Header="Product" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Product, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
-        </StackPanel>
+                    <TextBox Header="Manufacturer" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Manufacturer, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+                    <TextBox Header="Product" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Node.Product, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+                </StackPanel>
             </Border>
         </toolkit:DropShadowPanel>
 

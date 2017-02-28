@@ -24,16 +24,16 @@ namespace OZWDotNet
         public MainWindow()
         {
             InitializeComponent();
-            VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
+            VM = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
             DataContext = this;
-            VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
+            VM = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
             VM.Initialize().ContinueWith((t) =>
             {
                 GetSerialPorts();
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public MainViewModel VM { get; }
+        public NodeWatcher VM { get; }
 
         private void GetSerialPorts()
         {

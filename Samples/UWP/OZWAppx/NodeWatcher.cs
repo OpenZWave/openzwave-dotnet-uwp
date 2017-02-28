@@ -17,27 +17,26 @@ using CoreDispatcher = System.Windows.Threading.Dispatcher;
 
 namespace OZWAppx
 {
-    public class MainViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// This class monitors discovery, removal and changes to available devices (nodes),
+    /// and raises the proper change notifications to use it for binding to a view
+    /// </summary>
+    public class NodeWatcher : INotifyPropertyChanged
     {
-        public static MainViewModel Instance { get; private set; }
+        public static NodeWatcher Instance { get; private set; }
 
-        private CoreDispatcher Dispatcher { get; }
+        private readonly CoreDispatcher Dispatcher;
         
-        public MainViewModel(CoreDispatcher dispatcher)
+        public NodeWatcher(CoreDispatcher dispatcher)
         {
             if (Instance != null)
-                throw new InvalidOperationException("Only one manager instance can be created");
+                throw new InvalidOperationException("Only one watcher instance can be created");
             Dispatcher = dispatcher;
             Instance = this;            
         }
 
         public async Task Initialize()
         {
-#if NETFX_CORE
-            var userPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
-#else
-            var userPath = "";
-#endif
             ZWOptions.Instance.Initialize();
 
             // Add any app specific options here...
@@ -48,7 +47,7 @@ namespace OZWAppx
             // save recent messages with "Debug" level messages to be dumped if an error occurs
             //m_options.AddOptionInt("QueueLogLevel", (int)ZWLogLevel.Debug);
 
-            // only "dump" Debug  to the log emessages when an error-level message is logged
+            // only "dump" Debug to the log emessages when an error-level message is logged
             //m_options.AddOptionInt("DumpTriggerLevel", (int)ZWLogLevel.Error);
 
             // Lock the options
@@ -65,27 +64,26 @@ namespace OZWAppx
             {
                 SerialPorts.Add(new SerialPortInfo(item));
             }
-#else
+#else //.NET
             foreach(var item in System.IO.Ports.SerialPort.GetPortNames())
             {
                 SerialPorts.Add(new SerialPortInfo(item));
             }
-
 #endif
         }
 
         public ObservableCollection<SerialPortInfo> SerialPorts { get; } = new ObservableCollection<SerialPortInfo>();
 
-        public class SerialPortInfo
+        public sealed class SerialPortInfo
         {
 #if NETFX_CORE
-            public SerialPortInfo(DeviceInformation info)
+            internal SerialPortInfo(DeviceInformation info)
             {
                 PortID = info.Id;
                 Name = info.Name;
             }
 #else
-            public SerialPortInfo(string id)
+            internal SerialPortInfo(string id)
             {
                 PortID = id;
                 Name = id;
@@ -112,7 +110,7 @@ namespace OZWAppx
         /// The notifications handler.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        public void OnNodeNotification(ZWNotification notification)
+        private void OnNodeNotification(ZWNotification notification)
         {
             // Handle the notification on a thread that can safely
             // modify the controls without throwing an exception.
@@ -148,7 +146,8 @@ namespace OZWAppx
         }
 
         /// <summary>
-        /// The notification handler.
+        /// The notification handler. This is called by the ZWave library every time
+        /// an event occurs on the ZWave network, a device is found/lost, etc
         /// </summary>
         private void NotificationHandler(ZWNotification notification)
         {
@@ -182,53 +181,10 @@ namespace OZWAppx
                     PendingRequests.Remove(item);
                 }
             }
-            // NodeQueriesComplete : When all nodes has reported back
-            // NodeAdded : Node now exists in the system. Very little useful info
-            // NodeProtocolInfo: We now know what type of node it is
-            // Debug.WriteLine($"Notification Received: {homeID}:{nodeId} = {type}");
+
             switch (notification.Type)
             {
-                case NotificationType.ValueAdded:
-                    {
-                        Node node = GetNode(homeID, nodeId);
-                        if (node != null)
-                        {
-                            var value = notification.ValueID;
-                            node.AddValue(value);
-                            debugWriteValueID(value);
-                        }
-                        break;
-                    }
-
-                case NotificationType.ValueRemoved:
-                    {
-                        Node node = GetNode(homeID, nodeId);
-                        if (node != null)
-                        {
-                            node.RemoveValue(notification.ValueID);
-                        }
-                        break;
-                    }
-
-                case NotificationType.ValueChanged:
-                    {
-                        ZWValueID value = notification.ValueID;
-                        Debug.WriteLine($"Value Changed. Node {nodeId}: {ZWManager.Instance.GetValueLabel(value)} = {GetValue(value)} {ZWManager.Instance.GetValueUnits(value)}");
-                        debugWriteValueID(value);
-
-                        Node node = GetNode(homeID, nodeId);
-                        if (node != null)
-                        {
-                            node.AddValue(value);
-                        }
-                        break;
-                    }
-
-                case NotificationType.Group:
-                    {
-                        break;
-                    }
-
+                // NodeAdded : Node now exists in the system. Very little useful info
                 case NotificationType.NodeAdded:
                     {
                         // if this node was in zwcfg*.xml, this is the first node notification
@@ -254,6 +210,7 @@ namespace OZWAppx
                             if (node.ID == nodeId)
                             {
                                 m_nodeList.Remove(node);
+                                node.RaiseNodeRemoved();
                                 break;
                             }
                         }
@@ -261,31 +218,19 @@ namespace OZWAppx
                     }
 
                 case NotificationType.NodeProtocolInfo:
-                    {
-                        Node node = GetNode(homeID, nodeId);
-                        if (node != null)
-                        {
-                            node.Label = ZWManager.Instance.GetNodeType(homeID, node.ID);
-                            
-                        }
-                        break;
-                    }
-
-                case NotificationType.NodeNaming:
-                    {
-                        Node node = GetNode(homeID, nodeId);
-                        if (node != null)
-                        {
-                            node.Manufacturer = ZWManager.Instance.GetNodeManufacturerName(homeID, node.ID);
-                            node.Product = ZWManager.Instance.GetNodeProductName(homeID, node.ID);
-                            node.Location = ZWManager.Instance.GetNodeLocation(homeID, node.ID);
-                            node.Name = ZWManager.Instance.GetNodeName(homeID, node.ID);
-                        }
-                        break;
-                    }
-
                 case NotificationType.NodeEvent:
-                    {
+                case NotificationType.NodeNaming:
+                case NotificationType.EssentialNodeQueriesComplete:
+                case NotificationType.NodeQueriesComplete:
+                case NotificationType.ValueRemoved:
+                case NotificationType.ValueChanged:
+                case NotificationType.Group:
+                {
+                        Node node = GetNode(homeID, nodeId);
+                        if (node != null)
+                        {
+                            node.HandleNodeEvent(notification);
+                        }
                         break;
                     }
 
@@ -306,11 +251,13 @@ namespace OZWAppx
                         CurrentStatus = $"Initializing...driver with Home ID 0x{notification.HomeId.ToString("X8")} is ready.";
                         break;
                     }
+
                 case NotificationType.DriverFailed:
                     {
                         Debug.WriteLine("Driver failed for HomeID " + homeID.ToString());
                         break;
                     }
+
                 case NotificationType.DriverRemoved:
                     {
                         var nodes = GetNodes(homeID).ToArray();
@@ -318,52 +265,52 @@ namespace OZWAppx
                             m_nodeList.Remove(node);
                         break;
                     }
-                case NotificationType.NodeQueriesComplete:
-                    {
-                        Debug.WriteLine("Node queries complete");
-                        // as an example, enable query of BASIC info (CommandClass = 0x20)
-                        Node node = GetNode(homeID, nodeId);
-                        node.IsLoading = false;
-                        //if (node != null)
-                        //{
-                        //    foreach (ZWValueID vid in node.Values)
-                        //    {
-                        //        if (vid.GetCommandClassId() == 0x84)	// remove this "if" to poll all values
-                        //            m_manager.EnablePoll(vid);
-                        //    }
-                        //}
-                        CurrentStatus = $"Initializing...node {node.ID} query complete.";
-                        break;
-                    }
-                case NotificationType.EssentialNodeQueriesComplete:
-                    {
-                        Node node = GetNode(homeID, nodeId);
-                        CurrentStatus = $"Initializing...node {node.ID} essential queries complete.";
-                        break;
-                    }
+                
                 case NotificationType.AllNodesQueried:
                     {
+                        QueryStatus = NodeQueryStatus.AllNodesQueried;
+                        OnPropertyChanged(nameof(QueryStatus));
                         Debug.WriteLine("All nodes queried");
                         CurrentStatus = "Ready:  All nodes queried.";
                         ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
+
                 case NotificationType.AllNodesQueriedSomeDead:
                     {
+                        QueryStatus = NodeQueryStatus.AllNodesQueriedSomeDead;
+                        OnPropertyChanged(nameof(QueryStatus));
                         Debug.WriteLine("All nodes queried (some dead)");
                         CurrentStatus = "Ready:  All nodes queried but some are dead.";
                         ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
+
                 case NotificationType.AwakeNodesQueried:
                     {
+                        QueryStatus = NodeQueryStatus.AwakeNodesQueried;
+                        OnPropertyChanged(nameof(QueryStatus));
                         CurrentStatus = "Ready:  Awake nodes queried (but not some sleeping nodes).";
                         ZWManager.Instance.WriteConfig(homeID);
                         break;
                     }
+
                 default:
                     {
-                        Debug.WriteLine($"******Notification '{type}' not Handled @ ID: {nodeId}");
+                        if (nodeId > 0)
+                        {
+                            Node node = GetNode(homeID, nodeId);
+                            if (node != null)
+                            {
+                                node.HandleNodeEvent(notification);
+                            }
+                        }
+                        else
+                        {
+                            //var v = GetValue(notification.ValueID);
+                            Debug.WriteLine($"******Controller error '{notification.Code}'");
+                            //Debug.WriteLine($"******Notification '{type}' not Handled @ ID: {nodeId}");
+                        }
                         break;
                     }
             }
@@ -380,61 +327,16 @@ namespace OZWAppx
             private set { m_CurrentStatus = value; OnPropertyChanged(); }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public enum NodeQueryStatus
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Querying,
+            AwakeNodesQueried,
+            AllNodesQueried,
+            AllNodesQueriedSomeDead
         }
 
-
-        /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <param name="v">The v.</param>
-        /// <returns></returns>
-        private string GetValue(ZWValueID v)
-        {
-            switch (v.Type)
-            {
-                case ZWValueType.Bool:
-                    bool r1;
-                    ZWManager.Instance.GetValueAsBool(v, out r1);
-                    return r1.ToString();
-                case ZWValueType.Byte:
-                    byte r2;
-                    ZWManager.Instance.GetValueAsByte(v, out r2);
-                    return r2.ToString();
-                case ZWValueType.Decimal:
-                    decimal r3;
-                    string r3s;
-                    ZWManager.Instance.GetValueAsString(v, out r3s);
-                    return r3s;
-                //throw new NotImplementedException("Decimal");
-                //m_manager.GetValueAsDecimal(v, out r3);
-                //return r3.ToString();
-                case ZWValueType.Int:
-                    Int32 r4;
-                    ZWManager.Instance.GetValueAsInt(v, out r4);
-                    return r4.ToString();
-                case ZWValueType.List:
-                    string r5;
-                    ZWManager.Instance.GetValueListSelection(v, out r5);
-                    return r5;
-                case ZWValueType.Schedule:
-                    return "Schedule";
-                case ZWValueType.Short:
-                    short r7;
-                    ZWManager.Instance.GetValueAsShort(v, out r7);
-                    return r7.ToString();
-                case ZWValueType.String:
-                    string r8;
-                    ZWManager.Instance.GetValueAsString(v, out r8);
-                    return r8;
-                default:
-                    return "";
-            }
-        }
-
-
+        public NodeQueryStatus QueryStatus { get; private set; } = NodeQueryStatus.Querying;
+        
         /// <summary>
         /// Gets the node.
         /// </summary>
@@ -453,6 +355,7 @@ namespace OZWAppx
 
             return null;
         }
+
         private IEnumerable<Node> GetNodes(UInt32 homeId)
         {
             foreach (Node node in m_nodeList)
@@ -464,18 +367,18 @@ namespace OZWAppx
             }
         }
 
-
-        private bool m_securityEnabled = false;
-
-        public bool SecurityEnabled
-        {
-            get { return m_securityEnabled; }
-        }
-
         private ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
+
+        /// <summary>
+        /// Gets a list of the available/discovered nodes
+        /// </summary>
+        public IEnumerable<Node> Nodes => m_nodeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IEnumerable<Node> Nodes => m_nodeList;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

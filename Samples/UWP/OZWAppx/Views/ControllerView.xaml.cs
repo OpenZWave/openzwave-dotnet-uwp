@@ -28,16 +28,16 @@ namespace OZWAppx.Views
 
         private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach(var homeId in homeIds)
                 ZWManager.Instance.WriteConfig(homeId);
         }
 
-        public MainViewModel VM => MainViewModel.Instance;
+        public NodeWatcher VM => NodeWatcher.Instance;
 
         private void ResetSoft_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.SoftReset(homeId);
         }
@@ -47,7 +47,7 @@ namespace OZWAppx.Views
             var dlg = new MessageDialog("Reset all connected controllers? This can't be undone", "Confirm");
             dlg.Commands.Add(new UICommand("OK", (s) =>
             {
-                var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+                var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
                 foreach (var homeId in homeIds)
                     ZWManager.Instance.ResetController(homeId);
             }));
@@ -57,14 +57,14 @@ namespace OZWAppx.Views
 
         private void ReceiveConfig_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.ReceiveConfiguration(homeId);
         }
 
         private void RemoveNode_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.RemoveNode(homeId);
 
@@ -74,7 +74,7 @@ namespace OZWAppx.Views
 
         private void AddDevice_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.AddNode(homeId, false);
 
@@ -84,7 +84,7 @@ namespace OZWAppx.Views
 
         private void AddSecureDevice_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.AddNode(homeId, true);
 
@@ -94,14 +94,14 @@ namespace OZWAppx.Views
 
         private void NewPrimary_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.CreateNewPrimary(homeId);
         }
 
         private void TransferPrimary_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = MainViewModel.Instance.Nodes.Select(n => n.HomeID).Distinct();
+            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
             foreach (var homeId in homeIds)
                 ZWManager.Instance.TransferPrimaryRole(homeId);
         }

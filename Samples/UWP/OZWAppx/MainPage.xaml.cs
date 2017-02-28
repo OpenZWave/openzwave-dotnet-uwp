@@ -30,25 +30,25 @@ namespace OZWAppx
         public MainPage()
         {
             this.InitializeComponent();
-            VM = MainViewModel.Instance ?? new MainViewModel(this.Dispatcher);
-            VM.Initialize().ContinueWith((t) =>
+            Watcher = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
+            Watcher.Initialize().ContinueWith((t) =>
             {
                 GetSerialPorts();
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public MainViewModel VM { get; }
+        public NodeWatcher Watcher { get; }
 
         private void GetSerialPorts()
         {
-            if (!VM.SerialPorts.Any())
+            if (!Watcher.SerialPorts.Any())
             {
                 var _ = new Windows.UI.Popups.MessageDialog("No serial ports found").ShowAsync();
             }
-            else if (VM.SerialPorts.Count == 1)
+            else if (Watcher.SerialPorts.Count == 1)
             {
                 hamburgerMenu.SelectedIndex = 0;
-                VM.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
+                Watcher.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
                 (hamburgerMenu.Content as Frame).Navigate(typeof(Views.DevicesView));
             }
             else
