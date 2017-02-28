@@ -2,7 +2,7 @@
 //
 //      ZWOptions.cpp
 //
-//      UWP wrapper for the C++ OpenZWave Manager class
+//      CLI/C++ and WinRT wrapper for the C++ OpenZWave Manager class
 //
 //      Original Work by:
 //      Copyright (c) 2010 ) Amer Harb <harb_amer@hotmail.com> (
@@ -32,7 +32,9 @@
 
 using namespace OpenZWave;
 
+#if !__cplusplus_cli
 static ZWOptions^ s_instance = nullptr;
+#endif
 
 ZWOptions^ ZWOptions::Instance::get()
 {
@@ -46,7 +48,11 @@ ZWOptions^ ZWOptions::Instance::get()
 //-----------------------------------------------------------------------------
 void ZWOptions::Initialize()
 {
+#if __cplusplus_cli
+	Initialize("config/", Environment::GetFolderPath(Environment::SpecialFolder::LocalApplicationData), "");
+#else
 	Initialize("config/", Windows::Storage::ApplicationData::Current->LocalFolder->Path, "");
+#endif
 }
 
 void ZWOptions::Initialize

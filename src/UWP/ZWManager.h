@@ -2,7 +2,7 @@
 //
 //      ZWManager.h
 //
-//      UWP wrapper for the C++ OpenZWave Manager class
+//      CLI/C++ and WinRT wrapper for the C++ OpenZWave Manager class
 //
 //      Original Work by:
 //      Copyright (c) 2010 ) Amer Harb <harb_amer@hotmail.com> (
@@ -35,14 +35,27 @@
 #include "ZWNotification.h"
 
 using namespace OpenZWave;
+#if __cplusplus_cli
+using namespace System;
+using namespace Runtime::InteropServices;
+#else
 using namespace Platform;
+#endif
+
 
 namespace OpenZWave
 {
-	// Delegate for handling notification callbacks
 	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
+#if __cplusplus_cli
+
+	[UnmanagedFunctionPointer(CallingConvention::Cdecl)]
+	private delegate void OnNotificationFromUnmanagedDelegate(Notification* _notification, void* _context);
+
+#else
 	private delegate void OnNotificationFromUnmanagedDelegate(void *_notification, void* _context);
+#endif
+
 
 	/// <summary>The main public interface to OpenZWave.</summary>
 	/// <remarks><para>
@@ -93,13 +106,16 @@ namespace OpenZWave
 	private:
 
 		bool m_isInitialized = false;
-
+#if __cplusplus_cli
+		static ZWManager^ s_instance = nullptr;
+#endif
 		ZWManager() { }
 
 	public:
 		static property ZWManager^ Instance { ZWManager^ get(); }
 
 		event ManagedNotificationsHandler^ OnNotification;
+
 		/** <summary>Creates the Manager singleton object.</summary>
 		* <remarks>
 		* The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
@@ -545,7 +561,12 @@ namespace OpenZWave
 		* \param o_associations An array of 29 uint8s to hold the neighbor bitmap
 		*/
 		//uint32 GetNodeNeighbors(uint32 const homeId, uint8 const nodeId, [Out] cli::array<Byte>^ %o_associations);
-		uint32 GetNodeNeighbors(uint32 homeId, uint8 nodeId, Platform::Array<byte>^ *o_associations);
+		uint32 GetNodeNeighbors(
+#if __cplusplus_cli
+			uint32 homeId, uint8 nodeId, [Out] cli::array<Byte>^ %o_associations);
+#else
+			uint32 homeId, uint8 nodeId, Platform::Array<byte>^ *o_associations);
+#endif
 
 		/**
 		* <summary>Get the manufacturer name of a device.</summary>
@@ -732,7 +753,13 @@ namespace OpenZWave
 		* \param commandClassId Id of the class to test for
 		* \return True if the node does have the class instantiated, will return name & version
 		*/
-		bool GetNodeClassInformation(uint32 homeId, uint8 nodeId, uint8 commandClassId, String^ *className, byte *classVersion);
+		bool GetNodeClassInformation(uint32 homeId, uint8 nodeId, uint8 commandClassId,
+#if __cplusplus_cli
+			[Out] String^ %className, [Out] System::Byte %classVersion
+#else
+			String^ *className, byte *classVersion
+#endif
+		);
 
 		/**
 		* <summary>Get whether the node is awake or asleep</summary>
@@ -842,7 +869,13 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType.
 		* \see ValueID::GetType, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsBool(ZWValueID^ id, bool *o_value);
+		bool GetValueAsBool(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] System::Boolean %
+#else
+			bool *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets a value as an 8-bit unsigned integer.</summary>
@@ -852,7 +885,13 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsByte(ZWValueID^ id, byte *o_value);
+		bool GetValueAsByte(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] System::Byte %
+#else
+			byte *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets a value as a decimal.</summary>
@@ -872,7 +911,13 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Int. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsInt(ZWValueID^ id, int32 *o_value);
+		bool GetValueAsInt(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] System::Int32 %
+#else
+			int32 *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets a value as a 16-bit signed integer.</summary>
@@ -882,7 +927,13 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Short. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsShort(ZWValueID^ id, int16 *o_value);
+		bool GetValueAsShort(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] System::Int16 %
+#else
+			int16 *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets a value as a string.</summary>
@@ -893,7 +944,13 @@ namespace OpenZWave
 		* \return true if the value was obtained.</returns>
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsString(ZWValueID^ id, String^ *o_value);
+		bool GetValueAsString(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] String^ %
+#else
+			String^ *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets the selected item from a list value (as a string).</summary>
@@ -903,7 +960,13 @@ namespace OpenZWave
 		* \return True if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListItems
 		*/
-		bool GetValueListSelection(ZWValueID^ id, String^ *o_value);
+		bool GetValueListSelection(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] String^ %
+#else
+			String^ *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets the selected item from a list value (as an integer).</summary>
@@ -913,7 +976,13 @@ namespace OpenZWave
 		* \return True if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListItems
 		*/
-		bool GetValueListSelection(ZWValueID^ id, int32 *o_value);
+		bool GetValueListSelection(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] System::Int32 %
+#else
+			int32 *
+#endif
+			o_value);
 
 		/**
 		* <summary>Gets the list of items from a list value.</summary>
@@ -923,7 +992,12 @@ namespace OpenZWave
 		* \return true if the list items were obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection
 		*/
-		bool GetValueListItems(ZWValueID^ id, Platform::Array<String^>^ *o_value);
+		bool GetValueListItems(ZWValueID^ id,
+#if __cplusplus_cli
+		[Out] cli::array<String^>^ %o_value);
+#else
+		Platform::Array<String^>^ *o_value);
+#endif
 
 		/**
 		* <summary>Gets the list of values from a list value.</summary>
@@ -933,7 +1007,12 @@ namespace OpenZWave
 		* \return true if the list values were obtained.  Returns false if the value is not a ValueID::ValueType_List. The type can be tested with a call to ValueID::GetType.
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsFloat, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueAsRaw
 		*/
-		bool GetValueListValues(ZWValueID^ id, Platform::Array<int>^ *o_value);
+		bool GetValueListValues(ZWValueID^ id,
+#if __cplusplus_cli
+			[Out] cli::array<int>^ %o_value);
+#else
+			Platform::Array<int>^ *o_value);
+#endif
 
 		/**
 		* <summary>Sets the state of a bool.</summary>
@@ -1136,8 +1215,12 @@ namespace OpenZWave
 		* \return true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.
 		* \see GetNumSwitchPoints
 		*/
-		bool GetSwitchPoint(ZWValueID^ id, uint8 idx, byte *o_value, byte *o_minutes, byte *o_setback);
-
+		bool GetSwitchPoint(ZWValueID^ id, uint8 idx,
+#if __cplusplus_cli
+		[Out] System::Byte %o_hours, [Out] System::Byte %o_minutes, [Out] System::SByte %o_setback);
+#else
+		byte *o_hours, byte *o_minutes, byte *o_setback);
+#endif
 		/*@}*/
 
 		//-----------------------------------------------------------------------------
@@ -1255,7 +1338,13 @@ namespace OpenZWave
 		* \return The number of nodes in the associations array.  If zero, the array will point to NULL, and does not need to be deleted.
 		* \see GetNumGroups, AddAssociation, RemoveAssociation
 		*/
-		uint32 GetAssociations(uint32 homeId, uint8 nodeId, uint8 groupIdx, Platform::Array<byte>^ *o_associations);
+		uint32 GetAssociations(
+#if __cplusplus_cli
+		uint32 const homeId, uint8 const nodeId, uint8 const groupIdx,
+			[Out] cli::array<Byte>^ %o_associations);
+#else
+		uint32 homeId, uint8 nodeId, uint8 groupIdx, Platform::Array<byte>^ *o_associations);
+#endif
 
 		/**
 		* <summary>Gets the maximum number of associations for a group.</summary>
@@ -1305,23 +1394,6 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Hard Reset a PC Z-Wave Controller.</summary>
-		*
-		* Resets a controller and erases its network configuration settings.  The controller becomes a primary controller ready to add devices to a new network.
-		* \param homeId The Home ID of the Z-Wave controller to be reset.
-		* \see SoftReset
-		*/
-		void ResetController(uint32 homeId) { Manager::Get()->ResetController(homeId); }
-
-		/**
-		* <summary>Soft Reset a PC Z-Wave Controller.</summary>
-		*
-		* Resets a controller without erasing its network configuration settings.
-		* \param homeId The Home ID of the Z-Wave controller to be reset.
-		* \see SoftReset
-		*/
-		void SoftReset(uint32 homeId) { Manager::Get()->SoftReset(homeId); }
 
 		/*@}*/
 
@@ -1616,7 +1688,12 @@ namespace OpenZWave
 		* \return The number of scenes.
 		* \see GetNumScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		uint8 GetAllScenes(Platform::WriteOnlyArray<byte>^ sceneIds);
+		uint8 GetAllScenes(
+#if __cplusplus_cli
+			[Out] cli::array<Byte>^ %sceneIds);
+#else
+			Platform::WriteOnlyArray<byte>^ sceneIds);
+#endif
 
 		/**
 		* <summary>Create a new Scene passing in Scene ID</summary>
@@ -1729,7 +1806,11 @@ namespace OpenZWave
 		* \return The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
+#if __cplusplus_cli
+		int SceneGetValues(uint8 sceneId, [Out] cli::array<ZWValueID ^>^ %o_values);
+#else
 		int SceneGetValues(uint8 sceneId, Platform::WriteOnlyArray<ZWValueID^>^ o_values);
+#endif
 
 		/**
 		* <summary>Retrieves a scene's value as a bool.</summary>
@@ -1914,21 +1995,72 @@ namespace OpenZWave
 		/// <returns>true if it is successful.</returns>
 		bool ActivateScene(uint8 sceneId) { return Manager::Get()->ActivateScene(sceneId); }
 
-		/*@}*/
 
+		//-----------------------------------------------------------------------------
+		// Controller commands
+		//-----------------------------------------------------------------------------
+		/** \name Controller Commands
+		*  Commands for Z-Wave network management using the PC Controller.
+		*/
+		/*@{*/
+
+	public:
+		/**
+		* <summary>Hard Reset a PC Z-Wave Controller.</summary>
+		*
+		* Resets a controller and erases its network configuration settings.  The controller becomes a primary controller ready to add devices to a new network.
+		* \param homeId The Home ID of the Z-Wave controller to be reset.
+		* \see SoftReset
+		*/
+		void ResetController(uint32 homeId) { Manager::Get()->ResetController(homeId); }
+
+		/**
+		* <summary>Soft Reset a PC Z-Wave Controller.</summary>
+		*
+		* Resets a controller without erasing its network configuration settings.
+		* \param homeId The Home ID of the Z-Wave controller to be reset.
+		* \see SoftReset
+		*/
+		void SoftReset(uint32 homeId) { Manager::Get()->SoftReset(homeId); }
+
+		/**
+		* \brief Cancels any in-progress command running on a controller.
+		*
+		* \param homeId The Home ID of the Z-Wave controller.
+		* \return true if a command was running and was cancelled.
+		* \see BeginControllerCommand
+		*/
+		bool CancelControllerCommand(uint32 homeId) { return Manager::Get()->CancelControllerCommand(homeId); }
+
+#if __cplusplus_cli
+	private:
+		void  OnNotificationFromUnmanaged(Notification* _notification, void* _context);					// Forward notification to managed delegates hooked via Event addhandler 
+	
+		GCHandle										m_gchNotification;
+		OnNotificationFromUnmanagedDelegate^			m_onNotification;
+#else
 	internal:
 		static void OnNotificationFromUnmanaged(OpenZWave::Notification const * _notification, void * _context);
+#endif
 
 	private:
 		std::string ConvertString(String^ value) {
+#if __cplusplus_cli
+			return msclr::interop::marshal_as<std::string>(value);
+#else
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			return convert.to_bytes(value->Data());
+#endif
 		}
 
 		String^ ConvertString(std::string value) {
+#if __cplusplus_cli
+			return gcnew String(value.c_str());
+#else
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
-			return gcnew Platform::String(intermediateForm.c_str());
+			return ref new Platform::String(intermediateForm.c_str());
+#endif
 		}
 	};
 }

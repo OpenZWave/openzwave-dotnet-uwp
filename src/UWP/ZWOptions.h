@@ -2,7 +2,7 @@
 //
 //      ZWOptions.h
 //
-//      UWP wrapper for the C++ OpenZWave Manager class
+//      CLI/C++ and WinRT wrapper for the C++ OpenZWave Manager class
 //
 //      Original Work by:
 //      Copyright (c) 2010 ) Amer Harb <harb_amer@hotmail.com> (
@@ -32,7 +32,11 @@
 #include "ZWEnums.h"
 
 using namespace OpenZWave;
+#if __cplusplus_cli
+using namespace System;
+#else
 using namespace Platform;
+#endif
 
 namespace OpenZWave
 {
@@ -69,6 +73,9 @@ namespace OpenZWave
 	public ref class ZWOptions sealed
 	{
 	private:
+#if __cplusplus_cli
+		static ZWOptions^ s_instance = nullptr;
+#endif
 		ZWOptions() { }
 	public:
 		static property ZWOptions^ Instance { ZWOptions^ get(); }
@@ -210,18 +217,22 @@ namespace OpenZWave
 
 	private:
 		std::string ConvertString(String^ value) {
-//#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+#if __cplusplus_cli
+			return msclr::interop::marshal_as<std::string>(value);
+#else
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			return convert.to_bytes(value->Data());
-//#endif
+#endif
 		}
 
 		String^ ConvertStdString(std::string value) {
-//#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+#if __cplusplus_cli
+			return gcnew String(value.c_str());
+#else
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
-			return gcnew Platform::String(intermediateForm.c_str());
-//#endif
+			return ref new Platform::String(intermediateForm.c_str());
+#endif
 		}
 	};
 }

@@ -102,7 +102,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\dotnet\OpenZWaveDotNet.vcxproj">
+    <ProjectReference Include="..\..\..\src\UWP\OpenZWaveDotNet.vcxproj">
       <Project>{0dd42424-b4ab-45c3-897c-774d1c5917c3}</Project>
       <Name>OpenZWaveDotNet</Name>
     </ProjectReference>

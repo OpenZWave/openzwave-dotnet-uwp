@@ -2,7 +2,7 @@
 //
 //      ZWNotification.h
 //
-//      UWP wrapper for the C++ OpenZWave Manager class
+//      CLI/C++ and WinRT wrapper for the C++ OpenZWave Manager class
 //
 //      Original Work by:
 //      Copyright (c) 2010 ) Amer Harb <harb_amer@hotmail.com> (

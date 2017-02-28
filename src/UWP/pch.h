@@ -4,6 +4,13 @@
 #include "Windows.h"
 #include "stdio.h"
 
+#if __cplusplus_cli
+// .NET CLR/CLI includes
+#include <msclr/auto_gcroot.h>
+#include <msclr/lock.h>
+#include <msclr/marshal_cppstd.h>
+#endif
+
 // OpenZWave includes
 #include "Manager.h"
 #include "Value.h"
