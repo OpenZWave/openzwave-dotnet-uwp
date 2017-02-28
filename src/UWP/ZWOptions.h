@@ -220,7 +220,7 @@ namespace OpenZWave
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
-			return ref new Platform::String(intermediateForm.c_str());
+			return gcnew Platform::String(intermediateForm.c_str());
 //#endif
 		}
 	};

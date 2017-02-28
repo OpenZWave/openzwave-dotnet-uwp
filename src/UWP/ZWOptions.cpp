@@ -37,7 +37,7 @@ static ZWOptions^ s_instance = nullptr;
 ZWOptions^ ZWOptions::Instance::get()
 {
 	if (s_instance == nullptr)
-		s_instance = ref new ZWOptions();
+		s_instance = gcnew ZWOptions();
 	return s_instance;
 }
 //-----------------------------------------------------------------------------

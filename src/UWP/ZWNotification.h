@@ -51,7 +51,7 @@ namespace OpenZWave
 				m_event = notification->GetEvent();
 			}
 
-			m_valueId = ref new ZWValueID(notification->GetValueID());
+			m_valueId = gcnew ZWValueID(notification->GetValueID());
 		}
 
 	public:

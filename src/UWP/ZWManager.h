@@ -1928,7 +1928,7 @@ namespace OpenZWave
 		String^ ConvertString(std::string value) {
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
 			std::wstring intermediateForm = convert.from_bytes(value);
-			return ref new Platform::String(intermediateForm.c_str());
+			return gcnew Platform::String(intermediateForm.c_str());
 		}
 	};
 }

@@ -38,7 +38,7 @@ static ZWManager^ s_instance = nullptr;
 ZWManager^ ZWManager::Instance::get()
 {
 	if (s_instance == nullptr)
-		s_instance = ref new ZWManager();
+		s_instance = gcnew ZWManager();
 	return s_instance;
 }
 
@@ -64,7 +64,7 @@ void ZWManager::Initialize()
 void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, void* _context)
 {
 	ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
-	ZWNotification^ notification = ref new ZWNotification((Notification *)_notification);
+	ZWNotification^ notification = gcnew ZWNotification((Notification *)_notification);
 	manager->OnNotification(notification);
 }
 
@@ -236,7 +236,7 @@ bool ZWManager::GetValueListItems
 	vector<string> items;
 	if (Manager::Get()->GetValueListItems(id->CreateUnmanagedValueID(), &items))
 	{
-		Platform::Array<String^>^ arr = ref new Platform::Array<String^>(items.size());
+		Platform::Array<String^>^ arr = gcnew Platform::Array<String^>(items.size());
 		for (uint32 i = 0; i<items.size(); ++i)
 		{
 			arr[i] = ConvertString(items[i]);
@@ -260,7 +260,7 @@ bool ZWManager::GetValueListValues
 	vector<int32> items;
 	if (Manager::Get()->GetValueListValues(id->CreateUnmanagedValueID(), &items))
 	{
-		Platform::Array<int>^ arr = ref new Platform::Array<int>(items.size());
+		Platform::Array<int>^ arr = gcnew Platform::Array<int>(items.size());
 		for (uint32 i = 0; i<items.size(); ++i)
 		{
 			arr[i] = items[i];
@@ -287,7 +287,7 @@ uint32 ZWManager::GetNodeNeighbors
 	if (numNeighbors)
 	{
 		
-		Platform::Array<byte>^ arr = ref new Platform::Array<byte>(numNeighbors);;
+		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(numNeighbors);;
 		for (uint32 i = 0; i<numNeighbors; ++i)
 		{
 			arr[i] = neighbors[i];
@@ -363,7 +363,7 @@ uint32 ZWManager::GetAssociations
 	uint32 numAssociations = Manager::Get()->GetAssociations(homeId, nodeId, groupIdx, &associations);
 	if (numAssociations)
 	{
-		Platform::Array<byte>^ arr = ref new Platform::Array<byte>(numAssociations);
+		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(numAssociations);
 		for (uint32 i = 0; i<numAssociations; ++i)
 		{
 			arr[i] = associations[i];
@@ -388,7 +388,7 @@ uint8 ZWManager::GetAllScenes
 	uint32 numScenes = Manager::Get()->GetAllScenes(&sceneIds);
 	if (numScenes)
 	{
-		o_sceneIds = ref new Platform::Array<byte>(numScenes);
+		o_sceneIds = gcnew Platform::Array<byte>(numScenes);
 		for (uint32 i = 0; i<numScenes; ++i)
 		{
 			o_sceneIds[i] = sceneIds[i];
@@ -413,10 +413,10 @@ int ZWManager::SceneGetValues
 	uint32 numValues = Manager::Get()->SceneGetValues(sceneId, &values);
 	if (numValues)
 	{
-		o_values = ref new Platform::Array<ZWValueID^>(numValues);
+		o_values = gcnew Platform::Array<ZWValueID^>(numValues);
 		for (uint32 i = 0; i<numValues; ++i)
 		{
-			o_values[i] = ref new ZWValueID(values[i]);
+			o_values[i] = gcnew ZWValueID(values[i]);
 		}
 	}
 

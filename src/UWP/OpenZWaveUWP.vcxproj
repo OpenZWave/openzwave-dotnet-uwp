@@ -252,6 +252,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="ZWEnums.h" />
     <ClInclude Include="ZWManager.h" />
     <ClInclude Include="ZWNotification.h" />
