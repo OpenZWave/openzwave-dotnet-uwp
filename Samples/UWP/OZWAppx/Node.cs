@@ -285,6 +285,11 @@ namespace OZWAppx
                         break;
                     }
                 case NotificationType.NodeEvent: // A node has triggered an event. This is commonly caused when a node sends a Basic_Set command to the controller. The event value is stored in the notification.
+                    {
+                        var value = GetValue(notification.ValueID);
+                        Debug.WriteLine($"******Node Event @ ID: Value = {value}");
+                        break;
+                    }
                 default:
                     {
                         Debug.WriteLine($"******Notification '{notification.Type}' not Handled @ ID: {ID}");

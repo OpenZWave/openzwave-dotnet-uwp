@@ -5,4 +5,8 @@
     xmlns:local="using:OZWAppx"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <local:NegateConverter x:Key="negate" />
+        <local:BoolToOpacityConverter x:Key="boolOpacity" />
+    </Application.Resources>
 </Application>
