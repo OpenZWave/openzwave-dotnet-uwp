@@ -157,7 +157,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\UWP\OpenZWaveUWP.vcxproj">
+    <ProjectReference Include="..\..\..\src\OpenZWave\OpenZWaveUWP.vcxproj">
       <Project>{46641b66-9271-4234-8e8b-1547def4bebb}</Project>
       <Name>OpenZWaveUWP</Name>
     </ProjectReference>
