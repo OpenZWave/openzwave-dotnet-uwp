@@ -27,7 +27,7 @@
 
 using System;
 using System.Collections.Generic;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {

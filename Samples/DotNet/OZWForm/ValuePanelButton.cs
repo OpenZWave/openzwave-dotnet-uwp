@@ -25,7 +25,7 @@
 //
 //-----------------------------------------------------------------------------
 
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {

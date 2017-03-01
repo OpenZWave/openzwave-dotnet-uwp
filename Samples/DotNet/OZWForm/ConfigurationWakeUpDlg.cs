@@ -27,7 +27,7 @@
 
 using System;
 using System.Windows.Forms;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {
@@ -72,6 +72,8 @@ namespace OZWForm
         /// <param name="notification">The notification.</param>
         public void NotificationHandler(ZWNotification notification)
         {
+            if (IsDisposed)
+                return;
             // Handle the notification on a thread that can safely
             // modify the form controls without throwing an exception.
             m_notification = notification;
@@ -85,9 +87,9 @@ namespace OZWForm
         private void NotificationHandler()
         {
             // Check whether all the queries on this node have completed
-            if( m_notification.GetType() == ZWNotification.Type.NodeQueriesComplete )
+            if( m_notification.Type == NotificationType.NodeQueriesComplete )
             {
-                if ((m_notification.GetHomeId() == m_homeId) && (m_notification.GetNodeId() == m_nodeId))
+                if ((m_notification.HomeId == m_homeId) && (m_notification.NodeId == m_nodeId))
                 {
                     // Done!
 					m_manager.OnNotification -= new ManagedNotificationsHandler(NotificationHandler);

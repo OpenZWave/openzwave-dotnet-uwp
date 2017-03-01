@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 
 using System;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {
@@ -55,10 +55,10 @@ namespace OZWForm
 				ValueDecimalButtonSet.Enabled = false;
             }
 
-            Decimal value;
-            if (MainForm.Manager.GetValueAsDecimal(valueID, out value))
+            string value;
+            if (MainForm.Manager.GetValueAsString(valueID, out value))
             {
-                ValueDecimalTextBox.Text = value.ToString();
+                ValueDecimalTextBox.Text = value;
             }
 
             SendChanges = true;

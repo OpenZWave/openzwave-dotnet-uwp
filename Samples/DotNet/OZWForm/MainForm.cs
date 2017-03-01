@@ -28,8 +28,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {
@@ -39,13 +40,6 @@ namespace OZWForm
     /// </summary>
     public partial class MainForm : Form
     {
-        private static ZWOptions m_options = null;
-
-        public static ZWOptions Options
-        {
-            get { return m_options; }
-        }
-
         private static ZWManager m_manager = null;
 
         public static ZWManager Manager
@@ -204,28 +198,28 @@ namespace OZWForm
             NodeGridView.DataSource = bs;
 
             // Create the Options
-            m_options = new ZWOptions();
-            m_options.Create(@"..\..\..\..\..\..\..\config\", @"", @"");
+            ZWOptions.Instance.Initialize();
 
             // Add any app specific options here...
-            m_options.AddOptionInt("SaveLogLevel", (int) ZWLogLevel.Detail);
-                // ordinarily, just write "Detail" level messages to the log
-            m_options.AddOptionInt("QueueLogLevel", (int) ZWLogLevel.Debug);
-                // save recent messages with "Debug" level messages to be dumped if an error occurs
-            m_options.AddOptionInt("DumpTriggerLevel", (int) ZWLogLevel.Error);
-                // only "dump" Debug  to the log emessages when an error-level message is logged
+            ZWOptions.Instance.AddOptionInt("SaveLogLevel", (int) ZWLogLevel.Detail);
+            // ordinarily, just write "Detail" level messages to the log
+            ZWOptions.Instance.AddOptionInt("QueueLogLevel", (int) ZWLogLevel.Debug);
+            // save recent messages with "Debug" level messages to be dumped if an error occurs
+            ZWOptions.Instance.AddOptionInt("DumpTriggerLevel", (int) ZWLogLevel.Error);
+            // only "dump" Debug  to the log emessages when an error-level message is logged
 
             // Lock the options
-            m_options.Lock();
+            ZWOptions.Instance.Lock();
 
             // Create the OpenZWave Manager
-            m_manager = new ZWManager();
-            m_manager.Create();
-            m_manager.OnNotification += new ManagedNotificationsHandler(NotificationHandler);
+            m_manager = ZWManager.Instance;
+            ZWManager.Instance.Initialize();
+            ZWManager.Instance.OnNotification += new ManagedNotificationsHandler(NotificationHandler);
 
             // Add a driver
-            m_driverPort = @"\\.\COM5";
-            m_manager.AddDriver(m_driverPort);
+
+            var m_driverPort = System.IO.Ports.SerialPort.GetPortNames().FirstOrDefault();
+            ZWManager.Instance.AddDriver(m_driverPort);
 //			m_manager.AddDriver(@"HID Controller", ZWControllerInterface.Hid);
         }
 
@@ -247,33 +241,33 @@ namespace OZWForm
         /// </summary>
         private void NotificationHandler()
         {
-            switch (m_notification.GetType())
+            switch (m_notification.Type)
             {
-                case ZWNotification.Type.ValueAdded:
+                case NotificationType.ValueAdded:
                 {
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
-                        node.AddValue(m_notification.GetValueID());
+                        node.AddValue(m_notification.ValueID);
                     }
                     break;
                 }
 
-                case ZWNotification.Type.ValueRemoved:
+                case NotificationType.ValueRemoved:
                 {
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
-                        node.RemoveValue(m_notification.GetValueID());
+                        node.RemoveValue(m_notification.ValueID);
                     }
                     break;
                 }
 
-                case ZWNotification.Type.ValueChanged:
+                case NotificationType.ValueChanged:
                 {
 /*						Console.WriteLine("Value Changed");
 						ZWValueID v = m_notification.GetValueID();
-						Console.WriteLine("  Node : " + v.GetNodeId().ToString());
+						Console.WriteLine("  Node : " + v.NodeId.ToString());
 						Console.WriteLine("  CC   : " + v.GetCommandClassId().ToString());
 						Console.WriteLine("  Type : " + v.GetType().ToString());
 						Console.WriteLine("  Index: " + v.GetIndex().ToString());
@@ -286,40 +280,40 @@ namespace OZWForm
                     break;
                 }
 
-                case ZWNotification.Type.Group:
+                case NotificationType.Group:
                 {
                     break;
                 }
 
-                case ZWNotification.Type.NodeAdded:
+                case NotificationType.NodeAdded:
                 {
                     // if this node was in zwcfg*.xml, this is the first node notification
                     // if not, the NodeNew notification should already have been received
-                    if (GetNode(m_notification.GetHomeId(), m_notification.GetNodeId()) == null)
+                    if (GetNode(m_notification.HomeId, m_notification.NodeId) == null)
                     {
                         Node node = new Node();
-                        node.ID = m_notification.GetNodeId();
-                        node.HomeID = m_notification.GetHomeId();
+                        node.ID = m_notification.NodeId;
+                        node.HomeID = m_notification.HomeId;
                         m_nodeList.Add(node);
                     }
                     break;
                 }
 
-                case ZWNotification.Type.NodeNew:
+                case NotificationType.NodeNew:
                 {
                     // Add the new node to our list (and flag as uninitialized)
                     Node node = new Node();
-                    node.ID = m_notification.GetNodeId();
-                    node.HomeID = m_notification.GetHomeId();
+                    node.ID = m_notification.NodeId;
+                    node.HomeID = m_notification.HomeId;
                     m_nodeList.Add(node);
                     break;
                 }
 
-                case ZWNotification.Type.NodeRemoved:
+                case NotificationType.NodeRemoved:
                 {
                     foreach (Node node in m_nodeList)
                     {
-                        if (node.ID == m_notification.GetNodeId())
+                        if (node.ID == m_notification.NodeId)
                         {
                             m_nodeList.Remove(node);
                             break;
@@ -328,9 +322,9 @@ namespace OZWForm
                     break;
                 }
 
-                case ZWNotification.Type.NodeProtocolInfo:
+                case NotificationType.NodeProtocolInfo:
                 {
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
                         node.Label = m_manager.GetNodeType(m_homeId, node.ID);
@@ -338,9 +332,9 @@ namespace OZWForm
                     break;
                 }
 
-                case ZWNotification.Type.NodeNaming:
+                case NotificationType.NodeNaming:
                 {
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
                         node.Manufacturer = m_manager.GetNodeManufacturerName(m_homeId, node.ID);
@@ -351,34 +345,34 @@ namespace OZWForm
                     break;
                 }
 
-                case ZWNotification.Type.NodeEvent:
+                case NotificationType.NodeEvent:
                 {
                     break;
                 }
 
-                case ZWNotification.Type.PollingDisabled:
+                case NotificationType.PollingDisabled:
                 {
                     Console.WriteLine("Polling disabled notification");
                     break;
                 }
 
-                case ZWNotification.Type.PollingEnabled:
+                case NotificationType.PollingEnabled:
                 {
                     Console.WriteLine("Polling enabled notification");
                     break;
                 }
 
-                case ZWNotification.Type.DriverReady:
+                case NotificationType.DriverReady:
                 {
-                    m_homeId = m_notification.GetHomeId();
+                    m_homeId = m_notification.HomeId;
                     toolStripStatusLabel1.Text = "Initializing...driver with Home ID 0x" + m_homeId.ToString("X8") +
                                                  " is ready.";
                     break;
                 }
-                case ZWNotification.Type.NodeQueriesComplete:
+                case NotificationType.NodeQueriesComplete:
                 {
                     // as an example, enable query of BASIC info (CommandClass = 0x20)
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     //if (node != null)
                     //{
                     //    foreach (ZWValueID vid in node.Values)
@@ -390,28 +384,28 @@ namespace OZWForm
                     toolStripStatusLabel1.Text = "Initializing...node " + node.ID + " query complete.";
                     break;
                 }
-                case ZWNotification.Type.EssentialNodeQueriesComplete:
+                case NotificationType.EssentialNodeQueriesComplete:
                 {
-                    Node node = GetNode(m_notification.GetHomeId(), m_notification.GetNodeId());
+                    Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     toolStripStatusLabel1.Text = "Initializing...node " + node.ID + " essential queries complete.";
                     break;
                 }
-                case ZWNotification.Type.AllNodesQueried:
+                case NotificationType.AllNodesQueried:
                 {
                     toolStripStatusLabel1.Text = "Ready:  All nodes queried.";
-                    m_manager.WriteConfig(m_notification.GetHomeId());
+                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
-                case ZWNotification.Type.AllNodesQueriedSomeDead:
+                case NotificationType.AllNodesQueriedSomeDead:
                 {
                     toolStripStatusLabel1.Text = "Ready:  All nodes queried but some are dead.";
-                    m_manager.WriteConfig(m_notification.GetHomeId());
+                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
-                case ZWNotification.Type.AwakeNodesQueried:
+                case NotificationType.AwakeNodesQueried:
                 {
                     toolStripStatusLabel1.Text = "Ready:  Awake nodes queried (but not some sleeping nodes).";
-                    m_manager.WriteConfig(m_notification.GetHomeId());
+                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
             }
@@ -474,7 +468,7 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void PowerOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_manager.SetNodeOn(m_homeId, m_rightClickNode);
+            m_manager.SetValue(new ZWValueID(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0xFF);
         }
 
         /// <summary>
@@ -484,7 +478,7 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void PowerOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_manager.SetNodeOff(m_homeId, m_rightClickNode);
+            m_manager.SetValue(new ZWValueID(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0x00);
         }
 
         /// <summary>
@@ -494,7 +488,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void hasNodeFailedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.HasNodeFailed);
+            DoCommand(() =>
+               m_manager.HasNodeFailed(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.HasNodeFailed);
         }
 
         /// <summary>
@@ -504,7 +500,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void markNodeAsFailedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.RemoveFailedNode);
+            DoCommand(() =>
+               m_manager.RemoveFailedNode(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.RemoveFailedNode);
         }
 
         /// <summary>
@@ -514,7 +512,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void replaceFailedNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.ReplaceFailedNode);
+            DoCommand(() =>
+               m_manager.ReplaceFailedNode(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.ReplaceFailedNode);
         }
 
         /// <summary>
@@ -524,7 +524,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void createNewPrmaryControllerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.CreateNewPrimary);
+            DoCommand(() =>
+               m_manager.CreateNewPrimary(m_homeId),
+                ControllerCommandDlg.ZWControllerCommand.CreateNewPrimary);
         }
 
         /// <summary>
@@ -534,7 +536,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void addDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.AddDevice);
+            DoCommand(() =>
+               m_manager.AddNode(m_homeId, m_securityEnabled),
+                ControllerCommandDlg.ZWControllerCommand.AddDevice);
         }
 
         /// <summary>
@@ -544,7 +548,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void removeDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.RemoveDevice);
+            DoCommand(() =>
+               m_manager.RemoveNode(m_homeId),
+                ControllerCommandDlg.ZWControllerCommand.RemoveDevice);
         }
 
         /// <summary>
@@ -554,7 +560,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void transferPrimaryRoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.TransferPrimaryRole);
+            DoCommand(() =>
+               m_manager.TransferPrimaryRole(m_homeId),
+                ControllerCommandDlg.ZWControllerCommand.TransferPrimaryRole);
         }
 
         /// <summary>
@@ -564,7 +572,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void receiveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.ReceiveConfiguration);
+            DoCommand(() =>
+               m_manager.ReceiveConfiguration(m_homeId),
+                ControllerCommandDlg.ZWControllerCommand.ReceiveConfiguration);
         }
 
         /// <summary>
@@ -574,7 +584,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void requestNetworkUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.RequestNetworkUpdate);
+            DoCommand(() =>
+               m_manager.RequestNetworkUpdate(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.RequestNetworkUpdate);
         }
 
         /// <summary>
@@ -584,7 +596,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void requestNodeNeighborUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.RequestNodeNeighborUpdate);
+            DoCommand(() =>
+               m_manager.RequestNodeNeighborUpdate(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.RequestNodeNeighborUpdate);
         }
 
         /// <summary>
@@ -594,7 +608,9 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void assignReturnRouteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.AssignReturnRoute);
+            DoCommand(() =>
+               m_manager.AssignReturnRoute(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.AssignReturnRoute);
         }
 
         /// <summary>
@@ -604,16 +620,18 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void deleteReturnRouteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCommand(ZWControllerCommand.DeleteAllReturnRoutes);
+            DoCommand(() => 
+                m_manager.DeleteAllReturnRoutes(m_homeId, m_rightClickNode),
+                ControllerCommandDlg.ZWControllerCommand.DeleteAllReturnRoutes);
         }
 
         /// <summary>
         /// Does the command.
         /// </summary>
         /// <param name="command">The command.</param>
-        private void DoCommand(ZWControllerCommand command)
+        private void DoCommand(Func<bool> command, ControllerCommandDlg.ZWControllerCommand cmd)
         {
-            ControllerCommandDlg dlg = new ControllerCommandDlg(this, m_manager, m_homeId, command, m_rightClickNode);
+            ControllerCommandDlg dlg = new ControllerCommandDlg(this, m_manager, m_homeId, command, m_rightClickNode, cmd);
             DialogResult d = dlg.ShowDialog(this);
             dlg.Dispose();
         }
@@ -692,25 +710,25 @@ namespace OZWForm
         /// <returns></returns>
         private string GetValue(ZWValueID v)
         {
-            switch (v.GetType())
+            switch (v.Type)
             {
-                case ZWValueID.ValueType.Bool:
+                case ZWValueType.Bool:
                     bool r1;
                     m_manager.GetValueAsBool(v, out r1);
                     return r1.ToString();
-                case ZWValueID.ValueType.Byte:
+                case ZWValueType.Byte:
                     byte r2;
                     m_manager.GetValueAsByte(v, out r2);
                     return r2.ToString();
-                case ZWValueID.ValueType.Decimal:
-                    decimal r3;
-                    m_manager.GetValueAsDecimal(v, out r3);
-                    return r3.ToString();
-                case ZWValueID.ValueType.Int:
+                case ZWValueType.Decimal:
+                    string r3;
+                    m_manager.GetValueAsString(v, out r3);
+                    return r3;
+                case ZWValueType.Int:
                     Int32 r4;
                     m_manager.GetValueAsInt(v, out r4);
                     return r4.ToString();
-                case ZWValueID.ValueType.List:
+                case ZWValueType.List:
                     string[] r5;
                     m_manager.GetValueListItems(v, out r5);
                     string r6 = "";
@@ -720,13 +738,13 @@ namespace OZWForm
                         r6 += "/";
                     }
                     return r6;
-                case ZWValueID.ValueType.Schedule:
+                case ZWValueType.Schedule:
                     return "Schedule";
-                case ZWValueID.ValueType.Short:
+                case ZWValueType.Short:
                     short r7;
                     m_manager.GetValueAsShort(v, out r7);
                     return r7.ToString();
-                case ZWValueID.ValueType.String:
+                case ZWValueType.String:
                     string r8;
                     m_manager.GetValueAsString(v, out r8);
                     return r8;
@@ -771,7 +789,7 @@ namespace OZWForm
         private void addSecureDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_securityEnabled = true;
-            DoCommand(ZWControllerCommand.AddDevice);
+            m_manager.AddNode(m_homeId, m_securityEnabled);
             m_securityEnabled = false;
         }
     }

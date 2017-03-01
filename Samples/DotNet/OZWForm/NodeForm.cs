@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 
 using System.Windows.Forms;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {
@@ -64,44 +64,44 @@ namespace OZWForm
             foreach (ZWValueID valueID in node.Values)
             {
                 Control control = null;
-                switch (valueID.GetType())
+                switch (valueID.Type)
                 {
-                    case ZWValueID.ValueType.Bool:
+                    case ZWValueType.Bool:
                     {
                         control = new ValuePanelBool(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.Button:
+                    case ZWValueType.Button:
                     {
                         control = new ValuePanelButton(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.Byte:
+                    case ZWValueType.Byte:
                     {
                         control = new ValuePanelByte(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.Decimal:
+                    case ZWValueType.Decimal:
                     {
                         control = new ValuePanelDecimal(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.Int:
+                    case ZWValueType.Int:
                     {
                         control = new ValuePanelInt(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.List:
+                    case ZWValueType.List:
                     {
                         control = new ValuePanelList(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.Short:
+                    case ZWValueType.Short:
                     {
                         control = new ValuePanelShort(valueID);
                         break;
                     }
-                    case ZWValueID.ValueType.String:
+                    case ZWValueType.String:
                     {
                         control = new ValuePanelString(valueID);
                         break;

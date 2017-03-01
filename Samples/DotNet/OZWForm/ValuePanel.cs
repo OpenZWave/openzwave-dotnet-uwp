@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 
 using System.Windows.Forms;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {

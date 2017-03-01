@@ -28,7 +28,7 @@
 
 using System;
 using System.Windows.Forms;
-using OpenZWaveDotNet;
+using OpenZWave;
 
 namespace OZWForm
 {
@@ -51,22 +51,55 @@ namespace OZWForm
         {
             get { return m_mainDlg; }
         }
+        public enum ZWControllerCommand
+        {
+            None,
+            AddDevice,
+            CreateNewPrimary,
+            ReceiveConfiguration,
+            RemoveDevice,
+            RemoveFailedNode,
+            HasNodeFailed,
+            ReplaceFailedNode,
+            TransferPrimaryRole,
+            RequestNetworkUpdate,
+            RequestNodeNeighborUpdate,
+            AssignReturnRoute,
+            DeleteAllReturnRoutes,
+            SendNodeInformation,
+            ReplicationSend,
+            CreateButton,
+            DeleteButton
+        }
+        public enum ZWControllerState : byte
+        {   Normal = 0,             /**< No command in progress. */
+            Starting,               /**< The command is starting. */
+            Cancel,                 /**< The command was canceled. */
+            Error,                  /**< Command invocation had error(s) and was aborted */
+            Waiting,                /**< Controller is waiting for a user action. */
+            Sleeping,               /**< Controller command is on a sleep queue wait for device. */
+            InProgress,             /**< The controller is communicating with the other device to carry out the command. */
+            Completed,              /**< The command has completed successfully. */
+            Failed,                 /**< The command has failed. */
+            NodeOK,                 /**< Used only with ControllerCommand_HasNodeFailed to indicate that the controller thinks the node is OK. */
+            NodeFailed              /**< Used only with ControllerCommand_HasNodeFailed to indicate that the controller thinks the node has failed. */
+        }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerCommandDlg"/> class.
-        /// </summary>
-        /// <param name="_mainDlg">The main form.</param>
-        /// <param name="_manager">The manager.</param>
-        /// <param name="homeId">The home identifier.</param>
-        /// <param name="_op">The Controller Command.</param>
-        /// <param name="nodeId">The node identifier.</param>
-        public ControllerCommandDlg(MainForm _mainDlg, ZWManager _manager, UInt32 homeId, ZWControllerCommand _op,
-            Byte nodeId)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ControllerCommandDlg"/> class.
+    /// </summary>
+    /// <param name="_mainDlg">The main form.</param>
+    /// <param name="_manager">The manager.</param>
+    /// <param name="homeId">The home identifier.</param>
+    /// <param name="_op">The Controller Command.</param>
+    /// <param name="nodeId">The node identifier.</param>
+        public ControllerCommandDlg(MainForm _mainDlg, ZWManager _manager, UInt32 homeId, Func<bool> _op,
+            Byte nodeId, ZWControllerCommand cmd)
         {
             m_mainDlg = _mainDlg;
             m_manager = _manager;
             m_homeId = homeId;
-            m_op = _op;
+            m_op = cmd;
             m_nodeId = nodeId;
             m_dlg = this;
 
@@ -207,13 +240,13 @@ namespace OZWForm
         /// Handles Notifications.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        public static void NotificationHandler(ZWNotification notification)
+        private static void NotificationHandler(ZWNotification notification)
         {
-            switch (notification.GetType())
+            switch (notification.Type)
             {
-                case ZWNotification.Type.ControllerCommand:
+                case NotificationType.ControllerCommand:
                 {
-                    MyControllerStateChangedHandler(((ZWControllerState) notification.GetEvent()));
+                    MyControllerStateChangedHandler((ZWControllerState)notification.Event);
                     break;
                 }
             }
@@ -223,7 +256,7 @@ namespace OZWForm
         /// Handles controller state changes.
         /// </summary>
         /// <param name="state">The state.</param>
-        public static void MyControllerStateChangedHandler(ZWControllerState state)
+        private static void MyControllerStateChangedHandler(ZWControllerState state)
         {
             // Handle the controller state notifications here.
             bool complete = false;
