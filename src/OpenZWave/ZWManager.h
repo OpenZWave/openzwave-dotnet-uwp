@@ -247,10 +247,10 @@ namespace OpenZWave
 		/// better for the promary controller to be portable, since most devices must be added when
 		/// installed in their final location.
 		/// </para><para>
-		/// Calls to BeginControllerCommand will fail if the controller is not the primary.</para>\
+		/// Calls to BeginControllerCommand will fail if the controller is not the primary.</para>
 		/// </remarks>
 		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
-		/// <returns>true if it is a primary controller, false if not.<returns>
+		/// <returns>true if it is a primary controller, false if not.</returns>
 		bool IsPrimaryController(uint32 homeId) { return Manager::Get()->IsPrimaryController(homeId); }
 
 		/// <summary>Query if the controller is a static update controller.</summary>
@@ -725,19 +725,15 @@ namespace OpenZWave
 		*/
 		void SetNodeName(uint32 homeId, uint8 nodeId, String^ nodeName) { Manager::Get()->SetNodeName(homeId, nodeId, ConvertString(nodeName)); }
 
-		/**
-		* <summary>Set the location of a node.</summary>
-		*
-		* The node location is a user-editable string that would normally be handled by the Node Naming
-		* commmand class, but many devices do not support it.  So that a node can always report its
-		* location, OpenZWave stores it with the node data, and provides access through this method
-		* and GetNodeLocation, rather than reporting it via a command class Value object.
-		* If the device does support the Node Naming command class, the new location will be sent to the node.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node to query.</param>
-		* \param location A string containing the node's location.
-		* \see GetNodeLocation, GetNodeName, SetNodeName
-		*/
+		/// <summary>Set the location of a node.</summary>
+		/// <remarks>The node location is a user-editable string that would normally be handled by the Node Naming
+		/// commmand class, but many devices do not support it.  So that a node can always report its
+		/// location, OpenZWave stores it with the node data, and provides access through this method
+		/// and GetNodeLocation, rather than reporting it via a command class Value object.
+		/// If the device does support the Node Naming command class, the new location will be sent to the node.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to query.</param>
+		/// <param name="location">A string containing the node's location.</param>
 		void SetNodeLocation(uint32 homeId, uint8 nodeId, String^ location) { Manager::Get()->SetNodeLocation(homeId, nodeId, ConvertString(location)); }
 
 		/// <summary>Get whether the node information has been received</summary>
@@ -746,13 +742,13 @@ namespace OpenZWave
 		/// <returns>True if the node information has been received yet</returns>
 		bool IsNodeInfoReceived(uint32 homeId, uint8 nodeId) { return Manager::Get()->IsNodeInfoReceived(homeId, nodeId); }
 
-		/**
-		* <summary>Get whether the node has the defined class available or not</summary>
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node to query.</param>
-		* \param commandClassId Id of the class to test for
-		* \return True if the node does have the class instantiated, will return name & version
-		*/
+		/// <summary>Get whether the node has the defined class available or not</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to query.</param>
+		/// <param name="commandClassId">Id of the class to test for</param>
+		/// <param name="className">Name of the class</param>
+		/// <param name="classVersion">Version of the class</param>
+		/// <returns>True if the node does have the class instantiated, will return name & version</returns>
 		bool GetNodeClassInformation(uint32 homeId, uint8 nodeId, uint8 commandClassId,
 #if __cplusplus_cli
 			[Out] String^ %className, [Out] System::Byte %classVersion
@@ -937,12 +933,10 @@ namespace OpenZWave
 
 		/**
 		* <summary>Gets a value as a string.</summary>
-		*
-		* Creates a string representation of a value, regardless of type.
-		* \param _id The unique identifier of the value.
-		* \param o_value a String that will be filled with the value.
-		* \return true if the value was obtained.</returns>
-		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueListSelection, GetValueListItems
+		* <remarks>Creates a string representation of a value, regardless of type.</remarks>
+		* <param name="_id">The unique identifier of the value.</param>
+		* <param name="o_value">a String that will be filled with the value.</param>
+		* <returns>true if the value was obtained.</returns>
 		*/
 		bool GetValueAsString(ZWValueID^ id,
 #if __cplusplus_cli
@@ -1075,16 +1069,13 @@ namespace OpenZWave
 		*/
 		bool SetValue(ZWValueID^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Sets the value from a string, regardless of type.</summary>
-		*
-		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-		* held by the node is updated directly.  This will be reverted by a future status message from the device
-		* if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.
-		* \param id The unique identifier of the integer value.
-		* \param value The new value of the string.
-		* \return true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
-		*/
+		/// <summary>Sets the value from a string, regardless of type.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="value">The new value of the string.</param>
+		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
 		bool SetValue(ZWValueID^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
@@ -1141,7 +1132,7 @@ namespace OpenZWave
 		//-----------------------------------------------------------------------------
 		// Climate Control Schedules
 		//-----------------------------------------------------------------------------
-		/** \name Climate Control Schedules
+		/* Climate Control Schedules
 		*  Methods for accessing schedule values.  All the methods require a ValueID, which will have been provided
 		*  in the ValueAdded Notification callback when the the value was first discovered by OpenZWave.
 		*  <p>The ValueType_Schedule is a specialized Value used to simplify access to the switch point schedule
@@ -1226,8 +1217,8 @@ namespace OpenZWave
 		//-----------------------------------------------------------------------------
 		// SwitchAll
 		//-----------------------------------------------------------------------------
-		/** \name SwitchAll
-		*  Methods for switching all devices on or off together.  The devices must support
+		/*  SwitchAll
+		*   Methods for switching all devices on or off together.  The devices must support
 		*	the SwitchAll command class.  The command is first broadcast to all nodes, and
 		*	then followed up with individual commands to each node (because broadcasts are
 		*	not routed, the message might not otherwise reach all the nodes).
@@ -1236,13 +1227,13 @@ namespace OpenZWave
 
 		/**
 		* <summary>Switch all devices on.
-		* All devices that support the SwitchAll command class will be turned on.
+		* All devices that support the SwitchAll command class will be turned on.</summary>
 		*/
 		void SwitchAllOn(uint32 homeId) { Manager::Get()->SwitchAllOn(homeId); }
 
 		/**
 		* <summary>Switch all devices off.
-		* All devices that support the SwitchAll command class will be turned off.
+		* All devices that support the SwitchAll command class will be turned off.</summary>
 		*/
 		void SwitchAllOff(uint32 homeId) { Manager::Get()->SwitchAllOff(homeId); }
 
@@ -1251,12 +1242,12 @@ namespace OpenZWave
 		//-----------------------------------------------------------------------------
 		// Configuration Parameters
 		//-----------------------------------------------------------------------------
-		/** \name Configuration Parameters
+		/* Configuration Parameters
 		*  Methods for accessing device configuration parameters.
 		*  Configuration parameters are values that are managed by the Configuration command class.
-		*	The values are device-specific and are not reported by the devices. Information on parameters
+		*  The values are device-specific and are not reported by the devices. Information on parameters
 		*  is provided only in the device user manual.
-		*  <p>An ongoing task for the OpenZWave project is to create XML files describing the available
+		*  An ongoing task for the OpenZWave project is to create XML files describing the available
 		*  parameters for every Z-Wave.  See the config folder in the project source code for examples.
 		*/
 		/*@{*/
@@ -1800,11 +1791,10 @@ namespace OpenZWave
 		bool RemoveSceneValue(uint8 sceneId, ZWValueID^ valueId) { return Manager::Get()->RemoveSceneValue(sceneId, valueId->CreateUnmanagedValueID()); }
 
 		/**
-		* <summary>Retrieves the scene's list of values.
-		* \param sceneId The Scene ID of the scene to retrieve the value from.
-		* \param o_value an array of ValueIDs.
-		* \return The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
+		* <summary>Retrieves the scene's list of values.</summary>
+		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		* <param name="o_value">an array of ValueIDs.</param>
+		* <returns>The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.</returns>
 		*/
 #if __cplusplus_cli
 		int SceneGetValues(uint8 sceneId, [Out] cli::array<ZWValueID ^>^ %o_values);
@@ -1987,7 +1977,7 @@ namespace OpenZWave
 
 		/// <summary>Check if a Scene ID is defined.</summary>
 		/// <param name="sceneId">The Scene ID.</param>
-		/// <returns>true if Scene ID exists.</param>
+		/// <returns>true if Scene ID exists.</returns>
 		bool SceneExists(uint8 sceneId) { return Manager::Get()->SceneExists(sceneId); }
 
 		/// <summary>Activate given scene to perform all its actions.</summary>
@@ -2014,22 +2004,14 @@ namespace OpenZWave
 		*/
 		void ResetController(uint32 homeId) { Manager::Get()->ResetController(homeId); }
 
-		/**
-		* <summary>Soft Reset a PC Z-Wave Controller.</summary>
-		*
-		* Resets a controller without erasing its network configuration settings.
-		* \param homeId The Home ID of the Z-Wave controller to be reset.
-		* \see SoftReset
-		*/
+		/// <summary>Soft Reset a PC Z-Wave Controller.</summary>
+		/// <remarks>Resets a controller without erasing its network configuration settings.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
 		void SoftReset(uint32 homeId) { Manager::Get()->SoftReset(homeId); }
 
-		/**
-		* \brief Cancels any in-progress command running on a controller.
-		*
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return true if a command was running and was cancelled.
-		* \see BeginControllerCommand
-		*/
+		/// <summary>Cancels any in-progress command running on a controller.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>true if a command was running and was cancelled.</returns>
 		bool CancelControllerCommand(uint32 homeId) { return Manager::Get()->CancelControllerCommand(homeId); }
 
 #if __cplusplus_cli

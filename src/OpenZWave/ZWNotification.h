@@ -37,6 +37,10 @@ using namespace OpenZWave;
 
 namespace OpenZWave
 {
+	/// <summary>
+	/// Provides a container for data sent via the notification callback
+	/// handler from the ZWManager.OnNotification event.
+	// </summary>
 	public ref class ZWNotification sealed
 	{
 	internal:
@@ -55,14 +59,20 @@ namespace OpenZWave
 		}
 
 	public:
+		/// <summary>Get the type of this notification.</summary>
 		property NotificationType Type { NotificationType get() { return m_type; } }
+		/// <summary>Gets the notification code</summary>
 		property NotificationCode Code { NotificationCode get() { return (NotificationCode)m_byte; } }
+		/// <summary>Get the Home ID of the driver sending this notification.</summary>
 		property uint32 HomeId { uint32 get() { return m_valueId->HomeId; } }
+		/// <summary>Get the ID of any node involved in this notification.</summary>
 		property uint8 NodeId { uint8 get() { return m_valueId->NodeId; } }
+		/// <summary>Get the unique ValueID of any value involved in this notification.</summary>
 		property ZWValueID^ ValueID { ZWValueID^ get() { return m_valueId; } }
+		/// <summary>Get the index of the association group that has been changed.  Only valid in Notification::Type_Group notifications.</summary>
 		property uint8 GroupIdx { uint8 get() { assert(NotificationType::Group == m_type); return m_byte; } }
+		/// <summary>Get the event value of a notification.  Only valid in Notification::Type_NodeEvent and Notification::Type_ControllerCommand notifications.</summary>
 		property uint8 Event { uint8 get() { return m_event; } }
-		property uint8 Byte { uint8 get() { return m_byte; } }
 
 	private:
 		NotificationType		m_type;

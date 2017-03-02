@@ -6,18 +6,29 @@ namespace OpenZWave
 {
 	/// <summary>Various LogLevels available to the Application</summary>
 	public enum class ZWLogLevel
-	{
-		None = LogLevel_None,
-		Always = LogLevel_Always,
-		Fatal = LogLevel_Fatal,
-		Error = LogLevel_Error,
-		Warning = LogLevel_Warning,
-		Alert = LogLevel_Alert,
-		Info = LogLevel_Info,
-		Detail = LogLevel_Detail,
-		Debug = LogLevel_Debug,
-		StreamDetail = LogLevel_StreamDetail,
-		Internal = LogLevel_Internal
+	{	
+		/// <summary>Disable all logging</summary>
+		None = LogLevel_None,				   
+		/// <summary>These messages should always be shown</summary>
+		Always = LogLevel_Always,			   
+		/// <summary>A likely fatal issue in the library</summary>
+		Fatal = LogLevel_Fatal,				   
+		/// <summary>A serious issue with the library or the network</summary>
+		Error = LogLevel_Error,				   
+		/// <summary>A minor issue from which the library should be able to recover</summary>
+		Warning = LogLevel_Warning,			               
+		/// <summary>Something unexpected by the library about which the controlling application should be aware</summary>
+		Alert = LogLevel_Alert,				   			   
+		/// <summary>Everything is working fine...these messages provide streamlined feedback on each message</summary>
+		Info = LogLevel_Info,				   			   
+		/// <summary>Detailed information on the progress of each message</summary>
+		Detail = LogLevel_Detail,			   			   
+		/// <summary>Very detailed information on progress that will create a huge log file quickly. But this level (as others) can be queued and sent to the log only on an error or warning</summary>
+		Debug = LogLevel_Debug,				   			   
+		/// <summary>Will include low-level byte transfers from controller to buffer to application and back</summary>
+		StreamDetail = LogLevel_StreamDetail,  			   
+		/// <summary>Used only within the log class (uses existing timestamp, etc.)</summary>
+		Internal = LogLevel_Internal           
 	};
 
 	// Controller interface types
@@ -36,74 +47,74 @@ namespace OpenZWave
 		String = Options::OptionType_String
 	};
 
-	/** <summary>Notification types.</summary>
-	* <remarks>Notifications of various Z-Wave events sent to the watchers
-	* registered with the Manager::AddWatcher method.</remarks> */
+	/// <summary>Notification types.</summary>
+	/// <remarks>Notifications of various Z-Wave events sent to the watchers
+	/// registered with the Manager::AddWatcher method.</remarks>
 	public enum class NotificationType
 	{
-		/** <summary>A new node value has been added to OpenZWave's list. These notifications occur after a node has been discovered, and details of its command classes have been received.  Each command class may generate one or more values depending on the complexity of the item being represented.</summary> */
+		/// <summary>A new node value has been added to OpenZWave's list. These notifications occur after a node has been discovered, and details of its command classes have been received.  Each command class may generate one or more values depending on the complexity of the item being represented.</summary> 
 		ValueAdded = Notification::Type_ValueAdded,
-		/** <summary>A node value has been removed from OpenZWave's list.  This only occurs when a node is removed.</summary> */
+		/// <summary>A node value has been removed from OpenZWave's list.  This only occurs when a node is removed.</summary>
 		ValueRemoved = Notification::Type_ValueRemoved,
-		/** <summary>A node value has been updated from the Z-Wave network and it is different from the previous value.</summary> */
+		/// <summary>A node value has been updated from the Z-Wave network and it is different from the previous value.</summary>
 		ValueChanged = Notification::Type_ValueChanged,
-		/** <summary>A node value has been updated from the Z-Wave network.</summary> */
+		/// <summary>A node value has been updated from the Z-Wave network.</summary>
 		ValueRefreshed = Notification::Type_ValueRefreshed,
-		/** <summary>The associations for the node have changed. The application should rebuild any group information it holds about the node.</summary> */
+		/// <summary>The associations for the node have changed. The application should rebuild any group information it holds about the node.</summary>
 		Group = Notification::Type_Group,
-		/** <summary>A new node has been found (not already stored in zwcfg*.xml file) </summary>*/
+		/// <summary>A new node has been found (not already stored in zwcfg*.xml file) </summary>
 		NodeNew = Notification::Type_NodeNew,
-		/** <summary>A new node has been added to OpenZWave's list.  This may be due to a device being added to the Z-Wave network, or because the application is initializing itself.</summary> */
+		/// <summary>A new node has been added to OpenZWave's list.  This may be due to a device being added to the Z-Wave network, or because the application is initializing itself.</summary>
 		NodeAdded = Notification::Type_NodeAdded,
-		/** <summary>A node has been removed from OpenZWave's list.  This may be due to a device being removed from the Z-Wave network, or because the application is closing.</summary> */
+		/// <summary>A node has been removed from OpenZWave's list.  This may be due to a device being removed from the Z-Wave network, or because the application is closing.</summary>
 		NodeRemoved = Notification::Type_NodeRemoved,
-		/** <summary>Basic node information has been received, such as whether the node is a listening device, a routing device and its baud rate and basic, generic and specific types. It is after this notification that you can call Manager::GetNodeType to obtain a label containing the device description.</summary> */
+		/// <summary>Basic node information has been received, such as whether the node is a listening device, a routing device and its baud rate and basic, generic and specific types. It is after this notification that you can call Manager::GetNodeType to obtain a label containing the device description.</summary> 
 		NodeProtocolInfo = Notification::Type_NodeProtocolInfo,
-		/** <summary> One of the node names has changed (name, manufacturer, product).</summary> */
+		/// <summary> One of the node names has changed (name, manufacturer, product).</summary>
 		NodeNaming = Notification::Type_NodeNaming,
-		/** <summary>A node has triggered an event.  This is commonly caused when a node sends a Basic_Set command to the controller.  The event value is stored in the notification.</summary> */
+		/// <summary>A node has triggered an event.  This is commonly caused when a node sends a Basic_Set command to the controller.  The event value is stored in the notification.</summary>
 		NodeEvent = Notification::Type_NodeEvent,
-		/** <summary></summary> */
+		/// <summary></summary>
 		PollingDisabled = Notification::Type_PollingDisabled,
-		/** <summary></summary> */
+		/// <summary></summary>
 		PollingEnabled = Notification::Type_PollingEnabled,
-		/** <summary></summary> */
+		/// <summary></summary>
 		SceneEvent = Notification::Type_SceneEvent,
-		/** <summary></summary> */
+		/// <summary></summary>
 		CreateButton = Notification::Type_CreateButton,
-		/** <summary></summary> */
+		/// <summary></summary>
 		DeleteButton = Notification::Type_DeleteButton,
-		/** <summary></summary> */
+		/// <summary></summary>
 		ButtonOn = Notification::Type_ButtonOn,
-		/** <summary></summary> */
+		/// <summary></summary>
 		ButtonOff = Notification::Type_ButtonOff,
-		/** <summary>A driver for a PC Z-Wave controller has been added and is ready to use.  The notification will contain the controller's Home ID, which is needed to call most of the Manager methods.</summary> */
+		/// <summary>A driver for a PC Z-Wave controller has been added and is ready to use.  The notification will contain the controller's Home ID, which is needed to call most of the Manager methods.</summary>
 		DriverReady = Notification::Type_DriverReady,
-		/** <summary>Driver failed to load</summary> */
+		/// <summary>Driver failed to load</summary>
 		DriverFailed = Notification::Type_DriverFailed,
-		/** <summary>All nodes and values for this driver have been removed.  This is sent instead of potentially hundreds of individual node and value notifications.</summary> */
+		/// <summary>All nodes and values for this driver have been removed.  This is sent instead of potentially hundreds of individual node and value notifications.</summary>
 		DriverReset = Notification::Type_DriverReset,
-		/** <summary>The queries on a node that are essential to its operation have been completed. The node can now handle incoming messages.</summary> */
+		/// <summary>The queries on a node that are essential to its operation have been completed. The node can now handle incoming messages.</summary>
 		EssentialNodeQueriesComplete = Notification::Type_EssentialNodeQueriesComplete,
-		/** <summary>All the initialization queries on a node have been completed.</summary> */
+		/// <summary>All the initialization queries on a node have been completed.</summary> 
 		NodeQueriesComplete = Notification::Type_NodeQueriesComplete,
-		/** <summary></summary> */
+		/// <summary>All awake nodes have been queried, so client application can expected complete data for these nodes.</summary>
 		AwakeNodesQueried = Notification::Type_AwakeNodesQueried,
-		/** <summary></summary> */
+		///<summary>All nodes have been queried but some dead nodes found.</summary> 
 		AllNodesQueriedSomeDead = Notification::Type_AllNodesQueriedSomeDead,
-		/** <summary></summary> */
+		/// <summary>All nodes have been queried, so client application can expected complete data.</summary> 
 		AllNodesQueried = Notification::Type_AllNodesQueried,
-		/** <summary></summary> */
+		/// <summary>An error has occurred that we need to report.</summary> 
 		Notification = Notification::Type_Notification,
-		/** <summary></summary> */
+		/// <summary>The Driver is being removed. (either due to Error or by request) Do Not Call Any Driver Related Methods after receiving this call</summary>
 		DriverRemoved = Notification::Type_DriverRemoved,
-		/** <summary></summary> */
+		/// <summary>When Controller Commands are executed, Notifications of Success/Failure etc are communicated via this Notification</summary>
 		ControllerCommand = Notification::Type_ControllerCommand,
-		/** <summary>The Device has been reset and thus removed from the NodeList in OZW</summary> */
+		/// <summary>The Device has been reset and thus removed from the NodeList in OZW</summary>
 		NodeReset = Notification::Type_NodeReset,
-		/** <summary>Warnings and Notifications Generated by the library that should be displayed to the user (eg, out of date config files) </summary>*/
+		/// <summary>Warnings and Notifications Generated by the library that should be displayed to the user (eg, out of date config files) </summary>
 		UserAlerts = Notification::Type_UserAlerts,
-		/** <summary>The ManufacturerSpecific Database Is Ready</summary> */
+		/// <summary>The ManufacturerSpecific Database Is Ready</summary>
 		ManufacturerSpecificDBReady = Notification::Type_ManufacturerSpecificDBReady
 	};
 
