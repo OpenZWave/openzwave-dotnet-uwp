@@ -17,6 +17,7 @@ XCOPY ..\src\Output\OpenZWaveDotNet\x86\Release\OpenZWaveDotNet.dll package\lib\
 XCOPY ..\src\Output\OpenZWaveDotNet\x86\Release\OpenZWaveDotNet.xml package\lib\net452\ /Y
 MD package\build\net452\
 COPY OpenZWave.net452.targets package\build\net452\%PackageName%.targets /Y
+COPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.xml package\lib\net452\OpenZWaveDotNet.xml /Y
 
 nuget pack package\OpenZWave.nuspec
 PAUSE
