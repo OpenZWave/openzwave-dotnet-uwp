@@ -1,4 +1,5 @@
-SET PackageName=dotMorten.OpenZWave
+SET PackageName=OpenZWave
+SET Version=2.0.0-beta1
 RMDIR package /S /Q
 XCOPY ..\open-zwave\config package\config\ /S /Y
 XCOPY OpenZWave.nuspec package\ /Y
@@ -19,5 +20,5 @@ MD package\build\net452\
 COPY OpenZWave.net452.targets package\build\net452\%PackageName%.targets /Y
 COPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.xml package\lib\net452\OpenZWaveDotNet.xml /Y
 
-nuget pack package\OpenZWave.nuspec
+nuget pack package\OpenZWave.nuspec -Properties packageid=%PackageName%;version=%Version%
 PAUSE

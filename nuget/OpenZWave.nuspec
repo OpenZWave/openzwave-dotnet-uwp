@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>dotMorten.OpenZWave</id>
-    <version>0.9.0</version>
+    <id>$packageid$</id>
+    <version>$version$</version>
     <title>OpenZWave for .NET and UWP</title>
     <authors>Morten Nielsen</authors>
     <owners>Morten Nielsen</owners>
