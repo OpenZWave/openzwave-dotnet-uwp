@@ -86,7 +86,7 @@ void ZWManager::OnNotificationFromUnmanaged
 )
 {
 	ZWNotification^ notification = gcnew ZWNotification(_notification);
-	OnNotification(notification);
+	NotificationReceived(this, gcnew NotificationReceivedEventArgs(notification));
 }
 
 #else
@@ -94,7 +94,7 @@ void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, v
 {
 	ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
 	ZWNotification^ notification = gcnew ZWNotification((Notification *)_notification);
-	manager->OnNotification(notification);
+	manager->NotificationReceived(manager, gcnew NotificationReceivedEventArgs(notification));
 }
 #endif
 

@@ -45,7 +45,9 @@ using namespace Platform;
 
 namespace OpenZWave
 {
-	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
+	ref class ZWManager;
+
+	public delegate void NotificationReceivedEventHandler(ZWManager^ sender, NotificationReceivedEventArgs^ e);
 
 #if __cplusplus_cli
 
@@ -114,7 +116,7 @@ namespace OpenZWave
 	public:
 		static property ZWManager^ Instance { ZWManager^ get(); }
 
-		event ManagedNotificationsHandler^ OnNotification;
+		event NotificationReceivedEventHandler^ NotificationReceived;
 
 		/** <summary>Creates the Manager singleton object.</summary>
 		* <remarks>
@@ -123,7 +125,7 @@ namespace OpenZWave
 		* callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
 		* \see Destroy, AddWatcher, AddDriver
 		* <seealso cref="Destroy" />
-		* <seealso cref="OnNotification" />
+		* <seealso cref="NotificationReceived" />
 		* <seealso cref="AddDriver" />
 		*/
 		void Initialize();

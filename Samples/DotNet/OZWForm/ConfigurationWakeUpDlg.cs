@@ -70,13 +70,13 @@ namespace OZWForm
         /// The notification handler.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        public void NotificationHandler(ZWNotification notification)
+        public void NotificationHandler(ZWManager manager, NotificationReceivedEventArgs e)
         {
             if (IsDisposed)
                 return;
             // Handle the notification on a thread that can safely
             // modify the form controls without throwing an exception.
-            m_notification = notification;
+            m_notification = e.Notification;
             Invoke(new MethodInvoker(NotificationHandler));
             m_notification = null;
         }
@@ -92,7 +92,7 @@ namespace OZWForm
                 if ((m_notification.HomeId == m_homeId) && (m_notification.NodeId == m_nodeId))
                 {
                     // Done!
-					m_manager.OnNotification -= new ManagedNotificationsHandler(NotificationHandler);
+					m_manager.NotificationReceived -= new NotificationReceivedEventHandler(NotificationHandler);
 					DialogResult = DialogResult.OK;
 				}
             }
@@ -115,7 +115,7 @@ namespace OZWForm
 		private void ConfigurationWakeUpDlg_Shown(object sender, EventArgs e)
 		{
 			// Add a handler so that we receive notification of when the node queries are complete.
-			m_manager.OnNotification += new ManagedNotificationsHandler(NotificationHandler);
+			m_manager.NotificationReceived += new NotificationReceivedEventHandler(NotificationHandler);
 
 			// Request refreshed config param values.
 			m_manager.RequestAllConfigParams(m_homeId, m_nodeId);

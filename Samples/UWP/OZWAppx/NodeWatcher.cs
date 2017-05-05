@@ -55,7 +55,7 @@ namespace OZWAppx
 
             // Create the OpenZWave Manager
             ZWManager.Instance.Initialize();
-            ZWManager.Instance.OnNotification += OnNodeNotification;
+            ZWManager.Instance.NotificationReceived += OnNodeNotification;
 
 #if NETFX_CORE
             var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
@@ -110,7 +110,7 @@ namespace OZWAppx
         /// The notifications handler.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        private void OnNodeNotification(ZWNotification notification)
+        private void OnNodeNotification(ZWManager manager, NotificationReceivedEventArgs e)
         {
             // Handle the notification on a thread that can safely
             // modify the controls without throwing an exception.
@@ -120,7 +120,7 @@ namespace OZWAppx
             Dispatcher.BeginInvoke(new Action(() =>
 #endif
             {
-                NotificationHandler(notification);
+                NotificationHandler(e.Notification);
             }
 #if !NETFX_CORE
             )

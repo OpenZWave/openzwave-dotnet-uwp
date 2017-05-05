@@ -37,9 +37,28 @@ using namespace OpenZWave;
 
 namespace OpenZWave
 {
+	ref class ZWNotification;
+
+	/// <summary>
+	/// The event args returned by the ZWManager.NotificationReceived event
+	// </summary>
+	public ref class NotificationReceivedEventArgs sealed
+	{
+	internal:
+		NotificationReceivedEventArgs(ZWNotification^ notification) : m_notification(notification)
+		{
+		}
+	public:
+		/// <summary>Get the notification from the event argument.</summary>
+		property ZWNotification^ Notification { ZWNotification^ get() { return m_notification; } }
+
+	private:
+		ZWNotification^ m_notification;
+	};
+
 	/// <summary>
 	/// Provides a container for data sent via the notification callback
-	/// handler from the ZWManager.OnNotification event.
+	/// handler from the ZWManager.NotificationReceived event.
 	// </summary>
 	public ref class ZWNotification sealed
 	{

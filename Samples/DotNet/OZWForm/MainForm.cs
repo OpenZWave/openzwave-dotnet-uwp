@@ -214,7 +214,7 @@ namespace OZWForm
             // Create the OpenZWave Manager
             m_manager = ZWManager.Instance;
             ZWManager.Instance.Initialize();
-            ZWManager.Instance.OnNotification += new ManagedNotificationsHandler(NotificationHandler);
+            ZWManager.Instance.NotificationReceived += new NotificationReceivedEventHandler(NotificationHandler);
 
             // Add a driver
 
@@ -227,11 +227,11 @@ namespace OZWForm
         /// The notifications handler.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        public void NotificationHandler(ZWNotification notification)
+        public void NotificationHandler(ZWManager manager, NotificationReceivedEventArgs e)
         {
             // Handle the notification on a thread that can safely
             // modify the form controls without throwing an exception.
-            m_notification = notification;
+            m_notification = e.Notification;
             Invoke(new MethodInvoker(NotificationHandler));
             m_notification = null;
         }
