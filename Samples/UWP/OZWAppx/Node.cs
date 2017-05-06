@@ -214,7 +214,7 @@ namespace OZWAppx
             switch(notification.Type)
             {
                 // NodeProtocolInfo: We now know what type of node it is
-                case NotificationType.NodeProtocolInfo:
+                case ZWNotificationType.NodeProtocolInfo:
                     {
                         // Basic node information has been received, such as whether the node is a listening
                         // device, a routing device and its baud rate and basic, generic and specific types.
@@ -222,7 +222,7 @@ namespace OZWAppx
                         OnPropertyChanged(nameof(Label));
                         break;
                     }
-                case NotificationType.NodeNaming:
+                case ZWNotificationType.NodeNaming:
                     {
                         // One of the node names has changed (name, manufacturer, product)
                         OnPropertyChanged(nameof(Name));
@@ -232,7 +232,7 @@ namespace OZWAppx
                         OnPropertyChanged(nameof(Location));
                         break;
                     }
-                case NotificationType.EssentialNodeQueriesComplete:
+                case ZWNotificationType.EssentialNodeQueriesComplete:
                     {
                         // The queries on a node that are essential to its operation have been completed. 
                         // The node can now handle incoming messages.
@@ -240,15 +240,15 @@ namespace OZWAppx
                         OnPropertyChanged(nameof(EssentialNodeQueriesComplete));
                         break;
                     }
-                case NotificationType.NodeQueriesComplete:
+                case ZWNotificationType.NodeQueriesComplete:
                     {
                         // All the initialization queries on a node have been completed.
                         NodeQueriesComplete = true;
                         OnPropertyChanged(nameof(NodeQueriesComplete));
                         break;
                     }
-                case NotificationType.ValueAdded:
-                case NotificationType.ValueChanged:
+                case ZWNotificationType.ValueAdded:
+                case ZWNotificationType.ValueChanged:
                     {
                         // Added: A new node value has been added to OpenZWave's list. These notifications occur
                         // after a node has been discovered, and details of its command classes have been
@@ -261,7 +261,7 @@ namespace OZWAppx
                         Debug.WriteLine($"{notification.Type}. Node {ID}: {ZWManager.Instance.GetValueLabel(value)} = {GetValue(value)} {ZWManager.Instance.GetValueUnits(value)}");
                         break;
                     }
-                case NotificationType.ValueRemoved:
+                case ZWNotificationType.ValueRemoved:
                     {
                         // A node value has been removed from OpenZWave's list. This only occurs when a
                         // node is removed.
@@ -270,21 +270,21 @@ namespace OZWAppx
                         RemoveValue(notification.ValueId);
                         break;
                     }
-                case NotificationType.Group:
+                case ZWNotificationType.Group:
                     {
                         // The associations for the node have changed.The application should rebuild any
                         // group information it holds about the node.
                         break;
                     }
 
-                case NotificationType.Notification: //An error has occurred that we need to report.
+                case ZWNotificationType.Notification: //An error has occurred that we need to report.
                     {
                         Debug.WriteLine($"******Node error '{notification.Code}' @ ID: {ID}");
                         // var code = notification.Code;
                         // var v = GetValue(notification.ValueID);
                         break;
                     }
-                case NotificationType.NodeEvent: // A node has triggered an event. This is commonly caused when a node sends a Basic_Set command to the controller. The event value is stored in the notification.
+                case ZWNotificationType.NodeEvent: // A node has triggered an event. This is commonly caused when a node sends a Basic_Set command to the controller. The event value is stored in the notification.
                     {
                         var value = GetValue(notification.ValueId);
                         Debug.WriteLine($"******Node Event @ ID: Value = {value}");

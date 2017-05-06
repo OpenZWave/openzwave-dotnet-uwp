@@ -245,7 +245,7 @@ namespace OZWForm
             var notification = e.Notification;
             switch (notification.Type)
             {
-                case NotificationType.ControllerCommand:
+                case ZWNotificationType.ControllerCommand:
                 {
                     MyControllerStateChangedHandler((ZWControllerState)notification.Event);
                     break;

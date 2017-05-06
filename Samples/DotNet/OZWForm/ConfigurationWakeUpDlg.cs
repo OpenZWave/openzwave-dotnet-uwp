@@ -87,7 +87,7 @@ namespace OZWForm
         private void NotificationHandler()
         {
             // Check whether all the queries on this node have completed
-            if( m_notification.Type == NotificationType.NodeQueriesComplete )
+            if( m_notification.Type == ZWNotificationType.NodeQueriesComplete )
             {
                 if ((m_notification.HomeId == m_homeId) && (m_notification.NodeId == m_nodeId))
                 {
