@@ -231,13 +231,10 @@ namespace OpenZWave
 		*/
 		uint8 GetControllerNodeId(uint32 homeId) { return Manager::Get()->GetControllerNodeId(homeId); }
 
-		/**
-		* <summary>Get the node ID of the Static Update Controller.</summary>
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return the node ID of the Z-Wave controller.
-		*/
-		uint8 GetSUCNodeId(uint32 homeId) { return Manager::Get()->GetSUCNodeId(homeId); }
-
+		/// <summary>Get the node ID of the Static Update Controller.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>The node ID of the Z-Wave controller.</returns>
+		uint8 GetSucNodeId(uint32 homeId) { return Manager::Get()->GetSUCNodeId(homeId); }
 
 		/// <summary>Query if the controller is a primary controller.</summary>
 		/// <remarks>
