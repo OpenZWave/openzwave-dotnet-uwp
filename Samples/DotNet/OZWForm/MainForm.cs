@@ -248,7 +248,7 @@ namespace OZWForm
                     Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
-                        node.AddValue(m_notification.ValueID);
+                        node.AddValue(m_notification.ValueId);
                     }
                     break;
                 }
@@ -258,7 +258,7 @@ namespace OZWForm
                     Node node = GetNode(m_notification.HomeId, m_notification.NodeId);
                     if (node != null)
                     {
-                        node.RemoveValue(m_notification.ValueID);
+                        node.RemoveValue(m_notification.ValueId);
                     }
                     break;
                 }

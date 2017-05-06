@@ -256,7 +256,7 @@ namespace OZWAppx
                         // complexity of the item being represented.
                         // Changed: A node value has been updated from the Z-Wave network and it is different from
                         // the previous value.
-                        var value = notification.ValueID;
+                        var value = notification.ValueId;
                         AddValue(value);
                         Debug.WriteLine($"{notification.Type}. Node {ID}: {ZWManager.Instance.GetValueLabel(value)} = {GetValue(value)} {ZWManager.Instance.GetValueUnits(value)}");
                         break;
@@ -267,7 +267,7 @@ namespace OZWAppx
                         // node is removed.
                         // Note to self: We probably don't need to handle this, since the node would have been
                         // removed at this point
-                        RemoveValue(notification.ValueID);
+                        RemoveValue(notification.ValueId);
                         break;
                     }
                 case NotificationType.Group:
@@ -286,7 +286,7 @@ namespace OZWAppx
                     }
                 case NotificationType.NodeEvent: // A node has triggered an event. This is commonly caused when a node sends a Basic_Set command to the controller. The event value is stored in the notification.
                     {
-                        var value = GetValue(notification.ValueID);
+                        var value = GetValue(notification.ValueId);
                         Debug.WriteLine($"******Node Event @ ID: Value = {value}");
                         break;
                     }

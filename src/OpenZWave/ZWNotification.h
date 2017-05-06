@@ -87,9 +87,9 @@ namespace OpenZWave
 		/// <summary>Get the ID of any node involved in this notification.</summary>
 		property uint8 NodeId { uint8 get() { return m_valueId->NodeId; } }
 		/// <summary>Get the unique ValueID of any value involved in this notification.</summary>
-		property ZWValueID^ ValueID { ZWValueID^ get() { return m_valueId; } }
+		property ZWValueID^ ValueId { ZWValueID^ get() { return m_valueId; } }
 		/// <summary>Get the index of the association group that has been changed.  Only valid in Notification::Type_Group notifications.</summary>
-		property uint8 GroupIdx { uint8 get() { assert(NotificationType::Group == m_type); return m_byte; } }
+		property uint8 GroupIndex { uint8 get() { assert(NotificationType::Group == m_type); return m_byte; } }
 		/// <summary>Get the event value of a notification.  Only valid in Notification::Type_NodeEvent and Notification::Type_ControllerCommand notifications.</summary>
 		property uint8 Event { uint8 get() { return m_event; } }
 
