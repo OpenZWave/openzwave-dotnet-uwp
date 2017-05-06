@@ -114,57 +114,48 @@ namespace OpenZWave
 		ZWManager() { }
 
 	public:
+		/// <summary>Gets a reference to the single ZWManager instance</summary>
+		/// <remarks>Before use, 'Initialize' must be called.</remarks>
+		/// <returns>The ZWManager singleton instance</returns>
 		static property ZWManager^ Instance { ZWManager^ get(); }
 
+		/// <summary>Event fired when a notification is received from the controller or a node</summary>
 		event NotificationReceivedEventHandler^ NotificationReceived;
 
-		/** <summary>Creates the Manager singleton object.</summary>
-		* <remarks>
-		* The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
-		* There can be only one Manager in an OpenZWave application.  Once the Manager has been created, call AddWatcher to install a notification
-		* callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
-		* \see Destroy, AddWatcher, AddDriver
-		* <seealso cref="Destroy" />
-		* <seealso cref="NotificationReceived" />
-		* <seealso cref="AddDriver" />
-		*/
+		/// <summary>Creates the Manager singleton object.</summary>
+		/// <remarks>
+		/// The Manager provides the public interface to OpenZWave, exposing all the functionality required to add Z-Wave support to an application.
+		/// There can be only one Manager in an OpenZWave application.  Once the Manager has been created, call AddWatcher to install a notification
+		/// callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
+		/// <seealso cref="Destroy" />
+		/// <seealso cref="NotificationReceived" />
+		/// <seealso cref="AddDriver" />
 		void Initialize();
 
-		/**
-		* <summary>Deletes the Manager and cleans up any associated objects.</summary>
-		* <seealso cref="Initialize" />
-		*/
+		/// <summary>Deletes the Manager and cleans up any associated objects.</summary>
+		/// <seealso cref="Initialize" />
 		void Destroy() { Manager::Get()->Destroy(); m_isInitialized = false; }
 
-		/**
-		* <summary>Get the Version Number of OZW as a string</summary>
-		* \return a String representing the version number as MAJOR.MINOR.REVISION
-		*/
+		/// <summary>Get the Version Number of OZW as a string</summary>
+		/// <returns>A String representing the version number as MAJOR.MINOR.REVISION</returns>
 		String^ GetVersionAsString() { return ConvertString(Manager::Get()->getVersionAsString()); }
 
-		/**
-		* <summary>Sets the library logging state.</summary>
-		* \param bState True to enable logging; false to disable logging.
-		* \see GetLoggingState
-		*/
+		/// <summary>Sets the library logging state.</summary>
+		/// <param name="bState">True to enable logging; false to disable logging.</param>
+		/// <seealso cref="GetLoggingState" />
 		void SetLoggingState(bool bState) { Log::SetLoggingState(bState); }
 
-		/**
-		* <summary>Gets the current library logging state.</summary>
-		* \return True if logging is enabled; false otherwise
-		* \see SetLoggingState
-		*/
+		/// <summary>Gets the current library logging state.</summary>
+		/// <returns>True if logging is enabled; false otherwise</returns>
+		/// <seealso cref="SetLoggingState" />
 		bool GetLoggingState() { return Log::GetLoggingState(); }
 
-		/**
-		* <summary>Sets the current library log file name to a new name</summary>
-		*/
+		/// <summary>Sets the current library log file name to a new name</summary>
+		/// <param name="filename">Name of the log file</param>
 		void SetLogFileName(String^ _filename) { Log::SetLogFileName(ConvertString(_filename)); }
 
-		/**
-		* <summary>Sends current driver statistics to the log file</summary>
-		* <param name="homeId">The Home ID of the Z-Wave controller.</param>
-		*/
+		/// <summary>Sends current driver statistics to the log file</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
 		void LogDriverStatistics(uint32 homeId) { Manager::Get()->LogDriverStatistics(homeId); }
 
 		//-----------------------------------------------------------------------------
@@ -176,17 +167,15 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.</summary>
-		*
-		* This method does not normally need to be called, since OpenZWave will save the state automatically
-		* during the shutdown process.  It is provided here only as an aid to development.
-		* The configuration of each PC Controller's Z-Wave network is stored in a separate file.  The filename
-		* consists of the 8 digit hexadecimal version of the controller's Home ID, prefixed with the string 'zwcfg_'.
-		* This convention allows OpenZWave to find the correct configuration file for a controller, even if it is
-		* attached to a different serial port.
-		* \param homeId The Home ID of the Z-Wave controller to save.
-		*/
+		/// <summary>Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.</summary>
+		/// <remarks>
+		/// This method does not normally need to be called, since OpenZWave will save the state automatically
+		/// during the shutdown process.  It is provided here only as an aid to development.
+		/// The configuration of each PC Controller's Z-Wave network is stored in a separate file.  The filename
+		/// consists of the 8 digit hexadecimal version of the controller's Home ID, prefixed with the string 'zwcfg_'.
+		/// This convention allows OpenZWave to find the correct configuration file for a controller, even if it is
+		/// attached to a different serial port.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller to save.</param>
 		void WriteConfig(uint32 homeId) { Manager::Get()->WriteConfig(homeId); }
 		/*@}*/
 
@@ -198,37 +187,47 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Creates a new driver for a Z-Wave controller.</summary>
-		*
-		* This method creates a Driver object for handling communications with a single Z-Wave controller.  In the background, the
-		* driver first tries to read configuration data saved during a previous run.  It then queries the controller directly for any
-		* missing information, and a refresh of the list of nodes that it controls.  Once this information
-		* has been received, a DriverReady notification callback is sent, containing the Home ID of the controller.  This Home ID is
-		* required by most of the OpenZWave Manager class methods.
-		* \param serialPortName The string used to open the serial port, for example "\\.\COM3".
-		8 \param interfaceType Specifies whether this is a serial or HID interface (default is serial).
-		* \return True if a new driver was created, false if a driver for the controller already exists.
-		* \see Create, Get, RemoveDriver
-		*/
+		/// <summary>Creates a new driver for a Z-Wave controller.</summary>
+		/// <remarks>
+		/// This method creates a Driver object for handling communications with a single Z-Wave controller.  In the background, the
+		/// driver first tries to read configuration data saved during a previous run.  It then queries the controller directly for any
+		/// missing information, and a refresh of the list of nodes that it controls.  Once this information
+		/// has been received, a DriverReady notification callback is sent, containing the Home ID of the controller.  This Home ID is
+		/// required by most of the OpenZWave Manager class methods.</remarks>
+		/// <param name="serialPortName">The string used to open the serial port, for example "\\.\COM3".</param>
+		/// <seealso cref="Create" />
+		/// <seealso cref="Get" />
+		/// <seealso cref="RemoveDriver" />
 		bool AddDriver(String^ serialPortName) { return Manager::Get()->AddDriver(ConvertString(serialPortName)); }
+
+		/// <summary>Creates a new driver for a Z-Wave controller.</summary>
+		/// <remarks>
+		/// This method creates a Driver object for handling communications with a single Z-Wave controller.  In the background, the
+		/// driver first tries to read configuration data saved during a previous run.  It then queries the controller directly for any
+		/// missing information, and a refresh of the list of nodes that it controls.  Once this information
+		/// has been received, a DriverReady notification callback is sent, containing the Home ID of the controller.  This Home ID is
+		/// required by most of the OpenZWave Manager class methods.</remarks>
+		/// <param name="serialPortName">The string used to open the serial port, for example "\\.\COM3".</param>
+		/// <param name="interfaceType">Specifies whether this is a serial or HID interface (default is serial).</param>
+		/// <returns>True if a new driver was created, false if a driver for the controller already exists.</returns>
+		/// <seealso cref="Create" />
+		/// <seealso cref="Get" />
+		/// <seealso cref="RemoveDriver" />
 		bool AddDriver(String^ serialPortName, ZWControllerInterface interfaceType) { return Manager::Get()->AddDriver(ConvertString(serialPortName), (Driver::ControllerInterface) interfaceType); }
 
-		/**
-		* <summary>Removes the driver for a Z-Wave controller, and closes the serial port.</summary>
-		*
-		* Drivers do not need to be explicitly removed before calling Destroy - this is handled automatically.
-		* @paaram serialPortName The same string as was passed in the original call to AddDriver.
-		* \returns True if the driver was removed, false if it could not be found.
-		* \see Destroy, AddDriver
-		*/
+		/// <summary>Removes the driver for a Z-Wave controller, and closes the serial port.</summary>
+		/// <remarks>
+		/// Drivers do not need to be explicitly removed before calling Destroy - this is handled automatically.
+		/// </remarks>
+		/// <param name="serialPortName">The same string as was passed in the original call to AddDriver.</param>
+		/// <returns>True if the driver was removed, false if it could not be found.</returns>
+		/// <seealso cref="Destroy" />
+		/// <seealso cref="AddDriver(serialPortName)" />
 		bool RemoveDriver(String^ serialPortName) { return Manager::Get()->RemoveDriver(ConvertString(serialPortName)); }
 
-		/**
-		* <summary>Get the node ID of the Z-Wave controller.</summary>
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return the node ID of the Z-Wave controller.
-		*/
+		/// <summary>Get the node ID of the Z-Wave controller.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>The node ID of the Z-Wave controller.</returns>
 		uint8 GetControllerNodeId(uint32 homeId) { return Manager::Get()->GetControllerNodeId(homeId); }
 
 		/// <summary>Get the node ID of the Static Update Controller.</summary>
@@ -259,44 +258,37 @@ namespace OpenZWave
 		/// <returns>true if it is a static update controller, false if not.</returns>
 		bool IsStaticUpdateController(uint32 homeId) { return Manager::Get()->IsStaticUpdateController(homeId); }
 
-		/**
-		* <summary>Query if the controller is using the bridge controller library.</summary>
-		*
-		* A bridge controller is able to create virtual nodes that can be associated
-		* with other controllers to enable events to be passed on.
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return true if it is a bridge controller, false if not.
-		*/
+		/// <summary>Query if the controller is using the bridge controller library.</summary>
+		/// <remarks>A bridge controller is able to create virtual nodes that can be associated
+		/// with other controllers to enable events to be passed on.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>true if it is a bridge controller, false if not.</returns>
 		bool IsBridgeController(uint32 homeId) { return Manager::Get()->IsBridgeController(homeId); }
 
-		/**
-		* <summary>Get the version of the Z-Wave API library used by a controller.</summary>
-		*
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return a string containing the library version. For example, "Z-Wave 2.48".
-		*/
+		/// <summary>Get the version of the Z-Wave API library used by a controller.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>a string containing the library version. For example, "Z-Wave 2.48".</returns>
 		String^ GetLibraryVersion(uint32 homeId) { return ConvertString(Manager::Get()->GetLibraryVersion(homeId)); }
 
-		/**
-		* <summary>Get a string containing the Z-Wave API library type used by a controller.</summary>
-		*
-		* The possible library types are:
-		* - Static Controller
-		* - Controller
-		* - Enhanced Slave
-		* - Slave
-		* - Installer
-		* - Routing Slave
-		* - Bridge Controller
-		* - Device Under Test
-		*
-		* The controller should never return a slave library type.
-		* For a more efficient test of whether a controller is a Bridge Controller, use
-		* the IsBridgeController method.
-		* \param homeId The Home ID of the Z-Wave controller.
-		* \return a string containing the library type.
-		* \see GetLibraryVersion, IsBridgeController
-		*/
+		/// <summary>Get a string containing the Z-Wave API library type used by a controller.</summary>
+		/// <remarks><para>
+		/// The possible library types are:
+		/// - Static Controller
+		/// - Controller
+		/// - Enhanced Slave
+		/// - Slave
+		/// - Installer
+		/// - Routing Slave
+		/// - Bridge Controller
+		/// - Device Under Test
+		/// </para><para>
+		/// The controller should never return a slave library type.
+		/// For a more efficient test of whether a controller is a Bridge Controller, use
+		/// the IsBridgeController method.</para></remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
+		/// <returns>A string containing the library type.</returns>
+		/// <seealso cref="GetLibraryVersion" />
+		/// <seealso cref="IsBridgeController" />
 		String^ GetLibraryTypeName(uint32 homeId) { return ConvertString(Manager::Get()->GetLibraryTypeName(homeId)); }
 
 		/**
@@ -1665,11 +1657,8 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Gets the number of scenes that have been defined.</summary>
-		* \return The number of scenes.
-		* \see GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Gets the number of scenes that have been defined.</summary>
+		/// <returns>The number of scenes.</returns>
 		uint8 GetNumScenes() { return Manager::Get()->GetNumScenes(); }
 
 		/**
@@ -1801,14 +1790,11 @@ namespace OpenZWave
 		int SceneGetValues(uint8 sceneId, Platform::WriteOnlyArray<ZWValueID^>^ o_values);
 #endif
 
-		/**
-		* <summary>Retrieves a scene's value as a bool.</summary>
-		* \param sceneId The Scene ID of the scene to retrieve the value from.
-		* \param valueId The Value ID of the value to retrieve.
-		* \param boolean that will be filled with the returned value.
-		* \return true if the value was obtained.
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a bool.</summary>
+		/// <param sceneId The Scene ID of the scene to retrieve the value from.</param>
+		/// <param valueId The Value ID of the value to retrieve.</param>
+		/// <param boolean that will be filled with the returned value.</param>
+		/// <returns true if the value was obtained.</returns>
 		bool SceneGetValueAsBool(uint8 sceneId, ZWValueID^ valueId, bool *o_value);
 
 		/**
