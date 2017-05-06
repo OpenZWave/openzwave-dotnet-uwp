@@ -43,7 +43,7 @@ namespace OZWForm
         /// Initializes a new instance of the <see cref="ValuePanelShort"/> class.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public ValuePanelShort( ZWValueID valueID ): base( valueID )
+        public ValuePanelShort( ZWValueId valueID ): base( valueID )
         {
             InitializeComponent();
 

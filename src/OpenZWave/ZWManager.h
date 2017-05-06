@@ -350,7 +350,7 @@ namespace OpenZWave
 		* \param valueId The ID of the value to start polling.
 		* \return True if polling was enabled.
 		*/
-		bool EnablePoll(ZWValueID^ valueId) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID()); }
+		bool EnablePoll(ZWValueId^ valueId) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Enable the polling of a device's state.</summary>
@@ -359,7 +359,7 @@ namespace OpenZWave
 		* \param intensity, number of polling for one polling interval.
 		* \return True if polling was enabled.
 		*/
-		bool EnablePoll(ZWValueID^ valueId, uint8 intensity) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID(), intensity); }
+		bool EnablePoll(ZWValueId^ valueId, uint8 intensity) { return Manager::Get()->EnablePoll(valueId->CreateUnmanagedValueID(), intensity); }
 
 		/**
 		* <summary>Disable the polling of a device's state.</summary>
@@ -367,21 +367,21 @@ namespace OpenZWave
 		* \param valueId The ID of the value to stop polling.
 		* \return True if polling was disabled.
 		*/
-		bool DisablePoll(ZWValueID^ valueId) { return Manager::Get()->DisablePoll(valueId->CreateUnmanagedValueID()); }
+		bool DisablePoll(ZWValueId^ valueId) { return Manager::Get()->DisablePoll(valueId->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Determine the polling of a device's state.</summary>
 		* \param valueId The ID of the value to check polling.
 		* \return True if polling is active.
 		*/
-		bool IsPolled(ZWValueID^ valueId) { return Manager::Get()->isPolled(valueId->CreateUnmanagedValueID()); }
+		bool IsPolled(ZWValueId^ valueId) { return Manager::Get()->isPolled(valueId->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Set the frequency of polling (0=none, 1=every time through the list, 2-every other time, etc)</summary>
 		* \param valueId The ID of the value whose intensity should be set
 		* \param intensity The intensity to set
 		*/
-		void SetPollIntensity(ZWValueID^ valueId, uint8 intensity) { Manager::Get()->SetPollIntensity(valueId->CreateUnmanagedValueID(), intensity); }
+		void SetPollIntensity(ZWValueId^ valueId, uint8 intensity) { Manager::Get()->SetPollIntensity(valueId->CreateUnmanagedValueID(), intensity); }
 
 		/**
 		* <summary>Get the polling intensity of a device's state.</summary>
@@ -390,7 +390,7 @@ namespace OpenZWave
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_HOMEID if the Driver cannot be found
 		*/
-		uint8 GetPollIntensity(ZWValueID^ valueId) { return Manager::Get()->GetPollIntensity(valueId->CreateUnmanagedValueID()); }
+		uint8 GetPollIntensity(ZWValueId^ valueId) { return Manager::Get()->GetPollIntensity(valueId->CreateUnmanagedValueID()); }
 
 		/*@}*/
 
@@ -791,7 +791,7 @@ namespace OpenZWave
 		* \return The value label.
 		 * \see ZWValueID
 		*/
-		String^ GetValueLabel(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
+		String^ GetValueLabel(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
 
 		/**
 		* <summary>Sets the user-friendly label for the value.</summary>
@@ -801,7 +801,7 @@ namespace OpenZWave
 		* \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_HOMEID if the Driver cannot be found
 		 * \see ZWValueID
 		*/
-		void SetValueLabel(ZWValueID^ id, String^ value) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value)); }
+		void SetValueLabel(ZWValueId^ id, String^ value) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Gets the units that the value is measured in.</summary>
@@ -810,7 +810,7 @@ namespace OpenZWave
 		* \return The value units.
 		 * \see ZWValueID
 		*/
-		String^ GetValueUnits(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueUnits(id->CreateUnmanagedValueID())); }
+		String^ GetValueUnits(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueUnits(id->CreateUnmanagedValueID())); }
 
 		/**
 		* <summary>Gets a help string describing the value's purpose and usage.</summary>
@@ -819,7 +819,7 @@ namespace OpenZWave
 		* \return The value help text.
 		* \see ZWValueID
 		*/
-		String^ GetValueHelp(ZWValueID^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
+		String^ GetValueHelp(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
 
 		/**
 		* <summary>Test whether the value is read-only.</summary>
@@ -828,7 +828,7 @@ namespace OpenZWave
 		* \return true if the value cannot be changed by the user.
 		 * \see ZWValueID
 		*/
-		bool IsValueReadOnly(ZWValueID^ id) { return Manager::Get()->IsValueReadOnly(id->CreateUnmanagedValueID()); }
+		bool IsValueReadOnly(ZWValueId^ id) { return Manager::Get()->IsValueReadOnly(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Test whether the value has been set.</summary>
@@ -837,7 +837,7 @@ namespace OpenZWave
 		* \return true if the value has actually been set by a status message from the device, rather than simply being the default.
 		* \see ValueID
 		*/
-		bool IsValueSet(ZWValueID^ id) { return Manager::Get()->IsValueSet(id->CreateUnmanagedValueID()); }
+		bool IsValueSet(ZWValueId^ id) { return Manager::Get()->IsValueSet(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Test whether the value is currently being polled.</summary>
@@ -846,7 +846,7 @@ namespace OpenZWave
 		* \return true if the value is being polled, false otherwise.
 		* \see ValueID
 		*/
-		bool IsValuePolled(ZWValueID^ id) { return Manager::Get()->IsValuePolled(id->CreateUnmanagedValueID()); }
+		bool IsValuePolled(ZWValueId^ id) { return Manager::Get()->IsValuePolled(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Gets a value as a bool.</summary>
@@ -856,7 +856,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType.
 		* \see ValueID::GetType, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsBool(ZWValueID^ id,
+		bool GetValueAsBool(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] System::Boolean %
 #else
@@ -872,7 +872,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsByte(ZWValueID^ id,
+		bool GetValueAsByte(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] System::Byte %
 #else
@@ -888,7 +888,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Decimal. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		//bool GetValueAsDecimal(ZWValueID^ id, System::Decimal %o_value);
+		//bool GetValueAsDecimal(ZWValueId^ id, System::Decimal %o_value);
 
 		/**
 		* <summary>Gets a value as a 32-bit signed integer.</summary>
@@ -898,7 +898,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Int. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsInt(ZWValueID^ id,
+		bool GetValueAsInt(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] System::Int32 %
 #else
@@ -914,7 +914,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Short. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsString, GetValueListSelection, GetValueListItems
 		*/
-		bool GetValueAsShort(ZWValueID^ id,
+		bool GetValueAsShort(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] System::Int16 %
 #else
@@ -929,7 +929,7 @@ namespace OpenZWave
 		* <param name="o_value">a String that will be filled with the value.</param>
 		* <returns>true if the value was obtained.</returns>
 		*/
-		bool GetValueAsString(ZWValueID^ id,
+		bool GetValueAsString(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] String^ %
 #else
@@ -945,7 +945,7 @@ namespace OpenZWave
 		* \return True if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListItems
 		*/
-		bool GetValueListSelection(ZWValueID^ id,
+		bool GetValueListSelection(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] String^ %
 #else
@@ -961,7 +961,7 @@ namespace OpenZWave
 		* \return True if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListItems
 		*/
-		bool GetValueListSelection(ZWValueID^ id,
+		bool GetValueListSelection(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] System::Int32 %
 #else
@@ -977,7 +977,7 @@ namespace OpenZWave
 		* \return true if the list items were obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection
 		*/
-		bool GetValueListItems(ZWValueID^ id,
+		bool GetValueListItems(ZWValueId^ id,
 #if __cplusplus_cli
 		[Out] cli::array<String^>^ %o_value);
 #else
@@ -992,7 +992,7 @@ namespace OpenZWave
 		* \return true if the list values were obtained.  Returns false if the value is not a ValueID::ValueType_List. The type can be tested with a call to ValueID::GetType.
 		* \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsFloat, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueAsRaw
 		*/
-		bool GetValueListValues(ZWValueID^ id,
+		bool GetValueListValues(ZWValueId^ id,
 #if __cplusplus_cli
 			[Out] cli::array<int>^ %o_value);
 #else
@@ -1009,7 +1009,7 @@ namespace OpenZWave
 		* \param value The new value of the bool.
 		* \return true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValue(ZWValueID^ id, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		bool SetValue(ZWValueId^ id, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Sets the value of a byte.</summary>
@@ -1021,7 +1021,7 @@ namespace OpenZWave
 		* \param value The new value of the byte.
 		* \return true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValue(ZWValueID^ id, uint8 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		bool SetValue(ZWValueId^ id, uint8 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Sets the value of a decimal.</summary>
@@ -1034,7 +1034,7 @@ namespace OpenZWave
 		* \param value The new value of the decimal.
 		* \return true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Decimal. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValue(ZWValueID^ id, float value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		bool SetValue(ZWValueId^ id, float value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Sets the value of a 32-bit signed integer.</summary>
@@ -1046,7 +1046,7 @@ namespace OpenZWave
 		* \param value The new value of the integer.
 		* \return true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Int. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValue(ZWValueID^ id, int32 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		bool SetValue(ZWValueId^ id, int32 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Sets the value of a 16-bit signed integer.</summary>
@@ -1058,7 +1058,7 @@ namespace OpenZWave
 		* \param value The new value of the integer.
 		* \return true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Short. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValue(ZWValueID^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		bool SetValue(ZWValueId^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
 		/// <summary>Sets the value from a string, regardless of type.</summary>
 		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
@@ -1067,7 +1067,7 @@ namespace OpenZWave
 		/// <param name="id">The unique identifier of the integer value.</param>
 		/// <param name="value">The new value of the string.</param>
 		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
-		bool SetValue(ZWValueID^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
+		bool SetValue(ZWValueId^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Sets the selected item in a list.</summary>
@@ -1080,7 +1080,7 @@ namespace OpenZWave
 		* \return true if the value was set.  Returns false if the selection is not in the list, or if the value is not a ZWValueID::ValueType_List.
 		* The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool SetValueListSelection(ZWValueID^ id, String^ selectedItem) { return Manager::Get()->SetValueListSelection(id->CreateUnmanagedValueID(), ConvertString(selectedItem)); }
+		bool SetValueListSelection(ZWValueId^ id, String^ selectedItem) { return Manager::Get()->SetValueListSelection(id->CreateUnmanagedValueID(), ConvertString(selectedItem)); }
 
 		/**
 		* <summary>Refreshes the specified value from the Z-Wave network.
@@ -1089,7 +1089,7 @@ namespace OpenZWave
 		* \param id The unique identifier of the value to be refreshed.
 		* \return true if the driver and node were found; false otherwise
 		*/
-		bool RefreshValue(ZWValueID^ id) { return Manager::Get()->RefreshValue(id->CreateUnmanagedValueID()); }
+		bool RefreshValue(ZWValueId^ id) { return Manager::Get()->RefreshValue(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Sets a flag indicating whether value changes noted upon a refresh should be verified.  If so, the
@@ -1098,7 +1098,7 @@ namespace OpenZWave
 		* \param _id The unique identifier of the value whose changes should or should not be verified.
 		* \param _verify if true, verify changes; if false, don't verify changes.
 		*/
-		void SetChangeVerified(ZWValueID^ id, bool verify) { Manager::Get()->SetChangeVerified(id->CreateUnmanagedValueID(), verify); }
+		void SetChangeVerified(ZWValueId^ id, bool verify) { Manager::Get()->SetChangeVerified(id->CreateUnmanagedValueID(), verify); }
 
 		/**
 		* <summary>Starts an activity in a device.</summary>
@@ -1107,7 +1107,7 @@ namespace OpenZWave
 		* \param id The unique identifier of the integer value.
 		* \return true if the activity was started.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool PressButton(ZWValueID^ id) { return Manager::Get()->PressButton(id->CreateUnmanagedValueID()); }
+		bool PressButton(ZWValueId^ id) { return Manager::Get()->PressButton(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Stops an activity in a device.</summary>
@@ -1116,7 +1116,7 @@ namespace OpenZWave
 		* \param id The unique identifier of the integer value.
 		* \return true if the activity was stopped.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType
 		*/
-		bool ReleaseButton(ZWValueID^ id) { return Manager::Get()->ReleaseButton(id->CreateUnmanagedValueID()); }
+		bool ReleaseButton(ZWValueId^ id) { return Manager::Get()->ReleaseButton(id->CreateUnmanagedValueID()); }
 
 		/*@}*/
 
@@ -1142,7 +1142,7 @@ namespace OpenZWave
 		* \param _id The unique identifier of the schedule value.
 		* \return the number of switch points defined in this schedule.  Returns zero if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.
 		*/
-		uint8 GetNumSwitchPoints(ZWValueID^ id) { return Manager::Get()->GetNumSwitchPoints(id->CreateUnmanagedValueID()); }
+		uint8 GetNumSwitchPoints(ZWValueId^ id) { return Manager::Get()->GetNumSwitchPoints(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Set a switch point in the schedule.</summary>
@@ -1160,7 +1160,7 @@ namespace OpenZWave
 		* \return true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.
 		* \see GetNumSwitchPoints, RemoveSwitchPoint, ClearSwitchPoints
 		*/
-		bool SetSwitchPoint(ZWValueID^ id, uint8 hours, uint8 minutes, byte setback) { return Manager::Get()->SetSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes, setback); }
+		bool SetSwitchPoint(ZWValueId^ id, uint8 hours, uint8 minutes, byte setback) { return Manager::Get()->SetSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes, setback); }
 
 		/**
 		* <summary>Remove a switch point from the schedule.</summary>
@@ -1174,14 +1174,14 @@ namespace OpenZWave
 		* is not switch point with the specified time values. The type can be tested with a call to ValueID::GetType.
 		* \see GetNumSwitchPoints, SetSwitchPoint, ClearSwitchPoints
 		*/
-		bool RemoveSwitchPoint(ZWValueID^ id, uint8 hours, uint8 minutes) { return Manager::Get()->RemoveSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes); }
+		bool RemoveSwitchPoint(ZWValueId^ id, uint8 hours, uint8 minutes) { return Manager::Get()->RemoveSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes); }
 
 		/**
 		* <summary>Clears all switch points from the schedule.</summary>
 		* \param id The unique identifier of the schedule value.
 		* \see GetNumSwitchPoints, SetSwitchPoint, RemoveSwitchPoint
 		*/
-		void ClearSwitchPoints(ZWValueID^ id) { Manager::Get()->ClearSwitchPoints(id->CreateUnmanagedValueID()); }
+		void ClearSwitchPoints(ZWValueId^ id) { Manager::Get()->ClearSwitchPoints(id->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Gets switch point data from the schedule.</summary>
@@ -1197,7 +1197,7 @@ namespace OpenZWave
 		* \return true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.
 		* \see GetNumSwitchPoints
 		*/
-		bool GetSwitchPoint(ZWValueID^ id, uint8 idx,
+		bool GetSwitchPoint(ZWValueId^ id, uint8 idx,
 #if __cplusplus_cli
 		[Out] System::Byte %o_hours, [Out] System::Byte %o_minutes, [Out] System::SByte %o_setback);
 #else
@@ -1697,7 +1697,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, bool value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, bool value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Add a byte Value ID to an existing scene.</summary>
@@ -1707,7 +1707,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, uint8 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, uint8 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Add a decimal Value ID to an existing scene.</summary>
@@ -1717,7 +1717,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, float value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, float value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Add a 32-bit signed integer Value ID to an existing scene.</summary>
@@ -1727,7 +1727,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Add a 16-bit signed integer Value ID to an existing scene.</summary>
@@ -1737,7 +1737,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, int16 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, int16 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Add a string Value ID to an existing scene.</summary>
@@ -1747,7 +1747,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValue(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
+		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Add the selected item list Value ID to an existing scene (as a string).</summary>
@@ -1757,7 +1757,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
+		bool AddSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Add the selected item list Value ID to an existing scene (as a integer).</summary>
@@ -1767,7 +1767,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool AddSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool AddSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Remove the Value ID from an existing scene.</summary>
@@ -1776,7 +1776,7 @@ namespace OpenZWave
 		* \return true if Value ID was removed.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool RemoveSceneValue(uint8 sceneId, ZWValueID^ valueId) { return Manager::Get()->RemoveSceneValue(sceneId, valueId->CreateUnmanagedValueID()); }
+		bool RemoveSceneValue(uint8 sceneId, ZWValueId^ valueId) { return Manager::Get()->RemoveSceneValue(sceneId, valueId->CreateUnmanagedValueID()); }
 
 		/**
 		* <summary>Retrieves the scene's list of values.</summary>
@@ -1785,9 +1785,9 @@ namespace OpenZWave
 		* <returns>The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.</returns>
 		*/
 #if __cplusplus_cli
-		int SceneGetValues(uint8 sceneId, [Out] cli::array<ZWValueID ^>^ %o_values);
+		int SceneGetValues(uint8 sceneId, [Out] cli::array<ZWValueId^>^ %o_values);
 #else
-		int SceneGetValues(uint8 sceneId, Platform::WriteOnlyArray<ZWValueID^>^ o_values);
+		int SceneGetValues(uint8 sceneId, Platform::WriteOnlyArray<ZWValueId^>^ o_values);
 #endif
 
 		/// <summary>Retrieves a scene's value as a bool.</summary>
@@ -1795,7 +1795,7 @@ namespace OpenZWave
 		/// <param valueId The Value ID of the value to retrieve.</param>
 		/// <param boolean that will be filled with the returned value.</param>
 		/// <returns true if the value was obtained.</returns>
-		bool SceneGetValueAsBool(uint8 sceneId, ZWValueID^ valueId, bool *o_value);
+		bool SceneGetValueAsBool(uint8 sceneId, ZWValueId^ valueId, bool *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as an 8-bit unsigned integer.</summary>
@@ -1805,7 +1805,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueAsByte(uint8 sceneId, ZWValueID^ valueId, byte *o_value);
+		bool SceneGetValueAsByte(uint8 sceneId, ZWValueId^ valueId, byte *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a decimal.</summary>
@@ -1815,7 +1815,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		// bool SceneGetValueAsDecimal(uint8 sceneId, ZWValueID^ valueId, [Out] System::Decimal %o_value);
+		// bool SceneGetValueAsDecimal(uint8 sceneId, ZWValueId^ valueId, [Out] System::Decimal %o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a 32-bit signed integer.</summary>
@@ -1825,7 +1825,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueAsInt(uint8 sceneId, ZWValueID^ valueId, int *o_value);
+		bool SceneGetValueAsInt(uint8 sceneId, ZWValueId^ valueId, int *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a 16-bit signed integer.</summary>
@@ -1835,7 +1835,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueAsShort(uint8 sceneId, ZWValueID^ valueId, int16 *o_value);
+		bool SceneGetValueAsShort(uint8 sceneId, ZWValueId^ valueId, int16 *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a string.</summary>
@@ -1845,7 +1845,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueAsString(uint8 sceneId, ZWValueID^ valueId, String^ *o_value);
+		bool SceneGetValueAsString(uint8 sceneId, ZWValueId^ valueId, String^ *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a list (as a string).</summary>
@@ -1855,7 +1855,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ *o_value);
+		bool SceneGetValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ *o_value);
 
 		/**
 		* <summary>Retrieves a scene's value as a list (as a integer).</summary>
@@ -1865,7 +1865,7 @@ namespace OpenZWave
 		* \return true if the value was obtained.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SceneGetValueListSelection(uint8 sceneId, ZWValueID^ valueId, int *o_value);
+		bool SceneGetValueListSelection(uint8 sceneId, ZWValueId^ valueId, int *o_value);
 
 		/**
 		* <summary>Set a bool Value ID to an existing scene's ValueID</summary>
@@ -1875,7 +1875,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, bool value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, bool value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Set a byte Value ID to an existing scene's ValueID</summary>
@@ -1885,7 +1885,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, uint8 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, uint8 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Set a decimal Value ID to an existing scene's ValueID</summary>
@@ -1895,7 +1895,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, float value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, float value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Set a 32-bit signed integer Value ID to an existing scene's ValueID</summary>
@@ -1905,7 +1905,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Set a 16-bit integer Value ID to an existing scene's ValueID</summary>
@@ -1915,7 +1915,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, int16 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, int16 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Set a string Value ID to an existing scene's ValueID</summary>
@@ -1925,7 +1925,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValue(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
+		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Set the list selected item Value ID to an existing scene's ValueID (as a string).</summary>
@@ -1935,7 +1935,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, String^ value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
+		bool SetSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/**
 		* <summary>Set the list selected item Value ID to an existing scene's ValueID (as a integer).</summary>
@@ -1945,7 +1945,7 @@ namespace OpenZWave
 		* \return true if Value ID was added.
 		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		*/
-		bool SetSceneValueListSelection(uint8 sceneId, ZWValueID^ valueId, int32 value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
+		bool SetSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
 		/**
 		* <summary>Returns a label for the particular scene.</summary>

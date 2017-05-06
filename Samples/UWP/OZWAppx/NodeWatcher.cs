@@ -155,7 +155,7 @@ namespace OZWAppx
             var nodeId = notification.NodeId;
             var type = notification.Type;
 
-            Action<ZWValueID> debugWriteValueID = (v) =>
+            Action<ZWValueId> debugWriteValueID = (v) =>
             {
                 // Debug.WriteLine("  Node : " + nodeId.ToString());
                 // Debug.WriteLine("  CC   : " + v.CommandClassId.ToString());

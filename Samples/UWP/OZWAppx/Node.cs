@@ -152,24 +152,24 @@ namespace OZWAppx
         }
 
         /// <summary>Gets the basic set of device values.</summary>
-        public IList<ZWValueID> BasicValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueId> BasicValues { get; } = new ObservableCollection<ZWValueId>();
 
         /// <summary>Gets the basic set of user values.</summary>
-        public IList<ZWValueID> UserValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueId> UserValues { get; } = new ObservableCollection<ZWValueId>();
 
         /// <summary>Gets the basic set of system values.</summary>
-        public IList<ZWValueID> SystemValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueId> SystemValues { get; } = new ObservableCollection<ZWValueId>();
 
         /// <summary>Gets the basic set of configuration values.</summary>
-        public IList<ZWValueID> ConfigValues { get; } = new ObservableCollection<ZWValueID>();
+        public IList<ZWValueId> ConfigValues { get; } = new ObservableCollection<ZWValueId>();
 
         /// <summary>
         /// Adds the value.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        private void AddValue(ZWValueID valueID)
+        private void AddValue(ZWValueId valueID)
         {
-            IList<ZWValueID> list = GetValues(valueID.Genre);
+            IList<ZWValueId> list = GetValues(valueID.Genre);
 
             var id = list.Where(v => v.CommandClassId == valueID.CommandClassId && v.Id == valueID.Id).FirstOrDefault();
             if (id != null)
@@ -186,13 +186,13 @@ namespace OZWAppx
         /// Removes the value.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        private void RemoveValue(ZWValueID valueID)
+        private void RemoveValue(ZWValueId valueID)
         {
             var values = GetValues(valueID.Genre);
             values.Remove(valueID);
         }
 
-        private IList<ZWValueID> GetValues(ZWValueGenre genre)
+        private IList<ZWValueId> GetValues(ZWValueGenre genre)
         {
             if (genre == ZWValueGenre.Basic)
                 return BasicValues;
@@ -304,7 +304,7 @@ namespace OZWAppx
         /// </summary>
         /// <param name="v">The value</param>
         /// <returns></returns>
-        private static string GetValue(ZWValueID v)
+        private static string GetValue(ZWValueId v)
         {
             switch (v.Type)
             {

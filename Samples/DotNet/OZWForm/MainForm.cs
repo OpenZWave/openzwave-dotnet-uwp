@@ -468,7 +468,7 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void PowerOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_manager.SetValue(new ZWValueID(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0xFF);
+            m_manager.SetValue(new ZWValueId(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0xFF);
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace OZWForm
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void PowerOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_manager.SetValue(new ZWValueID(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0x00);
+            m_manager.SetValue(new ZWValueId(m_homeId, m_rightClickNode, ZWValueGenre.Basic, 0x20, 0x01, 0x00, ZWValueType.Byte, 0x00), 0x00);
         }
 
         /// <summary>
@@ -708,7 +708,7 @@ namespace OZWForm
         /// </summary>
         /// <param name="v">The v.</param>
         /// <returns></returns>
-        private string GetValue(ZWValueID v)
+        private string GetValue(ZWValueId v)
         {
             switch (v.Type)
             {

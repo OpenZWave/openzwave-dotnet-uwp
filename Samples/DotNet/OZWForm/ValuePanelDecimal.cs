@@ -43,7 +43,7 @@ namespace OZWForm
         /// Initializes a new instance of the <see cref="ValuePanelDecimal"/> class.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public ValuePanelDecimal( ZWValueID valueID ): base( valueID )
+        public ValuePanelDecimal( ZWValueId valueID ): base( valueID )
         {
             InitializeComponent();
 

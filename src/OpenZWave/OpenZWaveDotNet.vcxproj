@@ -116,7 +116,7 @@
     <ClInclude Include="ZWManager.h" />
     <ClInclude Include="ZWNotification.h" />
     <ClInclude Include="ZWOptions.h" />
-    <ClInclude Include="ZWValueID.h" />
+    <ClInclude Include="ZWValueId.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
