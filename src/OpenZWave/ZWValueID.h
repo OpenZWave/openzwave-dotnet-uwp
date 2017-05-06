@@ -111,7 +111,11 @@ namespace OpenZWave
 		property uint64	Id { uint64 get() { return m_valueId->GetId(); } }
 
 	private:
+#if __cplusplus_cli
+		!ZWValueId()
+#else
 		~ZWValueId()
+#endif
 		{
 			delete m_valueId;
 		}
