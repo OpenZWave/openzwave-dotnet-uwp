@@ -41,7 +41,7 @@ namespace OpenZWave
 
 	/// <summary>
 	/// The event args returned by the ZWManager.NotificationReceived event
-	// </summary>
+	/// </summary>
 	public ref class NotificationReceivedEventArgs sealed
 	{
 	internal:
@@ -59,7 +59,7 @@ namespace OpenZWave
 	/// <summary>
 	/// Provides a container for data sent via the notification callback
 	/// handler from the ZWManager.NotificationReceived event.
-	// </summary>
+	/// </summary>
 	public ref class ZWNotification sealed
 	{
 	internal:
@@ -78,19 +78,19 @@ namespace OpenZWave
 		}
 
 	public:
-		/// <summary>Get the type of this notification.</summary>
+		/// <summary>Gets the type of notification.</summary>
 		property ZWNotificationType Type { ZWNotificationType get() { return m_type; } }
 		/// <summary>Gets the notification code</summary>
 		property ZWNotificationCode Code { ZWNotificationCode get() { return (ZWNotificationCode)m_byte; } }
-		/// <summary>Get the Home ID of the driver sending this notification.</summary>
+		/// <summary>Gets the Home ID of the driver sending this notification.</summary>
 		property uint32 HomeId { uint32 get() { return m_valueId->HomeId; } }
-		/// <summary>Get the ID of any node involved in this notification.</summary>
+		/// <summary>Gets the ID of any node involved in this notification.</summary>
 		property uint8 NodeId { uint8 get() { return m_valueId->NodeId; } }
-		/// <summary>Get the unique ValueID of any value involved in this notification.</summary>
+		/// <summary>Gets the unique ValueID of any value involved in this notification.</summary>
 		property ZWValueId^ ValueId { ZWValueId^ get() { return m_valueId; } }
-		/// <summary>Get the index of the association group that has been changed.  Only valid in ZWNotificationType.Group notifications.</summary>
+		/// <summary>Gets the index of the association group that has been changed.  Only valid in ZWNotificationType.Group notifications.</summary>
 		property uint8 GroupIndex { uint8 get() { assert(ZWNotificationType::Group == m_type); return m_byte; } }
-		/// <summary>Get the event value of a notification.  Only valid in Notification::Type_NodeEvent and Notification::Type_ControllerCommand notifications.</summary>
+		/// <summary>Gets the event value of a notification.  Only valid in Notification::Type_NodeEvent and Notification::Type_ControllerCommand notifications.</summary>
 		property uint8 Event { uint8 get() { return m_event; } }
 
 	private:

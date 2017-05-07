@@ -97,14 +97,15 @@ namespace OpenZWave
 		/// with one or more Option elements containing a name and value attribute.  Multiple
 		/// values with the same option name should be listed separately. Note that option names
 		/// are case insensitive.</remarks>
-		/// <code><![CDATA[
-		/// <?xml version="1.0" encoding="utf-8"?>
-		/// <Options>
-		///   <Option name="logging" value="true" />
-		///   <Option name="ignore" value="COMMAND_CLASS_BASIC" />
-		///   <Option name="ignore" value="COMMAND_CLASS_VERSION" />
-		/// </Options>
-		/// ]]></code>
+		// <example>
+		// <code><![CDATA[
+		// <?xml version="1.0" encoding="utf-8"?>
+		// <Options>
+		//   <Option name="logging" value="true" />
+		//   <Option name="ignore" value="COMMAND_CLASS_BASIC" />
+		//   <Option name="ignore" value="COMMAND_CLASS_VERSION" />
+		// </Options>
+		// ]]></code></example>
 		void Initialize(String^ _configPath, String^ _userPath, String^ _commandLine);
 		
 		/// <summary>Creates an object to manage the program options using the default data paths.</summary>
@@ -148,7 +149,7 @@ namespace OpenZWave
 		/// All calls to AddOptionString must be made before Lock.</remarks>
 		/// <param name="_name">the name of the option. Option names are case insensitive and must be unique.</param>
 		/// <param name="_default">the default value for this option.</param>
-		/// <param name="_append">Setting append to true will cause values read from the command line</param>
+		/// <param name="_append">Setting append to true will cause values read from the command line
 		/// or XML file to be concatenated into a comma delimited list. If _append is false,
 		/// newer values will overwrite older ones.</param>
 		/// <seealso cref="GetOptionAsString" />
