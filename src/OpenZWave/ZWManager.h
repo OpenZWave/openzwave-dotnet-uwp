@@ -679,7 +679,7 @@ namespace OpenZWave
 		/// <param name="commandClassId">Id of the class to test for</param>
 		/// <param name="className">Name of the class</param>
 		/// <param name="classVersion">Version of the class</param>
-		/// <returns>True if the node does have the class instantiated, will return name & version</returns>
+		/// <returns>True if the node does have the class instantiated, will return name and version</returns>
 		bool GetNodeClassInformation(uint32 homeId, uint8 nodeId, uint8 commandClassId,
 #if __cplusplus_cli
 			[Out] String^ %className, [Out] System::Byte %classVersion
@@ -962,31 +962,23 @@ namespace OpenZWave
 		/// <returns>true if the driver and node were found; false otherwise</returns>
 		bool RefreshValue(ZWValueId^ id) { return Manager::Get()->RefreshValue(id->CreateUnmanagedValueID()); }
 
-		/**
-		* <summary>Sets a flag indicating whether value changes noted upon a refresh should be verified.  If so, the
-		* library will immediately refresh the value a second time whenever a change is observed.  This helps to filter
-		* out spurious data reported occasionally by some devices.</summary>
-		* \param _id The unique identifier of the value whose changes should or should not be verified.
-		* \param _verify if true, verify changes; if false, don't verify changes.
-		*/
+		/// <summary>Sets a flag indicating whether value changes noted upon a refresh should be verified.  If so, the
+		/// library will immediately refresh the value a second time whenever a change is observed.  This helps to filter
+		/// out spurious data reported occasionally by some devices.</summary>
+		/// <param name="id">The unique identifier of the value whose changes should or should not be verified.</param>
+		/// <param name="verify">if true, verify changes; if false, don't verify changes.</param>
 		void SetChangeVerified(ZWValueId^ id, bool verify) { Manager::Get()->SetChangeVerified(id->CreateUnmanagedValueID(), verify); }
 
-		/**
-		* <summary>Starts an activity in a device.</summary>
-		*
-		* Since buttons are write-only values that do not report a state, no notification callbacks are sent.
-		* \param id The unique identifier of the integer value.
-		* <returns>true if the activity was started.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType</returns>
-		*/
+		/// <summary>Starts an activity in a device.</summary>
+		/// <remarks>Since buttons are write-only values that do not report a state, no notification callbacks are sent.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <returns>true if the activity was started.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType</returns>
 		bool PressButton(ZWValueId^ id) { return Manager::Get()->PressButton(id->CreateUnmanagedValueID()); }
 
-		/**
-		* <summary>Stops an activity in a device.</summary>
-		*
-		* Since buttons are write-only values that do not report a state, no notification callbacks are sent.
-		* \param id The unique identifier of the integer value.
-		* <returns>true if the activity was stopped.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType</returns>
-		*/
+		/// <summary>Stops an activity in a device.</summary>
+		/// <remarks>Since buttons are write-only values that do not report a state, no notification callbacks are sent.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <returns>true if the activity was stopped.  Returns false if the value is not a ZWValueID::ValueType_Button. The type can be tested with a call to ZWValueID::GetType</returns>
 		bool ReleaseButton(ZWValueId^ id) { return Manager::Get()->ReleaseButton(id->CreateUnmanagedValueID()); }
 
 		/*@}*/
@@ -1008,66 +1000,62 @@ namespace OpenZWave
 		*/
 		/*@{*/
 
-		/**
-		* <summary>Get the number of switch points defined in a schedule.</summary>
-		* \param _id The unique identifier of the schedule value.
-		* <returns>the number of switch points defined in this schedule.  Returns zero if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
-		*/
+		/// <summary>Get the number of switch points defined in a schedule.</summary>
+		/// <param name="id">The unique identifier of the schedule value.</param>
+		/// <returns>the number of switch points defined in this schedule.  Returns zero if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
 		uint8 GetNumSwitchPoints(ZWValueId^ id) { return Manager::Get()->GetNumSwitchPoints(id->CreateUnmanagedValueID()); }
 
-		/**
-		* <summary>Set a switch point in the schedule.</summary>
-		* Inserts a new switch point into the schedule, unless a switch point already exists at the specified
-		* time in which case that switch point is updated with the new setback value instead.
-		* A maximum of nine switch points can be set in the schedule.
-		* \param id The unique identifier of the schedule value.
-		* \param hours The hours part of the time when the switch point will trigger.  The time is set using
-		* the 24-hour clock, so this value must be between 0 and 23.
-		* \param minutes The minutes part of the time when the switch point will trigger.  This value must be
-		* between 0 and 59.
-		* \param setback The setback in tenths of a degree Celsius.  The setback value can range from -128 (-12.8C)
-		* to 120 (12.0C).  There are two special setback values - 121 is used to set Frost Protection mode, and
-		* 122 is used to set Energy Saving mode.
-		* <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
-		* \see GetNumSwitchPoints, RemoveSwitchPoint, ClearSwitchPoints
-		*/
+		/// <summary>Set a switch point in the schedule.</summary>
+		/// <remarks>Inserts a new switch point into the schedule, unless a switch point already exists at the specified
+		/// time in which case that switch point is updated with the new setback value instead.
+		/// A maximum of nine switch points can be set in the schedule.</remarks>
+		/// <param name="id">The unique identifier of the schedule value.</param>
+		/// <param name="hours">The hours part of the time when the switch point will trigger.  The time is set using
+		/// the 24-hour clock, so this value must be between 0 and 23.</param>
+		/// <param name="minutes">The minutes part of the time when the switch point will trigger.  This value must be
+		/// between 0 and 59.</param>
+		/// <param name="setback">The setback in tenths of a degree Celsius.  The setback value can range from -128 (-12.8C)
+		/// to 120 (12.0C).  There are two special setback values - 121 is used to set Frost Protection mode, and
+		/// 122 is used to set Energy Saving mode.</param>
+		/// <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
+		/// <seealco cref="GetNumSwitchPoints" />
+		/// <seealco cref="RemoveSwitchPoint" /> 
+		/// <seealco cref="ClearSwitchPoints" />
 		bool SetSwitchPoint(ZWValueId^ id, uint8 hours, uint8 minutes, byte setback) { return Manager::Get()->SetSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes, setback); }
 
-		/**
-		* <summary>Remove a switch point from the schedule.</summary>
-		* Removes the switch point at the specified time from the schedule.
-		* \param id The unique identifier of the schedule value.
-		* \param hours The hours part of the time when the switch point will trigger.  The time is set using
-		* the 24-hour clock, so this value must be between 0 and 23.
-		* \param minutes The minutes part of the time when the switch point will trigger.  This value must be
-		* between 0 and 59.
-		* <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule or if there
-		* is not switch point with the specified time values. The type can be tested with a call to ValueID::GetType.</returns>
-		* \see GetNumSwitchPoints, SetSwitchPoint, ClearSwitchPoints
-		*/
+		/// <summary>Remove a switch point from the schedule.</summary>
+		/// <remarks>Removes the switch point at the specified time from the schedule.</remarks>
+		/// <param name="id">The unique identifier of the schedule value.</param>
+		/// <param name="hours">The hours part of the time when the switch point will trigger.  The time is set using
+		/// the 24-hour clock, so this value must be between 0 and 23.</param>
+		/// <param name="minutes">The minutes part of the time when the switch point will trigger.  This value must be
+		/// between 0 and 59.</param>
+		/// <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule or if there
+		/// is not switch point with the specified time values. The type can be tested with a call to ValueID::GetType.</returns>
+		/// <seealso cref="GetNumSwitchPoints" />
+		/// <seealso cref="SetSwitchPoint" />
+		/// <seealso cref="ClearSwitchPoints" />
 		bool RemoveSwitchPoint(ZWValueId^ id, uint8 hours, uint8 minutes) { return Manager::Get()->RemoveSwitchPoint(id->CreateUnmanagedValueID(), hours, minutes); }
 
-		/**
-		* <summary>Clears all switch points from the schedule.</summary>
-		* \param id The unique identifier of the schedule value.
-		* \see GetNumSwitchPoints, SetSwitchPoint, RemoveSwitchPoint
-		*/
+		/// <summary>Clears all switch points from the schedule.</summary>
+		/// <param name="id">The unique identifier of the schedule value.</param>
+		/// <seealso cref="GetNumSwitchPoints" />
+		/// <seealso cref="SetSwitchPoint" />
+		/// <seealso cref="RemoveSwitchPoint" />
 		void ClearSwitchPoints(ZWValueId^ id) { Manager::Get()->ClearSwitchPoints(id->CreateUnmanagedValueID()); }
 
-		/**
-		* <summary>Gets switch point data from the schedule.</summary>
-		* Retrieves the time and setback values from a switch point in the schedule.
-		 * \param id The unique identifier of the schedule value.
-		 * \param idx The index of the switch point, between zero and one less than the value
-		* returned by GetNumSwitchPoints.
-		* \param o_hours a pointer to a uint8 that will be filled with the hours part of the switch point data.
-		* \param o_minutes a pointer to a uint8 that will be filled with the minutes part of the switch point data.
-		* \param o_setback a pointer to an int8 that will be filled with the setback value.  This can range from -128
-		* (-12.8C)to 120 (12.0C).  There are two special setback values - 121 is used to set Frost Protection mode, and
-		* 122 is used to set Energy Saving mode.
-		* <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
-		* \see GetNumSwitchPoints
-		*/
+		/// <summary>Gets switch point data from the schedule.</summary>
+		/// Retrieves the time and setback values from a switch point in the schedule.
+        /// <param name="id">The unique identifier of the schedule value.</param>
+        /// <param name="idx">The index of the switch point, between zero and one less than the value
+		/// returned by <see cref="GetNumSwitchPoints" />.</param>
+		/// <param name="o_hours">a pointer to a uint8 that will be filled with the hours part of the switch point data.</param>
+		/// <param name="o_minutes">a pointer to a uint8 that will be filled with the minutes part of the switch point data.</param>
+		/// <param name="o_setback">a pointer to an int8 that will be filled with the setback value.  This can range from -128
+		/// (-12.8C)to 120 (12.0C).  There are two special setback values - 121 is used to set Frost Protection mode, and
+		/// 122 is used to set Energy Saving mode.</param>
+		/// <returns>true if successful.  Returns false if the value is not a ValueID::ValueType_Schedule. The type can be tested with a call to ValueID::GetType.</returns>
+		/// <seealso cref="GetNumSwitchPoints" />
 		bool GetSwitchPoint(ZWValueId^ id, uint8 idx,
 #if __cplusplus_cli
 		[Out] System::Byte %o_hours, [Out] System::Byte %o_minutes, [Out] System::SByte %o_setback);
@@ -1087,16 +1075,12 @@ namespace OpenZWave
 		*/
 		/*@{*/
 
-		/**
-		* <summary>Switch all devices on.
-		* All devices that support the SwitchAll command class will be turned on.</summary>
-		*/
+		/// <summary>Switch all devices on.</summary>
+		/// <remarks>All devices that support the SwitchAll command class will be turned on.</remarks>
 		void SwitchAllOn(uint32 homeId) { Manager::Get()->SwitchAllOn(homeId); }
 
-		/**
-		* <summary>Switch all devices off.
-		* All devices that support the SwitchAll command class will be turned off.</summary>
-		*/
+		/// <summary>Switch all devices off.</summary>
+		/// <remarks>All devices that support the SwitchAll command class will be turned off.</remarks>
 		void SwitchAllOff(uint32 homeId) { Manager::Get()->SwitchAllOff(homeId); }
 
 		/*@}*/
@@ -1114,48 +1098,46 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Set the value of a configurable parameter in a device.</summary>
-		*
-		* Some devices have various parameters that can be configured to control the device behaviour.
-		* These are not reported by the device over the Z-Wave network, but can usually be found in
-		* the device's user manual.
-		* This method returns immediately, without waiting for confirmation from the device that the
-		* change has been made.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node to configure.</param>
-		 * \param param The index of the parameter.
-		* \param value The value to which the parameter should be set.
-		* <returns>true if the a message setting the value was sent to the device.</returns>
-		* \see RequestConfigParam
-		*/
+
+		/// <summary>Set the value of a configurable parameter in a device.</summary>
+		/// <remarks>Some devices have various parameters that can be configured to control the device behaviour.
+		/// These are not reported by the device over the Z-Wave network, but can usually be found in
+		/// the device's user manual.
+		/// This method returns immediately, without waiting for confirmation from the device that the
+		/// change has been made.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to configure.</param>
+		/// <param name="param">The index of the parameter.</param>
+		/// <param name="value">The value to which the parameter should be set.</param>
+		/// <returns>true if the a message setting the value was sent to the device.</returns>
+		/// <seealso cref="RequestConfigParam" />
+
 		bool SetConfigParam(uint32 homeId, uint8 nodeId, uint8 param, int32 value) { return Manager::Get()->SetConfigParam(homeId, nodeId, param, value); }
 
-		/**
-		* <summary>Request the value of a configurable parameter from a device.</summary>
-		*
-		* Some devices have various parameters that can be configured to control the device behaviour.
-		* These are not reported by the device over the Z-Wave network, but can usually be found in
-		* the device's user manual.
-		* This method requests the value of a parameter from the device, and then returns immediately,
-		* without waiting for a response.  If the parameter index is valid for this device, and the
-		* device is awake, the value will eventually be reported via a ValueChanged notification callback.
-		* The ValueID reported in the callback will have an index set the same as _param and a command class
-		* set to the same value as returned by a call to Configuration::StaticGetCommandClassId.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node to configure.</param>
-		* \param _param The index of the parameter.
-		* \see SetConfigParam, ValueID, Notification
-		*/
+		/// <summary>Request the value of a configurable parameter from a device.</summary>
+		/// <remarks><para>Some devices have various parameters that can be configured to control the device behaviour.
+		/// These are not reported by the device over the Z-Wave network, but can usually be found in
+		/// the device's user manual.</para><para>
+		/// This method requests the value of a parameter from the device, and then returns immediately,
+		/// without waiting for a response.  If the parameter index is valid for this device, and the
+		/// device is awake, the value will eventually be reported via a ValueChanged notification callback.
+		/// The ValueID reported in the callback will have an index set the same as _param and a command class
+		/// set to the same value as returned by a call to Configuration::StaticGetCommandClassId.</para></remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to configure.</param>
+		/// <param name="param">The index of the parameter.</param>
+		/// <seealso cref="SetConfigParam"/>
+		/// <seealso cref="ValueID" />
+		/// <seealso cref="Notification" />
 		void RequestConfigParam(uint32 homeId, uint8 nodeId, uint8 param) { Manager::Get()->RequestConfigParam(homeId, nodeId, param); }
 
-		/**
-		* <summary>Request the values of all known configurable parameters from a device.</summary>
-		*
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node to configure.</param>
-		* \see SetConfigParam, RequestConfigParam, ValueID, Notification
-		*/
+		/// <summary>Request the values of all known configurable parameters from a device.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node to configure.</param>
+		/// <seealso cref="SetConfigParam" />
+		/// <seealso cref="RequestConfigParam" />
+		/// <seealso cref="ValueID" />
+		/// <seealso cref="Notification" />
 		void RequestAllConfigParams(uint32 homeId, uint8 nodeId) { Manager::Get()->RequestAllConfigParams(homeId, nodeId); }
 		/*@}*/
 
@@ -1167,30 +1149,29 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Gets the number of association groups reported by this node.</summary>
-		*
-		* In Z-Wave, groups are numbered starting from one.  For example, if a call to GetNumGroups returns 4, the _groupIdx
-		* value to use in calls to GetAssociations, AddAssociation and RemoveAssociation will be a number between 1 and 4.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node whose groups we are interested in.</param>
-		* <returns>The number of groups.</returns>
-		* \see GetAssociations, AddAssociation, RemoveAssociation
-		*/
+		
+		/// <summary>Gets the number of association groups reported by this node.</summary>
+		/// <remarks>In Z-Wave, groups are numbered starting from one.  For example, if a call to GetNumGroups returns 4, the _groupIdx
+		/// value to use in calls to GetAssociations, AddAssociation and RemoveAssociation will be a number between 1 and 4.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose groups we are interested in.</param>
+		/// <returns>The number of groups.</returns>
+		/// <seealso cref="GetAssociations" />
+		/// <seealso cref="AddAssociation" />
+		/// <seealso cref="RemoveAssociation" />
 		uint8 GetNumGroups(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNumGroups(homeId, nodeId); }
 
-		/**
-		* <summary>Gets the associations for a group.</summary>
-		*
-		* Makes a copy of the list of associated nodes in the group, and returns it in an array of uint8's.
-		* The caller is responsible for freeing the array memory with a call to delete [].
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node whose associations we are interested in.</param>
-		* \param _groupIdx One-based index of the group (because Z-Wave product manuals use one-based group numbering).
-		* \param o_associations If the number of associations returned is greater than zero, o_associations will be set to point to an array containing the IDs of the associated nodes.
-		* <returns>The number of nodes in the associations array.  If zero, the array will point to NULL, and does not need to be deleted.</returns>
-		* \see GetNumGroups, AddAssociation, RemoveAssociation
-		*/
+		/// <summary>Gets the associations for a group.</summary>
+		/// <remarks>Makes a copy of the list of associated nodes in the group, and returns it in an array of uint8's.
+		/// The caller is responsible for freeing the array memory with a call to delete [].</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose associations we are interested in.</param>
+		/// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+		/// <param name="o_associations">If the number of associations returned is greater than zero, o_associations will be set to point to an array containing the IDs of the associated nodes.</param>
+		/// <returns>The number of nodes in the associations array.  If zero, the array will point to NULL, and does not need to be deleted.</returns>
+		/// <seealso cref="GetNumGroups" />
+		/// <seealso cref="AddAssociation" />
+		/// <seealso cref="RemoveAssociation" />
 		uint32 GetAssociations(
 #if __cplusplus_cli
 		uint32 const homeId, uint8 const nodeId, uint8 const groupIdx,
@@ -1199,43 +1180,40 @@ namespace OpenZWave
 		uint32 homeId, uint8 nodeId, uint8 groupIdx, Platform::Array<byte>^ *o_associations);
 #endif
 
-		/**
-		* <summary>Gets the maximum number of associations for a group.</summary>
-		*
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node whose associations we are interested in.</param>
-		* \param _groupIdx one-based index of the group (because Z-Wave product manuals use one-based group numbering).
-		* <returns>The maximum number of nodes that can be associated into the group.</returns>
-		* \see GetNumGroups, AddAssociation, RemoveAssociation
-		*/
+		/// <summary>Gets the maximum number of associations for a group.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose associations we are interested in.</param>
+		/// <param name="groupIdx">one-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+		/// <returns>The maximum number of nodes that can be associated into the group.</returns>
+		/// <seealso cref="GetNumGroups" /> 
+		/// <seealso cref="AddAssociation" />
+		/// <seealso cref="RemoveAssociation" />
 		uint8 GetMaxAssociations(uint32 homeId, uint8 nodeId, uint8 groupIdx) { return Manager::Get()->GetMaxAssociations(homeId, nodeId, groupIdx); }
 
-		/**
-		* <summary>Adds a node to an association group.</summary>
-		*
-		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
-		* held in this class is updated directly.  This will be reverted by a future Association message from the device
-		* if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node whose associations are to be changed.</param>
-		* \param _groupIdx One-based index of the group (because Z-Wave product manuals use one-based group numbering).
-		* \param _targetNodeId Identifier for the node that will be added to the association group.
-		* \see GetNumGroups, GetAssociations, RemoveAssociation
-		*/
+	    /// <summary>Adds a node to an association group.</summary>
+	    /// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
+	    /// held in this class is updated directly.  This will be reverted by a future Association message from the device
+	    /// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+	    /// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+	    /// <param name="nodeId">The ID of the node whose associations are to be changed.</param>
+	    /// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+	    /// <param name="targetNodeId">Identifier for the node that will be added to the association group.</param>
+	    /// <seealso cref="GetNumGroups" />
+	    /// <seealso cref="GetAssociations" />
+	    /// <seealso cref="RemoveAssociation" />
 		void AddAssociation(uint32 homeId, uint8 nodeId, uint8 groupIdx, uint8 targetNodeId) { return Manager::Get()->AddAssociation(homeId, nodeId, groupIdx, targetNodeId); }
 
-		/**
-		* <summary>Removes a node from an association group.</summary>
-		*
-		* Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
-		* held in this class is updated directly.  This will be reverted by a future Association message from the device
-		* if the Z-Wave message actually failed to get through.   Notification callbacks will be sent in both cases.
-		* <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-		* <param name="nodeId">The ID of the node whose associations are to be changed.</param>
-		* \param _groupIdx One-based index of the group (because Z-Wave product manuals use one-based group numbering).
-		* \param _targetNodeId Identifier for the node that will be removed from the association group.
-		* \see GetNumGroups, GetAssociations, AddAssociation
-		*/
+		/// <summary>Removes a node from an association group.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
+		/// held in this class is updated directly.  This will be reverted by a future Association message from the device
+		/// if the Z-Wave message actually failed to get through.   Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose associations are to be changed.</param>
+		/// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+		/// <param name="targetNodeId">Identifier for the node that will be removed from the association group.</param>
+		/// <seealso cref="GetNumGroups" />
+		/// <seealso cref="GetAssociations" />
+		/// <seealso cref="AddAssociation" />
 		void RemoveAssociation(uint32 homeId, uint8 nodeId, uint8 groupIdx, uint8 targetNodeId) { return Manager::Get()->RemoveAssociation(homeId, nodeId, groupIdx, targetNodeId); }
 		/*@}*/
 
@@ -1259,67 +1237,52 @@ namespace OpenZWave
 		*/
 		/*@{*/
 	public:
-		/**
-		* <summary>Test network node.
-		* Sends a series of messages to a network node for testing network reliability.</summary>
-		* <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
-		* \param count This is the number of test messages to send.
-		* \see TestNetwork
-		*/
+		
+		/// <summary>Test network node.</summary>
+		/// <remarks>Sends a series of messages to a network node for testing network reliability.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
+		/// <param name="count">This is the number of test messages to send.</param>
+		/// <seealso cref="TestNetwork(uint,uint)" />
 		void TestNetworkNode(uint32 homeId, uint8 nodeId, uint32 count) { Manager::Get()->TestNetworkNode(homeId, nodeId, count); }
 
-		/**
-		* <summary>Test network.
-		* Sends a series of messages to every node on the network for testing network reliability.</summary>
-		* <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
-		* \param count This is the number of test messages to send.
-		* \see TestNetwork
-		*/
+		/// <summary>Test network.</summary>
+		/// <remarks>Sends a series of messages to every node on the network for testing network reliability.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
+		/// <param name="count">This is the number of test messages to send.</param>
+		/// <seealso cref="TestNetwork(uint,uint,uint)" />
 		void TestNetwork(uint32 homeId, uint32 count) { Manager::Get()->TestNetwork(homeId, count); }
 
-		/**
-		* <summary>Heal network node by requesting the node rediscover their neighbors.
-		* Sends a ControllerCommand_RequestNodeNeighborUpdate to the node.</summary>
-		* <param name="homeId">The Home ID of the Z-Wave network to be healed.</param>
-		* <param name="nodeId">The node to heal.</param>
-		* \param doRR Whether to perform return routes initialization.
-		*/
+		/// <summary>Heal network node by requesting the node rediscover their neighbors.</summary>
+		/// <remarks>Sends a ControllerCommand_RequestNodeNeighborUpdate to the node.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave network to be healed.</param>
+		/// <param name="nodeId">The node to heal.</param>
+		/// <param name="doRR">Whether to perform return routes initialization.</param>
 		void HealNetworkNode(uint32 homeId, uint8 nodeId, bool doRR) { Manager::Get()->HealNetworkNode(homeId, nodeId, doRR); }
 
-		/**
-		* <summary>Heal network by requesting node's rediscover their neighbors.
-		* Sends a ControllerCommand_RequestNodeNeighborUpdate to every node.
-		* Can take a while on larger networks.</summary>
-		* <param name="homeId">The Home ID of the Z-Wave network to be healed.</param>
-		* \param doRR Whether to perform return routes initialization.
-		*/
+		/// <summary>Heal network by requesting node's rediscover their neighbors.</summary>
+		/// <remarks>Sends a ControllerCommand_RequestNodeNeighborUpdate to every node.
+		/// Can take a while on larger networks.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave network to be healed.</param>
+		/// <param name="doRR">Whether to perform return routes initialization.</param>
 		void HealNetwork(uint32 homeId, bool doRR) { Manager::Get()->HealNetwork(homeId, doRR); }
 
-		/**
-		* <summary>Start the Inclusion Process to add a Node to the Network.
-		* The Status of the Node Inclusion is communicated via Notifications. Specifically, you should
-		* monitor ControllerCommand Notifications.</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The Home ID of the Z-Wave network where the device should be added.</param>
-		* \param doSecurity Whether to initialize the Network Key on the device if it supports the Security CC
-		* <returns>if the Command was sent succcesfully to the Controller</returns>
-		*/
+		/// <summary>Start the Inclusion Process to add a Node to the Network.</summary>
+		/// <remarks><para>The Status of the Node Inclusion is communicated via Notifications. Specifically, you should
+		/// monitor ControllerCommand Notifications.</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave network where the device should be added.</param>
+		/// <param name="doSecurity">Whether to initialize the Network Key on the device if it supports the Security CC</param>
+		/// <returns>if the Command was sent succcesfully to the Controller</returns>
 		bool AddNode(uint32 homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
 
-		/**
-		* <summary>Remove a Device from the Z-Wave Network
-		* The Status of the Node Removal is communicated via Notifications. Specifically, you should
-		* monitor ControllerCommand Notifications.</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network where you want to remove the device</param>
-		* <returns>if the Command was send succesfully to the Controller</returns>
-		*/
+		/// <summary>Remove a Device from the Z-Wave Network</summary>
+		/// <remarks><para>The Status of the Node Removal is communicated via Notifications. Specifically, you should
+		/// monitor ControllerCommand Notifications.</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network where you want to remove the device</param>
+		/// <returns>if the Command was send succesfully to the Controller</returns>
 		bool RemoveNode(uint32 homeId) { return Manager::Get()->RemoveNode(homeId); }
 
 		/// <summary>Remove a Failed Device from the Z-Wave Network</summary>
@@ -1337,71 +1300,51 @@ namespace OpenZWave
 		/// <returns>if the Command was send succesfully to the Controller</returns>
 		bool RemoveFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->RemoveFailedNode(homeId, nodeId); }
 
-		/**
-		* <summary>Check if the Controller Believes a Node has Failed.
-		* This is different from the IsNodeFailed call in that we test the Controllers Failed Node List, whereas the IsNodeFailed is testing
-		* our list of Failed Nodes, which might be different.
-		* The Results will be communicated via Notifications. Specifically, you should monitor the ControllerCommand notifications
-		* </summary>
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network where you want to test the device</param>
-		* <param name="nodeId">The NodeID of the Failed Node.</param>
-		* <returns>if the RemoveDevice Command was send succesfully to the Controller</returns>
-		*/
+		/// <summary>Check if the Controller Believes a Node has Failed.</summary>
+		/// <remarks><para>This is different from the IsNodeFailed call in that we test the Controllers Failed Node List, whereas the IsNodeFailed is testing
+		/// our list of Failed Nodes, which might be different.</para>
+		/// <para>The Results will be communicated via Notifications. Specifically, you should monitor the ControllerCommand notifications</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network where you want to test the device</param>
+		/// <param name="nodeId">The NodeID of the Failed Node.</param>
+		/// <returns>if the RemoveDevice Command was send succesfully to the Controller</returns>
 		bool HasNodeFailed(uint32 homeId, uint8 nodeId) { return Manager::Get()->HasNodeFailed(homeId, nodeId); }
 
-		/**
-		* <summary>Ask a Node to update its update its Return Route to the Controller
-		* This command will ask a Node to update its Return Route to the Controller</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
-		* <param name="nodeId">The NodeID of the Node.</param>
-		* <returns>if the Command was send succesfully to the Controller</returns>
-		*/
+		/// <summary>Ask a Node to update its update its Return Route to the Controller</summary>
+		/// <remarks><para>This command will ask a Node to update its Return Route to the Controller</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
+		/// <param name="nodeId">The NodeID of the Node.</param>
+		/// <returns>if the Command was send succesfully to the Controller</returns>
 		bool AssignReturnRoute(uint32 homeId, uint8 nodeId) { return Manager::Get()->AssignReturnRoute(homeId, nodeId); }
 
-		/**
-		* <summary>Ask a Node to update its Neighbor Tables
-		* This command will ask a Node to update its Neighbor Tables.</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
-		* <param name="nodeId">The NodeID of the Node.</param>
-		* <returns>if the Command was send succesfully to the </returns>
-		*/
+		/// <summary>Ask a Node to update its Neighbor Tables</summary>
+		/// <remarks><para>This command will ask a Node to update its Neighbor Tables.</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
+		/// <param name="nodeId">The NodeID of the Node.</param>
+		/// <returns>if the Command was send succesfully to the </returns>
 		bool RequestNodeNeighborUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNodeNeighborUpdate(homeId, nodeId); }
 
-		/**
-		* <summary>Ask a Node to delete all Return Route.
-		* This command will ask a Node to delete all its return routes, and will rediscover when needed.</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
-		* <param name="nodeId">The NodeID of the Node.</param>
-		* <returns>if the Command was send succesfully to the Controller</returns>
-		*/
+		/// <summary>Ask a Node to delete all Return Route.</summary>
+		/// <remarks><para>This command will ask a Node to delete all its return routes, and will rediscover when needed.</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
+		/// <param name="nodeId">The NodeID of the Node.</param>
+		/// <returns>if the Command was send succesfully to the Controller</returns>
 		bool DeleteAllReturnRoutes(uint32 homeId, uint8 nodeId) { return Manager::Get()->DeleteAllReturnRoutes(homeId, nodeId); }
 
-		/**
-		* <summary>Send a NIF frame from the Controller to a Node.
-		* This command send a NIF frame from the Controller to a Node</summary>
-		*
-		* Results of the AddNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">The NodeID of the Node to recieve the NIF</param>
-		* <returns>if the sendNIF Command was send succesfully to the Controller</returns>
-		*/
+		/// <summary>Send a NIF frame from the Controller to a Node.</summary>
+		/// <remarks><para>This command send a NIF frame from the Controller to a Node</para>
+		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">The NodeID of the Node to recieve the NIF</param>
+		/// <returns>if the sendNIF Command was send succesfully to the Controller</returns>
 		bool SendNodeInformation(uint32 homeId, uint8 nodeId) { return Manager::Get()->SendNodeInformation(homeId, nodeId); }
 
 		/// <summary>Create a new primary controller when old primary fails. Requires SUC.</summary>
@@ -1413,105 +1356,74 @@ namespace OpenZWave
 		/// <seealso cref="CancelControllerCommand" />
 		bool CreateNewPrimary(uint32 homeId) { return Manager::Get()->CreateNewPrimary(homeId); }
 
-		/**
-		* <summary>Receive network configuration information from primary controller. Requires secondary.
-		* This command prepares the controller to recieve Network Configuration from a Secondary Controller.</summary>
-		*
-		* Results of the ReceiveConfiguration Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <returns>if the ReceiveConfiguration Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Receive network configuration information from primary controller. Requires secondary.</summary>
+		/// <remarks><para>This command prepares the controller to recieve Network Configuration from a Secondary Controller.</para>
+		/// <para>Results of the ReceiveConfiguration Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <returns>if the ReceiveConfiguration Command was send succesfully to the Controller</returns>
+		/// <seealso cref="CancelControllerCommand" />
 		bool ReceiveConfiguration(uint32 homeId) { return Manager::Get()->ReceiveConfiguration(homeId); }
 
-		/**
-		* <summary>Replace a failed device with another.</summary>
-		* If the node is not in the controller's failed nodes list, or the node responds, this command will fail.
-		* You can check if a Node is in the Controllers Failed node list by using the HasNodeFailed method
-		*
-		* Results of the ReplaceFailedNode Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">the ID of the Failed Node</param>
-		* <returns>if the ReplaceFailedNode Command was send succesfully to the Controller</returns>
-		* \sa HasNodeFailed
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Replace a failed device with another.</summary>
+		/// <remarks><para>If the node is not in the controller's failed nodes list, or the node responds, this command will fail.</para>
+		/// <para>You can check if a Node is in the Controllers Failed node list by using the HasNodeFailed method</para>
+		/// <para>Results of the ReplaceFailedNode Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">the ID of the Failed Node</param>
+		/// <returns>if the ReplaceFailedNode Command was send succesfully to the Controller</returns>
+		/// <seealso cref="HasNodeFailed" />
+		/// <seealso cref="CancelControllerCommand" />
 		bool ReplaceFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplaceFailedNode(homeId, nodeId); }
 
-		/**
-		* <summary>Add a new controller to the network and make it the primary.</summary>
-		* The existing primary will become a secondary controller.
-		*
-		* Results of the TransferPrimaryRole Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <returns>if the TransferPrimaryRole Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Add a new controller to the network and make it the primary.</summary>
+		/// <remarks><para>The existing primary will become a secondary controller.</para>
+		/// <para>Results of the TransferPrimaryRole Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <returns>if the TransferPrimaryRole Command was send succesfully to the Controller</returns>
+		/// <see cref="CancelControllerCommand" />
 		bool TransferPrimaryRole(uint32 homeId) { return Manager::Get()->TransferPrimaryRole(homeId); }
 
-		/**
-		* <summary>Update the controller with network information from the SUC/SIS.</summary>
-		*
-		* Results of the RequestNetworkUpdate Command will be send as a Notification with the Notification type asc
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">the ID of the Node</param>
-		* <returns>if the RequestNetworkUpdate Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Update the controller with network information from the SUC/SIS.</summary>
+		/// <remarks><para>Results of the RequestNetworkUpdate Command will be send as a Notification with the Notification type asc
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">the ID of the Node</param>
+		/// <returns>if the RequestNetworkUpdate Command was send succesfully to the Controller</returns>
+		/// <seealso cref="CancelControllerCommand" />
 		bool RequestNetworkUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNetworkUpdate(homeId, nodeId); }
 
-		/**
-		* <summary>Send information from primary to secondary</summary>
-		*
-		* Results of the ReplicationSend Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">the ID of the Node</param>
-		* <returns>if the ReplicationSend Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Send information from primary to secondary</summary>
+		/// <remarks><para>Results of the ReplicationSend Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">the ID of the Node</param>
+		/// <returns>if the ReplicationSend Command was send succesfully to the Controller</returns>
+		/// <seealso cref="CancelControllerCommand" />
 		bool ReplicationSend(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplicationSend(homeId, nodeId); }
 
-		/**
-		* <summary>Create a handheld button id.</summary>
-		*
-		* Only intended for Bridge Firmware Controllers.
-		*
-		* Results of the CreateButton Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">the ID of the Virtual Node</param>
-		* <param name="buttonId">the ID of the Button to create</param>
-		* <returns>if the CreateButton Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Create a handheld button id.</summary>
+		/// <remarks><para>Only intended for Bridge Firmware Controllers.</para>
+		/// <para>Results of the CreateButton Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">the ID of the Virtual Node</param>
+		/// <param name="buttonId">the ID of the Button to create</param>
+		/// <returns>if the CreateButton Command was send succesfully to the Controller</returns>
+		/// <seealso cref="CancelControllerCommand" />
 		bool CreateButton(uint32 homeId, uint8 nodeId, uint8 buttonid) { return Manager::Get()->CreateButton(homeId, nodeId, buttonid); }
 
-
-		/**
-		* <summary>Delete a handheld button id.</summary>
-		*
-		* Only intended for Bridge Firmware Controllers.
-		*
-		* Results of the DeleteButton Command will be send as a Notification with the Notification type as
-		* Notification::Type_ControllerCommand
-		*
-		* <param name="homeId">The HomeID of the Z-Wave network</param>
-		* <param name="nodeId">the ID of the Virtual Node</param>
-		* <param name="buttonId">the ID of the Button to delete</param>
-		* <returns>if the DeleteButton Command was send succesfully to the Controller</returns>
-		* \sa CancelControllerCommand
-		*/
+		/// <summary>Delete a handheld button id.</summary>
+		/// <remarks><para>Only intended for Bridge Firmware Controllers.</para>
+		/// <para>Results of the DeleteButton Command will be send as a Notification with the Notification type as
+		/// Notification::Type_ControllerCommand</para></remarks>
+		/// <param name="homeId">The HomeID of the Z-Wave network</param>
+		/// <param name="nodeId">the ID of the Virtual Node</param>
+		/// <param name="buttonId">the ID of the Button to delete</param>
+		/// <returns>if the DeleteButton Command was send succesfully to the Controller</returns>
+		/// <seealso cref="CancelControllerCommand" />
 		bool DeleteButton(uint32 homeId, uint8 nodeId, uint8 buttonid) { return Manager::Get()->DeleteButton(homeId, nodeId, buttonid); }
 
 		//-----------------------------------------------------------------------------
@@ -1537,116 +1449,92 @@ namespace OpenZWave
 			Platform::WriteOnlyArray<byte>^ sceneIds);
 #endif
 
-		/**
-		* <summary>Create a new Scene passing in Scene ID</summary>
-		* <returns>uint8 Scene ID used to reference the scene. 0 is failure result.</returns>
-		* \see GetNumScenes, GetAllScenes, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Create a new Scene passing in Scene ID</summary>
+		/// <returns>uint8 Scene ID used to reference the scene. 0 is failure result.</returns>
+		// \see GetNumScenes, GetAllScenes, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		uint8 CreateScene() { return Manager::Get()->CreateScene(); }
 
-		/**
-		* <summary>Remove an existing Scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID to be removed.</param>
-		* <returns>true if scene was removed.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Remove an existing Scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID to be removed.</param>
+		/// <returns>true if scene was removed.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool RemoveScene(uint8 sceneId) { return Manager::Get()->RemoveScene(sceneId); }
 
-		/**
-		* <summary>Add a bool Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the bool value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a bool Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the bool value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, bool value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Add a byte Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the byte value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a byte Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the byte value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, uint8 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Add a decimal Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the float value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a decimal Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the float value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, float value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Add a 32-bit signed integer Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the int32 value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a 32-bit signed integer Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the int32 value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Add a 16-bit signed integer Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the int16 value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a 16-bit signed integer Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the int16 value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, int16 value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Add a string Value ID to an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the string value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add a string Value ID to an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the string value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValue(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->AddSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
-		/**
-		* <summary>Add the selected item list Value ID to an existing scene (as a string).</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the string value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add the selected item list Value ID to an existing scene (as a string).</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the string value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
-		/**
-		* <summary>Add the selected item list Value ID to an existing scene (as a integer).</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the integer value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Add the selected item list Value ID to an existing scene (as a integer).</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the integer value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool AddSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->AddSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Remove the Value ID from an existing scene.</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be removed.</param>
-		* <returns>true if Value ID was removed.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Remove the Value ID from an existing scene.</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be removed.</param>
+		/// <returns>true if Value ID was removed.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool RemoveSceneValue(uint8 sceneId, ZWValueId^ valueId) { return Manager::Get()->RemoveSceneValue(sceneId, valueId->CreateUnmanagedValueID()); }
 
-		/**
-		* <summary>Retrieves the scene's list of values.</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="o_value">an array of ValueIDs.</param>
-		* <returns>The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.</returns>
-		*/
+		/// <summary>Retrieves the scene's list of values.</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="o_value">an array of ValueIDs.</param>
+		/// <returns>The number of nodes in the o_value array. If zero, the array will point to NULL and does not need to be deleted.</returns>
 #if __cplusplus_cli
 		int SceneGetValues(uint8 sceneId, [Out] cli::array<ZWValueId^>^ %o_values);
 #else
@@ -1654,150 +1542,122 @@ namespace OpenZWave
 #endif
 
 		/// <summary>Retrieves a scene's value as a bool.</summary>
-		/// <param sceneId The Scene ID of the scene to retrieve the value from.</param>
-		/// <param valueId The Value ID of the value to retrieve.</param>
-		/// <param boolean that will be filled with the returned value.</param>
-		/// <returns true if the value was obtained.</returns>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">boolean that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
 		bool SceneGetValueAsBool(uint8 sceneId, ZWValueId^ valueId, bool *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as an 8-bit unsigned integer.</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Byte that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as an 8-bit unsigned integer.</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Byte that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueAsByte(uint8 sceneId, ZWValueId^ valueId, byte *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a decimal.</summary>
-		* \param sceneId The Scene ID of the scene to retrieve the value from.
-		* \param valueId The Value ID of the value to retrieve.
-		* \param o_value decimal that will be filled with the returned value.
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		// <summary>Retrieves a scene's value as a decimal.</summary>
+		// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		// <param name="valueId">The Value ID of the value to retrieve.</param>
+		// <param name="o_value">decimal that will be filled with the returned value.</param>
+		// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		// bool SceneGetValueAsDecimal(uint8 sceneId, ZWValueId^ valueId, [Out] System::Decimal %o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a 32-bit signed integer.</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Int32 that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a 32-bit signed integer.</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Int32 that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueAsInt(uint8 sceneId, ZWValueId^ valueId, int *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a 16-bit signed integer.</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Int16 that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a 16-bit signed integer.</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Int16 that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueAsShort(uint8 sceneId, ZWValueId^ valueId, int16 *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a string.</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Pointer to a string that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a string.</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Pointer to a string that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueAsString(uint8 sceneId, ZWValueId^ valueId, String^ *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a list (as a string).</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Pointer to a string that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a list (as a string).</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Pointer to a string that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ *o_value);
 
-		/**
-		* <summary>Retrieves a scene's value as a list (as a integer).</summary>
-		* <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
-		* <param name="valueId">The Value ID of the value to retrieve.</param>
-		* <param name="o_value">Pointer to a integer that will be filled with the returned value.</param>
-		* <returns>true if the value was obtained.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Retrieves a scene's value as a list (as a integer).</summary>
+		/// <param name="sceneId">The Scene ID of the scene to retrieve the value from.</param>
+		/// <param name="valueId">The Value ID of the value to retrieve.</param>
+		/// <param name="o_value">Pointer to a integer that will be filled with the returned value.</param>
+		/// <returns>true if the value was obtained.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SceneGetValueListSelection(uint8 sceneId, ZWValueId^ valueId, int *o_value);
 
-		/**
-		* <summary>Set a bool Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the bool value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a bool Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the bool value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, bool value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Set a byte Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the byte value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a byte Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the byte value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, uint8 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Set a decimal Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the float value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a decimal Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the float value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, float value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Set a 32-bit signed integer Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the int32 value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a 32-bit signed integer Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the int32 value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, int32 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Set a 16-bit integer Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the int16 value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a 16-bit integer Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the int16 value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, int16 value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), value); }
 
-		/**
-		* <summary>Set a string Value ID to an existing scene's ValueID</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the string value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set a string Value ID to an existing scene's ValueID</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the string value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValue(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->SetSceneValue(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
-		/**
-		* <summary>Set the list selected item Value ID to an existing scene's ValueID (as a string).</summary>
-		* <param name="sceneId">is an integer representing the unique Scene ID.</param>
-		* <param name="valueId">is the Value ID to be added.</param>
-		* <param name="value">is the string value to be saved.</param>
-		* <returns>true if Value ID was added.</returns>
-		* \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
-		*/
+		/// <summary>Set the list selected item Value ID to an existing scene's ValueID (as a string).</summary>
+		/// <param name="sceneId">is an integer representing the unique Scene ID.</param>
+		/// <param name="valueId">is the Value ID to be added.</param>
+		/// <param name="value">is the string value to be saved.</param>
+		/// <returns>true if Value ID was added.</returns>
+		// \see GetNumScenes, GetAllScenes, CreateScene, RemoveScene, AddSceneValue, RemoveSceneValue, SceneGetValues, SceneGetValueAsBool, SceneGetValueAsByte, SceneGetValueAsFloat, SceneGetValueAsInt, SceneGetValueAsShort, SceneGetValueAsString, SetSceneValue, GetSceneLabel, SetSceneLabel, SceneExists, ActivateScene
 		bool SetSceneValueListSelection(uint8 sceneId, ZWValueId^ valueId, String^ value) { return Manager::Get()->SetSceneValueListSelection(sceneId, valueId->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/// <summary>Set the list selected item Value ID to an existing scene's ValueID (as a integer).</summary>
