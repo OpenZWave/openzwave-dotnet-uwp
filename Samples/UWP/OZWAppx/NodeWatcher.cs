@@ -55,7 +55,7 @@ namespace OZWAppx
 
             // Create the OpenZWave Manager
             ZWManager.Instance.Initialize();
-            ZWManager.Instance.OnNotification += OnNodeNotification;
+            ZWManager.Instance.NotificationReceived += OnNodeNotification;
 
 #if NETFX_CORE
             var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
@@ -110,7 +110,7 @@ namespace OZWAppx
         /// The notifications handler.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        private void OnNodeNotification(ZWNotification notification)
+        private void OnNodeNotification(ZWManager manager, NotificationReceivedEventArgs e)
         {
             // Handle the notification on a thread that can safely
             // modify the controls without throwing an exception.
@@ -120,7 +120,7 @@ namespace OZWAppx
             Dispatcher.BeginInvoke(new Action(() =>
 #endif
             {
-                NotificationHandler(notification);
+                NotificationHandler(e.Notification);
             }
 #if !NETFX_CORE
             )
@@ -138,7 +138,7 @@ namespace OZWAppx
                 creationTime = DateTimeOffset.Now;
             }
             public TimeSpan Age { get { return DateTimeOffset.Now - creationTime; } }
-            public NotificationType Type { get; set; }
+            public ZWNotificationType Type { get; set; }
             public byte HomeID { get; set; }
             public byte NodeID { get; set; }
             public TaskCompletionSource<ZWNotification> TCS { get; set; }
@@ -155,7 +155,7 @@ namespace OZWAppx
             var nodeId = notification.NodeId;
             var type = notification.Type;
 
-            Action<ZWValueID> debugWriteValueID = (v) =>
+            Action<ZWValueId> debugWriteValueID = (v) =>
             {
                 // Debug.WriteLine("  Node : " + nodeId.ToString());
                 // Debug.WriteLine("  CC   : " + v.CommandClassId.ToString());
@@ -185,7 +185,7 @@ namespace OZWAppx
             switch (notification.Type)
             {
                 // NodeAdded : Node now exists in the system. Very little useful info
-                case NotificationType.NodeAdded:
+                case ZWNotificationType.NodeAdded:
                     {
                         // if this node was in zwcfg*.xml, this is the first node notification
                         // if not, the NodeNew notification should already have been received
@@ -196,14 +196,14 @@ namespace OZWAppx
                         break;
                     }
 
-                case NotificationType.NodeNew:
+                case ZWNotificationType.NodeNew:
                     {
                         // Add the new node to our list (and flag as uninitialized)
                         m_nodeList.Add(new Node(nodeId, homeID));
                         break;
                     }
 
-                case NotificationType.NodeRemoved:
+                case ZWNotificationType.NodeRemoved:
                     {
                         foreach (Node node in m_nodeList)
                         {
@@ -217,14 +217,14 @@ namespace OZWAppx
                         break;
                     }
 
-                case NotificationType.NodeProtocolInfo:
-                case NotificationType.NodeEvent:
-                case NotificationType.NodeNaming:
-                case NotificationType.EssentialNodeQueriesComplete:
-                case NotificationType.NodeQueriesComplete:
-                case NotificationType.ValueRemoved:
-                case NotificationType.ValueChanged:
-                case NotificationType.Group:
+                case ZWNotificationType.NodeProtocolInfo:
+                case ZWNotificationType.NodeEvent:
+                case ZWNotificationType.NodeNaming:
+                case ZWNotificationType.EssentialNodeQueriesComplete:
+                case ZWNotificationType.NodeQueriesComplete:
+                case ZWNotificationType.ValueRemoved:
+                case ZWNotificationType.ValueChanged:
+                case ZWNotificationType.Group:
                 {
                         Node node = GetNode(homeID, nodeId);
                         if (node != null)
@@ -234,31 +234,31 @@ namespace OZWAppx
                         break;
                     }
 
-                case NotificationType.PollingDisabled:
+                case ZWNotificationType.PollingDisabled:
                     {
                         Debug.WriteLine("Polling disabled notification");
                         break;
                     }
 
-                case NotificationType.PollingEnabled:
+                case ZWNotificationType.PollingEnabled:
                     {
                         Debug.WriteLine("Polling enabled notification");
                         break;
                     }
 
-                case NotificationType.DriverReady:
+                case ZWNotificationType.DriverReady:
                     {
                         CurrentStatus = $"Initializing...driver with Home ID 0x{notification.HomeId.ToString("X8")} is ready.";
                         break;
                     }
 
-                case NotificationType.DriverFailed:
+                case ZWNotificationType.DriverFailed:
                     {
                         Debug.WriteLine("Driver failed for HomeID " + homeID.ToString());
                         break;
                     }
 
-                case NotificationType.DriverRemoved:
+                case ZWNotificationType.DriverRemoved:
                     {
                         var nodes = GetNodes(homeID).ToArray();
                         foreach (var node in nodes)
@@ -266,7 +266,7 @@ namespace OZWAppx
                         break;
                     }
                 
-                case NotificationType.AllNodesQueried:
+                case ZWNotificationType.AllNodesQueried:
                     {
                         QueryStatus = NodeQueryStatus.AllNodesQueried;
                         OnPropertyChanged(nameof(QueryStatus));
@@ -276,7 +276,7 @@ namespace OZWAppx
                         break;
                     }
 
-                case NotificationType.AllNodesQueriedSomeDead:
+                case ZWNotificationType.AllNodesQueriedSomeDead:
                     {
                         QueryStatus = NodeQueryStatus.AllNodesQueriedSomeDead;
                         OnPropertyChanged(nameof(QueryStatus));
@@ -286,7 +286,7 @@ namespace OZWAppx
                         break;
                     }
 
-                case NotificationType.AwakeNodesQueried:
+                case ZWNotificationType.AwakeNodesQueried:
                     {
                         QueryStatus = NodeQueryStatus.AwakeNodesQueried;
                         OnPropertyChanged(nameof(QueryStatus));

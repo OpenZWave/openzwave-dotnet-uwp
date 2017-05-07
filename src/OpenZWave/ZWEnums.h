@@ -50,7 +50,7 @@ namespace OpenZWave
 	/// <summary>Notification types.</summary>
 	/// <remarks>Notifications of various Z-Wave events sent to the watchers
 	/// registered with the Manager::AddWatcher method.</remarks>
-	public enum class NotificationType
+	public enum class ZWNotificationType
 	{
 		/// <summary>A new node value has been added to OpenZWave's list. These notifications occur after a node has been discovered, and details of its command classes have been received.  Each command class may generate one or more values depending on the complexity of the item being represented.</summary> 
 		ValueAdded = Notification::Type_ValueAdded,
@@ -123,7 +123,7 @@ namespace OpenZWave
 	* <remarks>Notifications of the type Type_Notification convey some
 	* extra information defined here.</remarks>
 	*/
-	public enum class NotificationCode
+	public enum class ZWNotificationCode
 	{
 		/** <summary>Completed messages</summary> */
 		MsgComplete = Notification::Code_MsgComplete,

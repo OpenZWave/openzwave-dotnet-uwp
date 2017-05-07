@@ -43,7 +43,7 @@ namespace OZWForm
         /// Initializes a new instance of the <see cref="ValuePanelByte"/> class.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public ValuePanelByte( ZWValueID valueID ): base( valueID )
+        public ValuePanelByte( ZWValueId valueID ): base( valueID )
         {
             InitializeComponent();
 

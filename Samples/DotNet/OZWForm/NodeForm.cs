@@ -61,7 +61,7 @@ namespace OZWForm
                 this.Text = "Node " + node.ID.ToString() + ": " + node.Label;
             }
 
-            foreach (ZWValueID valueID in node.Values)
+            foreach (ZWValueId valueID in node.Values)
             {
                 Control control = null;
                 switch (valueID.Type)

@@ -86,7 +86,7 @@ void ZWManager::OnNotificationFromUnmanaged
 )
 {
 	ZWNotification^ notification = gcnew ZWNotification(_notification);
-	OnNotification(notification);
+	NotificationReceived(this, gcnew NotificationReceivedEventArgs(notification));
 }
 
 #else
@@ -94,7 +94,7 @@ void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, v
 {
 	ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
 	ZWNotification^ notification = gcnew ZWNotification((Notification *)_notification);
-	manager->OnNotification(notification);
+	manager->NotificationReceived(manager, gcnew NotificationReceivedEventArgs(notification));
 }
 #endif
 
@@ -104,7 +104,7 @@ void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, v
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsBool
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] System::Boolean %
 #else
@@ -132,7 +132,7 @@ bool ZWManager::GetValueAsBool
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsByte
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] System::Byte %
 #else
@@ -161,7 +161,7 @@ bool ZWManager::GetValueAsByte
 /*
 bool ZWManager::GetValueAsDecimal
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 	[Out] System::Decimal %o_value
 )
 {
@@ -182,7 +182,7 @@ bool ZWManager::GetValueAsDecimal
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsInt
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] System::Int32 %
 #else
@@ -210,7 +210,7 @@ bool ZWManager::GetValueAsInt
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsShort
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] System::Int16 %
 #else
@@ -238,7 +238,7 @@ bool ZWManager::GetValueAsShort
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsString
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] String^ %
 #else
@@ -266,7 +266,7 @@ bool ZWManager::GetValueAsString
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueListSelection
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] String^ %
 #else
@@ -294,7 +294,7 @@ bool ZWManager::GetValueListSelection
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueListSelection
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] System::Int32 %
 #else
@@ -322,7 +322,7 @@ bool ZWManager::GetValueListSelection
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueListItems
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] cli::array<String^>^ %o_value
 )
@@ -363,7 +363,7 @@ bool ZWManager::GetValueListItems
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueListValues
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 #if __cplusplus_cli
 	[Out] cli::array<int>^ %o_value
 )
@@ -483,7 +483,7 @@ bool ZWManager::GetNodeClassInformation
 //-----------------------------------------------------------------------------
 bool ZWManager::GetSwitchPoint
 (
-	ZWValueID^ id,
+	ZWValueId^ id,
 	uint8 idx,
 #if __cplusplus_cli
 	[Out] System::Byte %o_hours, [Out] System::Byte %o_minutes, [Out] System::SByte %o_setback
@@ -615,34 +615,34 @@ int ZWManager::SceneGetValues
 (
 	uint8 sceneId,
 #if __cplusplus_cli
-	[Out] cli::array<ZWValueID ^>^ %o_values
+	[Out] cli::array<ZWValueId^>^ %o_values
 )
 {
 	vector<ValueID> values;
 	uint32 numValues = Manager::Get()->SceneGetValues(sceneId, &values);
 	if (numValues)
 	{
-		o_values = gcnew cli::array<ZWValueID ^>(numValues);
+		o_values = gcnew cli::array<ZWValueId^>(numValues);
 		for (uint32 i = 0; i<numValues; ++i)
 		{
-			o_values[i] = gcnew ZWValueID(values[i]);
+			o_values[i] = gcnew ZWValueId(values[i]);
 		}
 	}
 
 	return numValues;
 }
 #else
-	Platform::WriteOnlyArray<ZWValueID^>^ o_values
+	Platform::WriteOnlyArray<ZWValueId^>^ o_values
 )
 {
 	vector<ValueID> values;
 	uint32 numValues = Manager::Get()->SceneGetValues(sceneId, &values);
 	if (numValues)
 	{
-		o_values = gcnew Platform::Array<ZWValueID^>(numValues);
+		o_values = gcnew Platform::Array<ZWValueId^>(numValues);
 		for (uint32 i = 0; i<numValues; ++i)
 		{
-			o_values[i] = gcnew ZWValueID(values[i]);
+			o_values[i] = gcnew ZWValueId(values[i]);
 		}
 	}
 
@@ -657,7 +657,7 @@ int ZWManager::SceneGetValues
 bool ZWManager::SceneGetValueAsBool
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	bool *o_value
 )
 {
@@ -677,7 +677,7 @@ bool ZWManager::SceneGetValueAsBool
 bool ZWManager::SceneGetValueAsByte
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	byte *o_value
 )
 {
@@ -698,7 +698,7 @@ bool ZWManager::SceneGetValueAsByte
 bool ZWManager::SceneGetValueAsDecimal
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	[Out] System::Decimal %o_value
 )
 {
@@ -720,7 +720,7 @@ bool ZWManager::SceneGetValueAsDecimal
 bool ZWManager::SceneGetValueAsInt
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	int *o_value
 )
 {
@@ -740,7 +740,7 @@ bool ZWManager::SceneGetValueAsInt
 bool ZWManager::SceneGetValueAsShort
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	int16 *o_value
 )
 {
@@ -760,7 +760,7 @@ bool ZWManager::SceneGetValueAsShort
 bool ZWManager::SceneGetValueAsString
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	String^ *o_value
 )
 {
@@ -780,7 +780,7 @@ bool ZWManager::SceneGetValueAsString
 bool ZWManager::SceneGetValueListSelection
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	String^ *o_value
 )
 {
@@ -800,7 +800,7 @@ bool ZWManager::SceneGetValueListSelection
 bool ZWManager::SceneGetValueListSelection
 (
 	uint8 sceneId,
-	ZWValueID^ valueId,
+	ZWValueId^ valueId,
 	int *o_value
 )
 {

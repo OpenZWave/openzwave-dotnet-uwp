@@ -112,7 +112,7 @@ namespace OZWAppx.Views
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var v=  value as ZWValueID;
+            var v=  value as ZWValueId;
             if (v != null)
             {
                 if (parameter as string == "Units")
@@ -136,7 +136,7 @@ namespace OZWAppx.Views
         /// </summary>
         /// <param name="v">The v.</param>
         /// <returns></returns>
-        private string GetValue(ZWValueID v)
+        private string GetValue(ZWValueId v)
         {
             var manager = ZWManager.Instance;
             switch (v.Type)

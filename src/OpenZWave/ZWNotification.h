@@ -31,52 +31,71 @@
 
 #pragma once
 #include "ZWEnums.h"
-#include "ZWValueID.h"
+#include "ZWValueId.h"
 
 using namespace OpenZWave;
 
 namespace OpenZWave
 {
+	ref class ZWNotification;
+
+	/// <summary>
+	/// The event args returned by the ZWManager.NotificationReceived event
+	// </summary>
+	public ref class NotificationReceivedEventArgs sealed
+	{
+	internal:
+		NotificationReceivedEventArgs(ZWNotification^ notification) : m_notification(notification)
+		{
+		}
+	public:
+		/// <summary>Get the notification from the event argument.</summary>
+		property ZWNotification^ Notification { ZWNotification^ get() { return m_notification; } }
+
+	private:
+		ZWNotification^ m_notification;
+	};
+
 	/// <summary>
 	/// Provides a container for data sent via the notification callback
-	/// handler from the ZWManager.OnNotification event.
+	/// handler from the ZWManager.NotificationReceived event.
 	// </summary>
 	public ref class ZWNotification sealed
 	{
 	internal:
 		ZWNotification(Notification* notification)
 		{
-			m_type = (NotificationType)notification->GetType();
+			m_type = (ZWNotificationType)notification->GetType();
 			m_byte = notification->GetByte();
 
 			//Check if notification is either NodeEvent or ControllerCommand, otherwise GetEvent() will fail
-			if ((m_type == NotificationType::NodeEvent) || (m_type == NotificationType::ControllerCommand))
+			if ((m_type == ZWNotificationType::NodeEvent) || (m_type == ZWNotificationType::ControllerCommand))
 			{
 				m_event = notification->GetEvent();
 			}
 
-			m_valueId = gcnew ZWValueID(notification->GetValueID());
+			m_valueId = gcnew ZWValueId(notification->GetValueID());
 		}
 
 	public:
 		/// <summary>Get the type of this notification.</summary>
-		property NotificationType Type { NotificationType get() { return m_type; } }
+		property ZWNotificationType Type { ZWNotificationType get() { return m_type; } }
 		/// <summary>Gets the notification code</summary>
-		property NotificationCode Code { NotificationCode get() { return (NotificationCode)m_byte; } }
+		property ZWNotificationCode Code { ZWNotificationCode get() { return (ZWNotificationCode)m_byte; } }
 		/// <summary>Get the Home ID of the driver sending this notification.</summary>
 		property uint32 HomeId { uint32 get() { return m_valueId->HomeId; } }
 		/// <summary>Get the ID of any node involved in this notification.</summary>
 		property uint8 NodeId { uint8 get() { return m_valueId->NodeId; } }
 		/// <summary>Get the unique ValueID of any value involved in this notification.</summary>
-		property ZWValueID^ ValueID { ZWValueID^ get() { return m_valueId; } }
-		/// <summary>Get the index of the association group that has been changed.  Only valid in Notification::Type_Group notifications.</summary>
-		property uint8 GroupIdx { uint8 get() { assert(NotificationType::Group == m_type); return m_byte; } }
+		property ZWValueId^ ValueId { ZWValueId^ get() { return m_valueId; } }
+		/// <summary>Get the index of the association group that has been changed.  Only valid in ZWNotificationType.Group notifications.</summary>
+		property uint8 GroupIndex { uint8 get() { assert(ZWNotificationType::Group == m_type); return m_byte; } }
 		/// <summary>Get the event value of a notification.  Only valid in Notification::Type_NodeEvent and Notification::Type_ControllerCommand notifications.</summary>
 		property uint8 Event { uint8 get() { return m_event; } }
 
 	private:
-		NotificationType		m_type;
-		ZWValueID^	m_valueId;
+		ZWNotificationType		m_type;
+		ZWValueId^	m_valueId;
 		uint8		m_byte;
 		uint8		m_event;
 	};

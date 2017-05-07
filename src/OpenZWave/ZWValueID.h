@@ -44,7 +44,7 @@ namespace OpenZWave
 	/// instance.The type (bool, byte, string etc) of the value is also stored.</para>
     /// <para>The packing of the ID is such that a list of Values sorted by ValueID will be in a sensible order for display to the user.</para>
 	/// </remarks>
-    public ref class ZWValueID sealed
+    public ref class ZWValueId sealed
     {
     public:		
 		/// <summary>Create a ZWValue ID from its component parts.</summary>
@@ -57,7 +57,7 @@ namespace OpenZWave
 		/// <param name="instance">Instance index of the command class.</param>
 		/// <param name="valueIndex">Index of the value within all the values created by the command class instance.</param>
 		/// <param name="type">Type of value (bool, byte, string etc).</param>
-		ZWValueID
+		ZWValueId
 		(
 			uint32 homeId,
 			uint8 nodeId,
@@ -111,13 +111,17 @@ namespace OpenZWave
 		property uint64	Id { uint64 get() { return m_valueId->GetId(); } }
 
 	private:
-		~ZWValueID()
+#if __cplusplus_cli
+		!ZWValueId()
+#else
+		~ZWValueId()
+#endif
 		{
 			delete m_valueId;
 		}
 
 	internal:
-		ZWValueID(ValueID const& valueId)
+		ZWValueId(ValueID const& valueId)
 		{
 			m_valueId = new ValueID(valueId);
 		}
@@ -125,10 +129,10 @@ namespace OpenZWave
 		ValueID CreateUnmanagedValueID() { return ValueID(*m_valueId); }
 
 		// Comparison Operators
-		bool operator ==	(ZWValueID^ _other) { return((*m_valueId) == (*_other->m_valueId)); }
-		bool operator !=	(ZWValueID^ _other) { return((*m_valueId) != (*_other->m_valueId)); }
-		bool operator <		(ZWValueID^ _other) { return((*m_valueId) < (*_other->m_valueId)); }
-		bool operator >		(ZWValueID^ _other) { return((*m_valueId) > (*_other->m_valueId)); }
+		bool operator ==	(ZWValueId^ _other) { return((*m_valueId) == (*_other->m_valueId)); }
+		bool operator !=	(ZWValueId^ _other) { return((*m_valueId) != (*_other->m_valueId)); }
+		bool operator <		(ZWValueId^ _other) { return((*m_valueId) < (*_other->m_valueId)); }
+		bool operator >		(ZWValueId^ _other) { return((*m_valueId) > (*_other->m_valueId)); }
 
 	private:
 		ValueID* m_valueId;

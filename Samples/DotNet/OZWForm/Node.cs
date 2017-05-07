@@ -127,14 +127,14 @@ namespace OZWForm
             set { m_product = value; }
         }
 
-        private List<ZWValueID> m_values = new List<ZWValueID>();
+        private List<ZWValueId> m_values = new List<ZWValueId>();
         /// <summary>
         /// Gets the values.
         /// </summary>
         /// <value>
         /// The values.
         /// </value>
-        public List<ZWValueID> Values
+        public List<ZWValueId> Values
         {
             get { return m_values; }
         }
@@ -150,7 +150,7 @@ namespace OZWForm
         /// Adds the value.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public void AddValue(ZWValueID valueID)
+        public void AddValue(ZWValueId valueID)
         {
             m_values.Add(valueID);
         }
@@ -159,7 +159,7 @@ namespace OZWForm
         /// Removes the value.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public void RemoveValue(ZWValueID valueID)
+        public void RemoveValue(ZWValueId valueID)
         {
             m_values.Remove(valueID);
         }

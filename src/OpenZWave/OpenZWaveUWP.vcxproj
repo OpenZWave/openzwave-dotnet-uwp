@@ -275,7 +275,7 @@
     <ClInclude Include="ZWManager.h" />
     <ClInclude Include="ZWNotification.h" />
     <ClInclude Include="ZWOptions.h" />
-    <ClInclude Include="ZWValueID.h" />
+    <ClInclude Include="ZWValueId.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -289,7 +289,7 @@
     <ClCompile Include="ZWManager.cpp" />
     <ClCompile Include="ZWNotification.cpp" />
     <ClCompile Include="ZWOptions.cpp" />
-    <ClCompile Include="ZWValueID.cpp" />
+    <ClCompile Include="ZWValueId.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

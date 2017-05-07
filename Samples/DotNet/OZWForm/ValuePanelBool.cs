@@ -41,7 +41,7 @@ namespace OZWForm
         /// Initializes a new instance of the <see cref="ValuePanelBool"/> class.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public ValuePanelBool( ZWValueID valueID ): base( valueID )
+        public ValuePanelBool( ZWValueId valueID ): base( valueID )
         {
             InitializeComponent();
 

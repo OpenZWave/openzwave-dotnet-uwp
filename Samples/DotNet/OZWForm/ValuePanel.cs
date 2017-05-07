@@ -35,14 +35,14 @@ namespace OZWForm
     /// </summary>
     public partial class ValuePanel : UserControl
     {
-        private ZWValueID m_valueID;
+        private ZWValueId m_valueID;
         /// <summary>
         /// Gets the value identifier.
         /// </summary>
         /// <value>
         /// The value identifier.
         /// </value>
-        public ZWValueID ValueID
+        public ZWValueId ValueID
         {
             get { return m_valueID; }
         }
@@ -71,7 +71,7 @@ namespace OZWForm
         /// Initializes a new instance of the <see cref="ValuePanel"/> class.
         /// </summary>
         /// <param name="valueID">The value identifier.</param>
-        public ValuePanel( ZWValueID valueID )
+        public ValuePanel( ZWValueId valueID )
         {
             m_valueID = valueID;
             InitializeComponent();

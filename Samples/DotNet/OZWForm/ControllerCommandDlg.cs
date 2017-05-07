@@ -105,7 +105,7 @@ namespace OZWForm
 
             InitializeComponent();
 
-            m_manager.OnNotification += new ManagedNotificationsHandler(NotificationHandler);
+            m_manager.NotificationReceived += new NotificationReceivedEventHandler(NotificationHandler);
             switch (m_op)
             {
                 case ZWControllerCommand.RequestNodeNeighborUpdate:
@@ -230,7 +230,7 @@ namespace OZWForm
                 }
                 default:
                 {
-                    m_manager.OnNotification -= NotificationHandler;
+                    m_manager.NotificationReceived -= NotificationHandler;
                     break;
                 }
             }
@@ -240,11 +240,12 @@ namespace OZWForm
         /// Handles Notifications.
         /// </summary>
         /// <param name="notification">The notification.</param>
-        private static void NotificationHandler(ZWNotification notification)
+        private static void NotificationHandler(ZWManager manager, NotificationReceivedEventArgs e)
         {
+            var notification = e.Notification;
             switch (notification.Type)
             {
-                case NotificationType.ControllerCommand:
+                case ZWNotificationType.ControllerCommand:
                 {
                     MyControllerStateChangedHandler((ZWControllerState)notification.Event);
                     break;
@@ -342,7 +343,7 @@ namespace OZWForm
                 m_dlg.SetButtonText("OK");
 
                 // Remove the event handler
-                m_manager.OnNotification -= NotificationHandler;
+                m_manager.NotificationReceived -= NotificationHandler;
             }
         }
 
@@ -404,7 +405,7 @@ namespace OZWForm
             if (ButtonCancel.Text != "OK")
             {
                 // Remove the event handler
-                m_manager.OnNotification -= NotificationHandler;
+                m_manager.NotificationReceived -= NotificationHandler;
 
                 // Cancel the operation
                 m_manager.CancelControllerCommand(m_homeId);

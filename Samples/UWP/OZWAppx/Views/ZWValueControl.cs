@@ -149,15 +149,15 @@ namespace OZWAppx.Views
             updating = false;
         }
         
-        public OpenZWave.ZWValueID Value
+        public OpenZWave.ZWValueId Value
         {
-            get { return (OpenZWave.ZWValueID)GetValue(ValueProperty); }
+            get { return (OpenZWave.ZWValueId)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(OpenZWave.ZWValueID), typeof(ZWValueControl), new PropertyMetadata(null, ValuePropertyChanged));
+            DependencyProperty.Register("Value", typeof(OpenZWave.ZWValueId), typeof(ZWValueControl), new PropertyMetadata(null, ValuePropertyChanged));
 
         private static void ValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -165,7 +165,7 @@ namespace OZWAppx.Views
         }
 
 
-        private object GetStringValue(ZWValueID v)
+        private object GetStringValue(ZWValueId v)
         {
             var manager = ZWManager.Instance;
             switch (v.Type)

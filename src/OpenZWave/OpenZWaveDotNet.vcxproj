@@ -66,6 +66,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(ProjectDir)\..\$(Configuration)\OpenZWave.lib;Ws2_32.lib;dnsapi.lib;</AdditionalDependencies>
@@ -82,7 +83,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(ProjectDir)\..\$(Configuration)\OpenZWave.lib;Ws2_32.lib;dnsapi.lib;</AdditionalDependencies>
@@ -116,7 +117,7 @@
     <ClInclude Include="ZWManager.h" />
     <ClInclude Include="ZWNotification.h" />
     <ClInclude Include="ZWOptions.h" />
-    <ClInclude Include="ZWValueID.h" />
+    <ClInclude Include="ZWValueId.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
