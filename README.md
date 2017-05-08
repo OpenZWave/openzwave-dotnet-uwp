@@ -4,10 +4,10 @@ This library was based on the OpenZWave .NET Library, but refactored to greatly 
 
 ### Nuget
 
-Install this package via [Nuget](https://www.nuget.org/packages/dotMorten.OpenZWave):
+Install this package via [Nuget](https://www.nuget.org/packages/OpenZWave/2.0.0-beta1):
 > ```
 > 
-> PM> Install-Package dotMorten.OpenZWave
+> PM> Install-Package OpenZWave -Pre 
 >
 > ```
 
@@ -18,5 +18,5 @@ https://github.com/OpenZWave/openzwave-dotnet-uwp/wiki
 
 
 ### UWP Sample app:
-![UWP Sample app](https://github.com/dotMorten/openzwave-dotnet-uwp/blob/master/Samples/UWP/OZWAppxScreenshot.png)
+![UWP Sample app](https://github.com/OpenZWave/openzwave-dotnet-uwp/blob/master/Samples/UWP/OZWAppxScreenshot.png)
 
