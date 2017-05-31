@@ -1,5 +1,5 @@
 SET PackageName=OpenZWave
-SET Version=2.0.0-beta1
+SET Version=2.0.0-beta2
 RMDIR package /S /Q
 XCOPY ..\open-zwave\config package\config\ /S /Y
 XCOPY OpenZWave.nuspec package\ /Y
