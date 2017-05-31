@@ -871,114 +871,114 @@ namespace OpenZWave
 #else
 			int32 *
 #endif
-o_value);
+			o_value);
 
-/// <summary>Gets the list of items from a list value.</summary>
-/// <param nam="id">The unique identifier of the value.</param>
-/// <param nam="o_value">List that will be filled with list items.</param>
-/// <returns>true if the list items were obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType</returns>
-// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection
-bool GetValueListItems(ZWValueId^ id,
+		/// <summary>Gets the list of items from a list value.</summary>
+		/// <param nam="id">The unique identifier of the value.</param>
+		/// <param nam="o_value">List that will be filled with list items.</param>
+		/// <returns>true if the list items were obtained.  Returns false if the value is not a ZWValueID::ValueType_List. The type can be tested with a call to ZWValueID::GetType</returns>
+		// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection
+		bool GetValueListItems(ZWValueId^ id,
 #if __cplusplus_cli
-	[Out] cli::array<String^>^ %o_value);
+			[Out] cli::array<String^>^ %o_value);
 #else
-Platform::Array<String^>^ *o_value);
+		Platform::Array<String^>^ *o_value);
 #endif
 
-/// <summary>Gets the list of values from a list value.</summary>
-/// <param name="id">The unique identifier of the value.</param>
-/// <param name="o_value">Pointer to a vector of integers that will be filled with list items. The vector will be cleared before the items are added.</param>
-/// <returns>true if the list values were obtained.  Returns false if the value is not a ValueID::ValueType_List. The type can be tested with a call to ValueID::GetType.</returns>
-// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsFloat, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueAsRaw
-bool GetValueListValues(ZWValueId^ id,
+		/// <summary>Gets the list of values from a list value.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="o_value">Pointer to a vector of integers that will be filled with list items. The vector will be cleared before the items are added.</param>
+		/// <returns>true if the list values were obtained.  Returns false if the value is not a ValueID::ValueType_List. The type can be tested with a call to ValueID::GetType.</returns>
+		// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsFloat, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueAsRaw
+		bool GetValueListValues(ZWValueId^ id,
 #if __cplusplus_cli
-	[Out] cli::array<int>^ %o_value);
+			[Out] cli::array<int>^ %o_value);
 #else
-Platform::Array<int>^ *o_value);
+			Platform::Array<int>^ *o_value);
 #endif
 
-/// <summary>Sets the state of a bool.</summary>
-/// <remarks>
-/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the bool value.</param>
-/// <param name="value">The new value of the bool.</param>
-/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType</returns>
-bool SetValue(ZWValueId^ id, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		/// <summary>Sets the state of a bool.</summary>
+		/// <remarks>
+		/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the bool value.</param>
+		/// <param name="value">The new value of the bool.</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType</returns>
+		bool SetValue(ZWValueId^ id, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-/// <summary>Sets the value of a byte.</summary>
-/// <remarks>
-/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the byte value.</param>
-/// <param name="value">The new value of the byte.</param>
-/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType</returns>
-bool SetValue(ZWValueId^ id, uint8 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		/// <summary>Sets the value of a byte.</summary>
+		/// <remarks>
+		/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the byte value.</param>
+		/// <param name="value">The new value of the byte.</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType</returns>
+		bool SetValue(ZWValueId^ id, uint8 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-/// <summary>Sets the value of a decimal.</summary>
-/// <remarks>
-/// It is usually better to handle decimal values using strings rather than floats, to avoid floating point accuracy issues.
-/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the decimal value.</param>
-/// <param name="value">The new value of the decimal.</param>
-/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Decimal. The type can be tested with a call to ZWValueID::GetType</returns>
-bool SetValue(ZWValueId^ id, float value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		/// <summary>Sets the value of a decimal.</summary>
+		/// <remarks>
+		/// It is usually better to handle decimal values using strings rather than floats, to avoid floating point accuracy issues.
+		/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the decimal value.</param>
+		/// <param name="value">The new value of the decimal.</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Decimal. The type can be tested with a call to ZWValueID::GetType</returns>
+		bool SetValue(ZWValueId^ id, float value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-/// <summary>Sets the value of a 32-bit signed integer.</summary>
-/// <remarks>
-/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the integer value.</param>
-/// <param name="value">The new value of the integer.</param>
-/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Int. The type can be tested with a call to ZWValueID::GetType</returns>
-bool SetValue(ZWValueId^ id, int32 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		/// <summary>Sets the value of a 32-bit signed integer.</summary>
+		/// <remarks>
+		/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="value">The new value of the integer.</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Int. The type can be tested with a call to ZWValueID::GetType</returns>
+		bool SetValue(ZWValueId^ id, int32 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-/// <summary>Sets the value of a 16-bit signed integer.</summary>
-/// <remarks>
-/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the integer value.</param>
-/// <param name="value">The new value of the integer.</param>
-/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Short. The type can be tested with a call to ZWValueID::GetType</returns>
-bool SetValue(ZWValueId^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
+		/// <summary>Sets the value of a 16-bit signed integer.</summary>
+		/// <remarks>
+		/// Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="value">The new value of the integer.</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ZWValueID::ValueType_Short. The type can be tested with a call to ZWValueID::GetType</returns>
+		bool SetValue(ZWValueId^ id, int16 value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), value); }
 
-/// <summary>Sets the value from a string, regardless of type.</summary>
-/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
-/// held by the node is updated directly.  This will be reverted by a future status message from the device
-/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the integer value.</param>
-/// <param name="value">The new value of the string.</param>
-/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
-bool SetValue(ZWValueId^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
+		/// <summary>Sets the value from a string, regardless of type.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="value">The new value of the string.</param>
+		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
+		bool SetValue(ZWValueId^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
-/// <summary>Sets the value of a collection of bytes.</summary>
-/// <remarks>Due to the possibility of a device being asleep, the command is assumed to succeed, and the value
-/// held by the node is updated directly. This will be reverted by a future status message from the device if
-/// the Z-Wave message actually failed to get through. Notification callbacks will be sent in both cases.</remarks>
-/// <param name="id">The unique identifier of the raw value.</param>
-/// <param name="value">The new collection of bytes.</param>
-/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
-bool SetValue(ZWValueId^ id,
+		/// <summary>Sets the value of a collection of bytes.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to succeed, and the value
+		/// held by the node is updated directly. This will be reverted by a future status message from the device if
+		/// the Z-Wave message actually failed to get through. Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the raw value.</param>
+		/// <param name="value">The new collection of bytes.</param>
+		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
+		bool SetValue(ZWValueId^ id,
 #if __cplusplus_cli
-	cli::array<Byte>^ value)
+			cli::array<Byte>^ value)
 #else
-const Platform::Array<byte>^ value)
+		const Platform::Array<byte>^ value)
 #endif
-{
+		{
 #if __cplusplus_cli
-	pin_ptr<uint8> p = &value[0];
-	uint8* data = p;
+			pin_ptr<uint8> p = &value[0];
+			uint8* data = p;
 #else
-	uint8* data = value->Data;
+			uint8* data = value->Data;
 #endif
-	return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), data, (uint8_t)value->Length);
-}
+			return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), data, (uint8_t)value->Length);
+		}
 
 		/// <summary>Sets the selected item in a list.</summary>
 		/// <remarks>
