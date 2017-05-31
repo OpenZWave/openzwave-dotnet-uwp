@@ -834,6 +834,19 @@ namespace OpenZWave
 #endif
 			o_value);
 
+		/// <summary>Gets a value as a collection of bytes.</summary>
+		/// <remarks>Returns a raw representation of a value, regardless of type.</remarks>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="o_value">a String that will be filled with the value.</param>
+		/// <returns><c>true</c> if the value was obtained. Returns <c>false</c> if the value is not a ValueType.Raw.
+		/// The type can be tested with a call to ValueID.GetType.</returns>
+		bool GetValueAsRaw(ZWValueId^ id,
+#if __cplusplus_cli
+			[Out] cli::array<Byte>^ %o_value);
+#else
+			Platform::Array<byte>^ *o_value);
+#endif
+
 	    /// <summary>Gets the selected item from a list value (as a string).</summary>
 		/// <param nam="id">The unique identifier of the value.</param>
 		/// <param nam="o_value">A String that will be filled with the selected item.</param>
@@ -867,7 +880,7 @@ namespace OpenZWave
 		// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection
 		bool GetValueListItems(ZWValueId^ id,
 #if __cplusplus_cli
-		[Out] cli::array<String^>^ %o_value);
+			[Out] cli::array<String^>^ %o_value);
 #else
 		Platform::Array<String^>^ *o_value);
 #endif
@@ -943,6 +956,29 @@ namespace OpenZWave
 		/// <param name="value">The new value of the string.</param>
 		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
 		bool SetValue(ZWValueId^ id, String^ value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), ConvertString(value)); }
+
+		/// <summary>Sets the value of a collection of bytes.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to succeed, and the value
+		/// held by the node is updated directly. This will be reverted by a future status message from the device if
+		/// the Z-Wave message actually failed to get through. Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="id">The unique identifier of the raw value.</param>
+		/// <param name="value">The new collection of bytes.</param>
+		/// <returns>true if the value was set.  Returns false if the value could not be parsed into the correct type for the value.</returns>
+		bool SetValue(ZWValueId^ id,
+#if __cplusplus_cli
+			cli::array<Byte>^ value)
+#else
+		const Platform::Array<byte>^ value)
+#endif
+		{
+#if __cplusplus_cli
+			pin_ptr<uint8> p = &value[0];
+			uint8* data = p;
+#else
+			uint8* data = value->Data;
+#endif
+			return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), data, (uint8_t)value->Length);
+		}
 
 		/// <summary>Sets the selected item in a list.</summary>
 		/// <remarks>

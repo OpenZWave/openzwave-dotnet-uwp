@@ -261,6 +261,43 @@ bool ZWManager::GetValueAsString
 }
 
 //-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsRaw>
+// Gets a value as a byte array
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsRaw
+(
+	ZWValueId^ id,
+#if __cplusplus_cli
+	[Out] cli::array<Byte>^ %o_value)
+#else
+	Platform::Array<byte>^ *o_value)
+#endif
+{
+	uint8 length;
+    uint8* rawValue;
+    bool result = Manager::Get()->GetValueAsRaw(id->CreateUnmanagedValueID(), &rawValue, &length);
+    if (result)
+    {
+#if __cplusplus_cli
+		o_value = gcnew cli::array<Byte>(length);
+		for (uint32 i = 0; i<length; ++i)
+		{
+			o_value[i] = rawValue[i];
+		}
+#else
+		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(length);
+		for (uint32 i = 0; i<length; ++i)
+    	{
+			arr[i] = rawValue[i];
+    	}
+		*o_value = arr;
+#endif
+		delete[] rawValue;
+    }
+    return result;
+}
+
+//-----------------------------------------------------------------------------
 // <ZWManager::GetValueListSelection>
 // Gets the selected item from a list value (returning a string)
 //-----------------------------------------------------------------------------
@@ -435,7 +472,7 @@ uint32 ZWManager::GetNodeNeighbors
 	if (numNeighbors)
 	{
 		
-		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(numNeighbors);;
+		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(numNeighbors);
 		for (uint32 i = 0; i<numNeighbors; ++i)
 		{
 			arr[i] = neighbors[i];
