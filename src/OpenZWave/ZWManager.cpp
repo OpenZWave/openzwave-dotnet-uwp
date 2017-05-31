@@ -273,7 +273,6 @@ bool ZWManager::GetValueAsRaw
 	Platform::Array<byte>^ *o_value)
 #endif
 {
-	o_value = nullptr;
 	uint8 length;
     uint8* rawValue;
     bool result = Manager::Get()->GetValueAsRaw(id->CreateUnmanagedValueID(), &rawValue, &length);
@@ -286,8 +285,8 @@ bool ZWManager::GetValueAsRaw
 			o_value[i] = rawValue[i];
 		}
 #else
-		auto arr = gcnew Platform::Array<byte>(length);
-    	for (uint32 i = 0; i<length; ++i)
+		Platform::Array<byte>^ arr = gcnew Platform::Array<byte>(length);
+		for (uint32 i = 0; i<length; ++i)
     	{
 			arr[i] = rawValue[i];
     	}
