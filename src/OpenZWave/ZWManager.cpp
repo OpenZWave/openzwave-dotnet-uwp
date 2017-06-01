@@ -233,6 +233,34 @@ bool ZWManager::GetValueAsShort
 }
 
 //-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsFloat>
+// Gets a value as an Float
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsFloat
+(
+	ZWValueId^ id,
+#if __cplusplus_cli
+	[Out] System::Single %
+#else
+	float *
+#endif
+	o_value
+)
+{
+	float value;
+	if (Manager::Get()->GetValueAsFloat(id->CreateUnmanagedValueID(), &value))
+	{
+#if __cplusplus_cli
+		o_value = value;
+#else
+		*o_value = value;
+#endif
+		return true;
+}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
 // <ZWManager::GetValueAsString>
 // Gets a value as a String
 //-----------------------------------------------------------------------------

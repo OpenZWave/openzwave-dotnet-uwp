@@ -821,6 +821,19 @@ namespace OpenZWave
 #endif
 			o_value);
 
+		/// <summary>Gets a value as a float.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="o_value">A Float that will be filled with the value.</param>
+		/// <returns>true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Float. The type can be tested with a call to ZWValueID::GetType</returns>
+		// \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsString, GetValueListSelection, GetValueListItems
+		bool GetValueAsFloat(ZWValueId^ id,
+#if __cplusplus_cli
+			[Out] System::Single %
+#else
+			float *
+#endif
+			o_value);
+
 		/// <summary>Gets a value as a string.</summary>
 		/// <remarks>Creates a string representation of a value, regardless of type.</remarks>
 		/// <param name="id">The unique identifier of the value.</param>
