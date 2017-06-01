@@ -14,16 +14,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace OZWAppx.Views
 {
-    public sealed partial class SettingsView : Page
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class ControllersView : Page
     {
-        public SettingsView()
+        public ControllersView()
         {
             this.InitializeComponent();
         }
-        public ApplicationState VM => ApplicationState.Instance;
+        public NodeWatcher Watcher => NodeWatcher.Instance;
     }
 }

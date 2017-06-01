@@ -60,11 +60,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\..\UWP\OZWAppx\Node.cs">
-      <Link>Node.cs</Link>
+    <Compile Include="..\..\UWP\OZWAppx\ApplicationState.cs">
+      <Link>ApplicationState.cs</Link>
     </Compile>
-    <Compile Include="..\..\UWP\OZWAppx\NodeWatcher.cs">
-      <Link>NodeWatcher.cs</Link>
+    <Compile Include="..\..\UWP\OZWAppx\NetworkManager\Controller.cs">
+      <Link>NetworkManager\Controller.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UWP\OZWAppx\NetworkManager\Node.cs">
+      <Link>NetworkManager\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UWP\OZWAppx\NetworkManager\NodeWatcher.cs">
+      <Link>NetworkManager\NodeWatcher.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

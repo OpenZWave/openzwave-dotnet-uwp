@@ -1,4 +1,5 @@
 ﻿using OpenZWave;
+using OpenZWave.NetworkManager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

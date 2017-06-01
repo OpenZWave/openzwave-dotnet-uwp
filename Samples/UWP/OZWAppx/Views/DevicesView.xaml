@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:OZWAppx"
+    xmlns:nm="using:OpenZWave.NetworkManager"
     xmlns:views="using:OZWAppx.Views"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,7 +22,7 @@
             </toolkit:MasterDetailsView.ItemContainerStyle>
             
             <toolkit:MasterDetailsView.ItemTemplate>
-                <DataTemplate x:DataType="local:Node">
+                <DataTemplate x:DataType="nm:Node">
                     <RelativePanel Margin="0,5" HorizontalAlignment="Stretch" 
                                    IsHitTestVisible="{x:Bind EssentialNodeQueriesComplete, Mode=OneWay}" 
                                    Opacity="{x:Bind EssentialNodeQueriesComplete, Converter={StaticResource boolOpacity}, ConverterParameter=.5, Mode=OneWay}">

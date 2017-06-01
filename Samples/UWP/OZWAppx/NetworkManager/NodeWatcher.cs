@@ -15,7 +15,7 @@ using Windows.UI.Core;
 using CoreDispatcher = System.Windows.Threading.Dispatcher;
 #endif
 
-namespace OZWAppx
+namespace OpenZWave.NetworkManager
 {
     /// <summary>
     /// This class monitors discovery, removal and changes to available devices (nodes),
@@ -23,6 +23,8 @@ namespace OZWAppx
     /// </summary>
     public class NodeWatcher : INotifyPropertyChanged
     {
+        private ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
+
         public static NodeWatcher Instance { get; private set; }
 
         private readonly CoreDispatcher Dispatcher;
@@ -35,7 +37,7 @@ namespace OZWAppx
             Instance = this;            
         }
 
-        public async Task Initialize()
+        public void Initialize()
         {
             ZWOptions.Instance.Initialize();
 
@@ -56,55 +58,17 @@ namespace OZWAppx
             // Create the OpenZWave Manager
             ZWManager.Instance.Initialize();
             ZWManager.Instance.NotificationReceived += OnNodeNotification;
-
-#if NETFX_CORE
-            var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
-            var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
-            foreach (var item in devices)
-            {
-                SerialPorts.Add(new SerialPortInfo(item));
-            }
-#else //.NET
-            foreach(var item in System.IO.Ports.SerialPort.GetPortNames())
-            {
-                SerialPorts.Add(new SerialPortInfo(item));
-            }
-#endif
         }
 
-        public ObservableCollection<SerialPortInfo> SerialPorts { get; } = new ObservableCollection<SerialPortInfo>();
+        /// <summary>
+        /// Gets a list of the available/discovered nodes
+        /// </summary>
+        public IEnumerable<Node> Nodes => m_nodeList;
 
-        public sealed class SerialPortInfo
-        {
-#if NETFX_CORE
-            internal SerialPortInfo(DeviceInformation info)
-            {
-                PortID = info.Id;
-                Name = info.Name;
-            }
-#else
-            internal SerialPortInfo(string id)
-            {
-                PortID = id;
-                Name = id;
-            }
-#endif
-            public string PortID { get; }
-            public string Name { get; }
-            private bool _isActive;
-
-            public bool IsActive
-            {
-                get { return _isActive; }
-                set {
-                    _isActive = value;
-                    if (value)
-                        ZWManager.Instance.AddDriver(PortID);
-                    else
-                        ZWManager.Instance.RemoveDriver(PortID);
-                }
-            }
-        }
+        /// <summary>
+        /// Gets a list of controllers registered with the controller.
+        /// </summary>
+        public IList<Controller> Controllers { get; } = new ObservableCollection<Controller>();
 
         /// <summary>
         /// The notifications handler.
@@ -141,7 +105,7 @@ namespace OZWAppx
             public ZWNotificationType Type { get; set; }
             public byte HomeID { get; set; }
             public byte NodeID { get; set; }
-            public TaskCompletionSource<ZWNotification> TCS { get; set; }
+            public TaskCompletionSource<ZWNotification> CompletionSource { get; set; }
             public TimeSpan Timeout { get; set; } = TimeSpan.MaxValue;
         }
 
@@ -151,6 +115,8 @@ namespace OZWAppx
         /// </summary>
         private void NotificationHandler(ZWNotification notification)
         {
+            var value = notification.ValueId;
+            
             var homeID = notification.HomeId;
             var nodeId = notification.NodeId;
             var type = notification.Type;
@@ -172,12 +138,12 @@ namespace OZWAppx
             {
                 if(item.HomeID == homeID && (item.NodeID == nodeId || item.NodeID < 0) && item.Type == type)
                 {
-                    item.TCS.SetResult(notification);
+                    item.CompletionSource.SetResult(notification);
                     PendingRequests.Remove(item);
                 }
                 else if(item.Age > item.Timeout)
                 {
-                    item.TCS.SetException(new TimeoutException());
+                    item.CompletionSource.SetException(new TimeoutException());
                     PendingRequests.Remove(item);
                 }
             }
@@ -248,13 +214,27 @@ namespace OZWAppx
 
                 case ZWNotificationType.DriverReady:
                     {
-                        CurrentStatus = $"Initializing...driver with Home ID 0x{notification.HomeId.ToString("X8")} is ready.";
+                        var p = ZWManager.Instance.GetControllerPath(homeID);
+                        var ctrl = Controllers.Where(c => c.ControllerPath == p).FirstOrDefault();
+                        if (ctrl != null)
+                        {
+                            ctrl.UpdateHomeId(homeID);
+                        }
+                        else
+                        {
+                            Controllers.Add(new Controller(p, homeID));
+                        }
                         break;
                     }
 
                 case ZWNotificationType.DriverFailed:
                     {
                         Debug.WriteLine("Driver failed for HomeID " + homeID.ToString());
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
+                        if (d != null)
+                        {
+                            d.UpdateDriverStatus(DriverStatus.Failed);
+                        }
                         break;
                     }
 
@@ -263,35 +243,48 @@ namespace OZWAppx
                         var nodes = GetNodes(homeID).ToArray();
                         foreach (var node in nodes)
                             m_nodeList.Remove(node);
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
+                        if (d != null)
+                        {
+                            Controllers.Remove(d);
+                            d.UpdateHomeId(0);
+                            OnPropertyChanged(nameof(Controllers));
+                        }
                         break;
                     }
                 
                 case ZWNotificationType.AllNodesQueried:
                     {
-                        QueryStatus = NodeQueryStatus.AllNodesQueried;
-                        OnPropertyChanged(nameof(QueryStatus));
                         Debug.WriteLine("All nodes queried");
-                        CurrentStatus = "Ready:  All nodes queried.";
                         ZWManager.Instance.WriteConfig(homeID);
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
+                        if (d != null)
+                        {
+                            d.UpdateDriverStatus(DriverStatus.AllNodesQueried);
+                        }
                         break;
                     }
 
                 case ZWNotificationType.AllNodesQueriedSomeDead:
                     {
-                        QueryStatus = NodeQueryStatus.AllNodesQueriedSomeDead;
-                        OnPropertyChanged(nameof(QueryStatus));
                         Debug.WriteLine("All nodes queried (some dead)");
-                        CurrentStatus = "Ready:  All nodes queried but some are dead.";
                         ZWManager.Instance.WriteConfig(homeID);
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
+                        if (d != null)
+                        {
+                            d.UpdateDriverStatus(DriverStatus.AllNodesQueriedSomeDead);
+                        }
                         break;
                     }
 
                 case ZWNotificationType.AwakeNodesQueried:
                     {
-                        QueryStatus = NodeQueryStatus.AwakeNodesQueried;
-                        OnPropertyChanged(nameof(QueryStatus));
-                        CurrentStatus = "Ready:  Awake nodes queried (but not some sleeping nodes).";
                         ZWManager.Instance.WriteConfig(homeID);
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
+                        if (d != null)
+                        {
+                            d.UpdateDriverStatus(DriverStatus.AwakeNodesQueried);
+                        }
                         break;
                     }
 
@@ -314,28 +307,7 @@ namespace OZWAppx
                         break;
                     }
             }
-
-            //NodeGridView.Refresh();
-            //NodeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            //NodeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
-        private string m_CurrentStatus;
-
-        public string CurrentStatus
-        {
-            get { return m_CurrentStatus; }
-            private set { m_CurrentStatus = value; OnPropertyChanged(); }
-        }
-
-        public enum NodeQueryStatus
-        {
-            Querying,
-            AwakeNodesQueried,
-            AllNodesQueried,
-            AllNodesQueriedSomeDead
-        }
-
-        public NodeQueryStatus QueryStatus { get; private set; } = NodeQueryStatus.Querying;
         
         /// <summary>
         /// Gets the node.
@@ -366,13 +338,6 @@ namespace OZWAppx
                 }
             }
         }
-
-        private ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
-
-        /// <summary>
-        /// Gets a list of the available/discovered nodes
-        /// </summary>
-        public IEnumerable<Node> Nodes => m_nodeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

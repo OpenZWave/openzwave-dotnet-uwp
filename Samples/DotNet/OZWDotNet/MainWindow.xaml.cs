@@ -1,4 +1,5 @@
-﻿using OZWAppx;
+﻿using OpenZWave.NetworkManager;
+using OZWAppx;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OZWDotNet
         {
             InitializeComponent();
             VM = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
+            VM.Initialize();
             DataContext = this;
-            VM = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
-            VM.Initialize().ContinueWith((t) =>
+            ApplicationState.Instance.InitializeAsync().ContinueWith((t) =>
             {
                 GetSerialPorts();
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
@@ -35,16 +36,18 @@ namespace OZWDotNet
 
         public NodeWatcher VM { get; }
 
+        public ApplicationState AppState => ApplicationState.Instance;
+
         private void GetSerialPorts()
         {
-            if (!VM.SerialPorts.Any())
+            if (!ApplicationState.Instance.SerialPorts.Any())
             {
                 MessageBox.Show("No serial ports found");
             }
-            else if (VM.SerialPorts.Count == 1)
+            else if (ApplicationState.Instance.SerialPorts.Count == 1)
             {
                 //hamburgerMenu.SelectedIndex = 0;
-                VM.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
+                ApplicationState.Instance.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
                 //(hamburgerMenu.Content as Frame).Navigate(typeof(Views.DevicesView));
             }
             else

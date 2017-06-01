@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZWAppx
+namespace OpenZWave.NetworkManager
 {
     /// <summary>
     /// Container for Nodes

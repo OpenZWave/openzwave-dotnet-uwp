@@ -5,9 +5,7 @@
     xmlns:local="using:OZWAppx.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="2000">
 
     <Grid>
 
@@ -20,7 +18,7 @@
             <TextBlock Text="Controller" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="20,5" />
         </Border>
         <ScrollViewer Grid.Row="1">
-            <StackPanel MaxWidth="650" HorizontalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -31,6 +29,16 @@
                         <Setter Property="TextWrapping" Value="Wrap" />
                     </Style>
                 </StackPanel.Resources>
+
+                <TextBox Header="Port" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Controller.ControllerPath, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+
+                <TextBox Header="Status" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Controller.DriverStatus, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+                <TextBox Header="Library Version" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Controller.LibraryVersion, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+                <TextBox Header="Library Type" FontWeight="Bold" FontSize="18" Text="{x:Bind VM.Controller.LibraryTypeName, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" />
+                
+                <ToggleSwitch OnContent="Yes" OffContent="No" IsEnabled="False" Header="Primary Controller" IsOn="{x:Bind VM.Controller.IsPrimary, Mode=OneWay}" />
+                <ToggleSwitch OnContent="Yes" OffContent="No" IsEnabled="False" Header="Bridge Controller" IsOn="{x:Bind VM.Controller.IsBridgeController, Mode=OneWay}" />
+                <ToggleSwitch OnContent="Yes" OffContent="No" IsEnabled="False" Header="Statuc Update Controller" IsOn="{x:Bind VM.Controller.IsStaticUpdateController, Mode=OneWay}" />
 
                 <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
                 <TextBlock>

@@ -93,6 +93,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationState.cs" />
+    <Compile Include="NetworkManager\Controller.cs" />
     <Compile Include="ValueConverters.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
@@ -103,11 +105,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NodeWatcher.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="NetworkManager\NodeWatcher.cs" />
+    <Compile Include="NetworkManager\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ControllerView.xaml.cs">
       <DependentUpon>ControllerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControllersView.xaml.cs">
+      <DependentUpon>ControllersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DevicesView.xaml.cs">
       <DependentUpon>DevicesView.xaml</DependentUpon>
@@ -142,6 +147,10 @@
     <Page Include="Views\ControllerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ControllersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DevicesView.xaml">
       <SubType>Designer</SubType>

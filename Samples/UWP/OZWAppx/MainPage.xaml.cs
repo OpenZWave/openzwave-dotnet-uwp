@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.Devices.Enumeration;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using OpenZWave.NetworkManager;
 
 namespace OZWAppx
 {
@@ -31,7 +32,8 @@ namespace OZWAppx
         {
             this.InitializeComponent();
             Watcher = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
-            Watcher.Initialize().ContinueWith((t) =>
+            Watcher.Initialize();
+            ApplicationState.Instance.InitializeAsync().ContinueWith((t) =>
             {
                 GetSerialPorts();
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
@@ -41,14 +43,14 @@ namespace OZWAppx
 
         private void GetSerialPorts()
         {
-            if (!Watcher.SerialPorts.Any())
+            if (!ApplicationState.Instance.SerialPorts.Any())
             {
                 var _ = new Windows.UI.Popups.MessageDialog("No serial ports found").ShowAsync();
             }
-            else if (Watcher.SerialPorts.Count == 1)
+            else if (ApplicationState.Instance.SerialPorts.Count == 1)
             {
                 hamburgerMenu.SelectedIndex = 0;
-                Watcher.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
+                ApplicationState.Instance.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
                 (hamburgerMenu.Content as Frame).Navigate(typeof(Views.DevicesView));
             }
             else

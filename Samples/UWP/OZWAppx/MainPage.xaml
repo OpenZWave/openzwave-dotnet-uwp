@@ -38,7 +38,7 @@
             <toolkit:HamburgerMenuItemCollection>
                 <toolkit:HamburgerMenuGlyphItem TargetPageType="views:DevicesView" Label="Devices" Glyph=""/>
                 <toolkit:HamburgerMenuGlyphItem TargetPageType="views:SettingsView" Label="Settings" Glyph=""/>
-                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:ControllerView" Label="Controller" Glyph=""  />
+                <toolkit:HamburgerMenuGlyphItem TargetPageType="views:ControllersView" Label="Controllers" Glyph=""  />
             </toolkit:HamburgerMenuItemCollection>
         </toolkit:HamburgerMenu.ItemsSource>
         

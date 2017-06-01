@@ -26,13 +26,13 @@
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock Text="Serial port:" />
-                <ComboBox x:Name="SerialPortList" HorizontalAlignment="Stretch" ItemsSource="{Binding VM.SerialPorts}" >
-                    <ComboBox.ItemTemplate>
+                <ListView x:Name="SerialPortList" HorizontalAlignment="Stretch" ItemsSource="{Binding AppState.SerialPorts}" >
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PortID}" />
+                            <CheckBox Content="{Binding PortID}" IsChecked="{Binding IsActive, Mode=TwoWay}" />
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <Button Content="Save Configuration" Click="SaveConfiguration_Click" />
                 <Button Content="Create New Primary Controller" />
                 <Button Content="Transfer Primary Role" />

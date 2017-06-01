@@ -1,6 +1,8 @@
 ﻿using OpenZWave;
+using OpenZWave.NetworkManager;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,20 +28,30 @@ namespace OZWAppx.Views
             this.InitializeComponent();
         }
 
-        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
+        public Controller Controller
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach(var homeId in homeIds)
-                ZWManager.Instance.WriteConfig(homeId);
+            get { return (Controller)GetValue(ControllerProperty); }
+            set { SetValue(ControllerProperty, value); }
         }
 
-        public NodeWatcher VM => NodeWatcher.Instance;
+        public static readonly DependencyProperty ControllerProperty =
+            DependencyProperty.Register("Controller", typeof(Controller), typeof(ControllerView), new PropertyMetadata(null, OnControllerPropertyChanged));
+
+        private static void OnControllerPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as ControllerView).VM.UpdateController(e.NewValue as Controller);
+        }
+
+        public ControllerViewVM VM { get; private set; } = new ControllerViewVM();
+
+        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
+        {
+            Controller.WriteConfiguration();
+        }
 
         private void ResetSoft_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.SoftReset(homeId);
+            Controller.SoftReset();
         }
 
         private void ResetHard_Click(object sender, RoutedEventArgs e)
@@ -47,9 +59,7 @@ namespace OZWAppx.Views
             var dlg = new MessageDialog("Reset all connected controllers? This can't be undone", "Confirm");
             dlg.Commands.Add(new UICommand("OK", (s) =>
             {
-                var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-                foreach (var homeId in homeIds)
-                    ZWManager.Instance.ResetController(homeId);
+                Controller.ResetController();
             }));
             dlg.Commands.Add(new UICommand("Cancel"));
             var _ = dlg.ShowAsync();
@@ -57,26 +67,19 @@ namespace OZWAppx.Views
 
         private void ReceiveConfig_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.ReceiveConfiguration(homeId);
+            Controller.ReceiveConfiguration();
         }
 
         private void RemoveNode_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.RemoveNode(homeId);
-
+            Controller.RemoveNode();
             var dlg = new MessageDialog("Please follow the manufacturer's instructions to remove the Z-Wave device from the controller", "Remove mode enabled");
             var _ = dlg.ShowAsync();
         }
 
         private void AddDevice_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.AddNode(homeId, false);
+            Controller.AddNode(false);
 
             var dlg = new MessageDialog("Please follow the manufacturer's instructions to add the Z-Wave device from the controller", "Add mode enabled");
             var _ = dlg.ShowAsync();
@@ -84,9 +87,7 @@ namespace OZWAppx.Views
 
         private void AddSecureDevice_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.AddNode(homeId, true);
+            Controller.AddNode(true);
 
             var dlg = new MessageDialog("Please follow the manufacturer's instructions to add the Z-Wave device from the controller", "Add mode enabled");
             var _ = dlg.ShowAsync();
@@ -94,16 +95,29 @@ namespace OZWAppx.Views
 
         private void NewPrimary_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.CreateNewPrimary(homeId);
+            Controller.CreateNewPrimary();
         }
 
         private void TransferPrimary_Click(object sender, RoutedEventArgs e)
         {
-            var homeIds = NodeWatcher.Instance.Nodes.Select(n => n.HomeID).Distinct();
-            foreach (var homeId in homeIds)
-                ZWManager.Instance.TransferPrimaryRole(homeId);
+            Controller.TransferPrimaryRole();
         }
+    }
+
+    public class ControllerViewVM : INotifyPropertyChanged
+    {
+        public ControllerViewVM()
+        {
+        }
+
+        public void UpdateController(Controller controller)
+        {
+            Controller = controller;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Controller)));
+        }
+        public Controller Controller { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
     }
 }
