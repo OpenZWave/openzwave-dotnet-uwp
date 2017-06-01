@@ -318,11 +318,10 @@ namespace OpenZWave.NetworkManager
                     return r2.ToString();
                 case ZWValueType.Decimal:
                     string r3s;
+                    // We could also use GetValueAsFloat, but it could have accuracy issues, and we need
+                    // string version anyway.
                     ZWManager.Instance.GetValueAsString(v, out r3s);
                     return r3s;
-                //throw new NotImplementedException("Decimal");
-                //m_manager.GetValueAsDecimal(v, out r3);
-                //return r3.ToString();
                 case ZWValueType.Int:
                     Int32 r4;
                     ZWManager.Instance.GetValueAsInt(v, out r4);

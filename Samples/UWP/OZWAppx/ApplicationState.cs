@@ -49,10 +49,10 @@ namespace OZWAppx
             }
 #endif
 #if DEBUG
-            SerialPorts.Add(new SerialPortInfo("//COM-TEST/1", "Test Port 1"));
-            SerialPorts.Add(new SerialPortInfo("//COM-TEST/2", "Test Port 2"));
-            SerialPorts.Add(new SerialPortInfo("//COM-TEST/3", "Test Port 3"));
-            SerialPorts.Add(new SerialPortInfo("//COM-TEST/4", "Test Port 4"));
+            // SerialPorts.Add(new SerialPortInfo("//COM-TEST/1", "Test Port 1"));
+            // SerialPorts.Add(new SerialPortInfo("//COM-TEST/2", "Test Port 2"));
+            // SerialPorts.Add(new SerialPortInfo("//COM-TEST/3", "Test Port 3"));
+            // SerialPorts.Add(new SerialPortInfo("//COM-TEST/4", "Test Port 4"));
 #endif
         }
 

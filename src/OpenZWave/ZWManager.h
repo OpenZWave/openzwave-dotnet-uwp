@@ -129,7 +129,8 @@ namespace OpenZWave
 		/// callback handler, and then call the AddDriver method for each attached PC Z-Wave controller in turn.</remarks>
 		/// <seealso cref="Destroy" />
 		/// <seealso cref="NotificationReceived" />
-		/// <seealso cref="AddDriver" />
+		/// <seealso cref="AddDriver(String ^)" />
+		/// <seealso cref="AddDriver(String ^,ZWControllerInterface)" />
 		void Initialize();
 
 		/// <summary>Deletes the Manager and cleans up any associated objects.</summary>
@@ -152,7 +153,7 @@ namespace OpenZWave
 
 		/// <summary>Sets the current library log file name to a new name</summary>
 		/// <param name="filename">Name of the log file</param>
-		void SetLogFileName(String^ _filename) { Log::SetLogFileName(ConvertString(_filename)); }
+		void SetLogFileName(String^ filename) { Log::SetLogFileName(ConvertString(filename)); }
 
 		/// <summary>Sends current driver statistics to the log file</summary>
 		/// <param name="homeId">The Home ID of the Z-Wave controller.</param>
@@ -195,8 +196,6 @@ namespace OpenZWave
 		/// has been received, a DriverReady notification callback is sent, containing the Home ID of the controller.  This Home ID is
 		/// required by most of the OpenZWave Manager class methods.</remarks>
 		/// <param name="serialPortName">The string used to open the serial port, for example "\\.\COM3".</param>
-		/// <seealso cref="Create" />
-		/// <seealso cref="Get" />
 		/// <seealso cref="RemoveDriver" />
 		bool AddDriver(String^ serialPortName) { return Manager::Get()->AddDriver(ConvertString(serialPortName)); }
 
@@ -210,8 +209,6 @@ namespace OpenZWave
 		/// <param name="serialPortName">The string used to open the serial port, for example "\\.\COM3".</param>
 		/// <param name="interfaceType">Specifies whether this is a serial or HID interface (default is serial).</param>
 		/// <returns>True if a new driver was created, false if a driver for the controller already exists.</returns>
-		/// <seealso cref="Create" />
-		/// <seealso cref="Get" />
 		/// <seealso cref="RemoveDriver" />
 		bool AddDriver(String^ serialPortName, ZWControllerInterface interfaceType) { return Manager::Get()->AddDriver(ConvertString(serialPortName), (Driver::ControllerInterface) interfaceType); }
 
@@ -222,7 +219,8 @@ namespace OpenZWave
 		/// <param name="serialPortName">The same string as was passed in the original call to AddDriver.</param>
 		/// <returns>True if the driver was removed, false if it could not be found.</returns>
 		/// <seealso cref="Destroy" />
-		/// <seealso cref="AddDriver(serialPortName)" />
+		/// <seealso cref="AddDriver(String^)" />
+		/// <seealso cref="AddDriver(String ^,ZWControllerInterface)" />
 		bool RemoveDriver(String^ serialPortName) { return Manager::Get()->RemoveDriver(ConvertString(serialPortName)); }
 
 		/// <summary>Get the node ID of the Z-Wave controller.</summary>
@@ -747,19 +745,19 @@ namespace OpenZWave
 		/// <summary>Test whether the value is read-only.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
 		/// <returns>true if the value cannot be changed by the user.</returns>
-		/// <seealso cref="ZWValueID" />
+		/// <seealso cref="ZWValueId" />
 		bool IsValueReadOnly(ZWValueId^ id) { return Manager::Get()->IsValueReadOnly(id->CreateUnmanagedValueID()); }
 
 		/// <summary>Test whether the value has been set.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
 		/// <returns>true if the value has actually been set by a status message from the device, rather than simply being the default.</returns>
-		/// <seealso cref="ValueID" />
+		/// <seealso cref="ZWValueId" />
 		bool IsValueSet(ZWValueId^ id) { return Manager::Get()->IsValueSet(id->CreateUnmanagedValueID()); }
 
 		/// <summary>Test whether the value is currently being polled.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
 		/// <returns>true if the value is being polled, false otherwise.</returns>
-		/// <seealso cref="ValueID" />
+		/// <seealso cref="ZWValueId" />
 		bool IsValuePolled(ZWValueId^ id) { return Manager::Get()->IsValuePolled(id->CreateUnmanagedValueID()); }
 
 		/// <summary>Gets a value as a bool.</summary>
@@ -999,7 +997,7 @@ namespace OpenZWave
 		/// held by the node is updated directly.  This will be reverted by a future status message from the device
 		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
 		/// <param name="id">The unique identifier of the list value.</param>
-		/// <param name="value">A string matching the new selected item in the list.</param>
+		/// <param name="selectedItem">A string matching the new selected item in the list.</param>
 		/// <returns>true if the value was set.  Returns false if the selection is not in the list, or if the value is not a ZWValueID::ValueType_List.
 		/// The type can be tested with a call to ZWValueID::GetType</returns>
 		bool SetValueListSelection(ZWValueId^ id, String^ selectedItem) { return Manager::Get()->SetValueListSelection(id->CreateUnmanagedValueID(), ConvertString(selectedItem)); }
@@ -1301,7 +1299,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The Home ID of the Z-Wave network where the device should be added.</param>
 		/// <param name="doSecurity">Whether to initialize the Network Key on the device if it supports the Security CC</param>
-		/// <returns>if the Command was sent succcesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool AddNode(uint32 homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
 
 		/// <summary>Remove a Device from the Z-Wave Network</summary>
@@ -1310,7 +1308,7 @@ namespace OpenZWave
 		/// <para>Results of the AddNode Command will be send as a Notification with the Notification type as
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to remove the device</param>
-		/// <returns>if the Command was send succesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool RemoveNode(uint32 homeId) { return Manager::Get()->RemoveNode(homeId); }
 
 		/// <summary>Remove a Failed Device from the Z-Wave Network</summary>
@@ -1325,7 +1323,7 @@ namespace OpenZWave
 		/// </para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to remove the device</param>
 		/// <param name="nodeId">The NodeID of the Failed Node.</param>
-		/// <returns>if the Command was send succesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool RemoveFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->RemoveFailedNode(homeId, nodeId); }
 
 		/// <summary>Check if the Controller Believes a Node has Failed.</summary>
@@ -1336,7 +1334,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to test the device</param>
 		/// <param name="nodeId">The NodeID of the Failed Node.</param>
-		/// <returns>if the RemoveDevice Command was send succesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool HasNodeFailed(uint32 homeId, uint8 nodeId) { return Manager::Get()->HasNodeFailed(homeId, nodeId); }
 
 		/// <summary>Ask a Node to update its update its Return Route to the Controller</summary>
@@ -1345,7 +1343,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
 		/// <param name="nodeId">The NodeID of the Node.</param>
-		/// <returns>if the Command was send succesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool AssignReturnRoute(uint32 homeId, uint8 nodeId) { return Manager::Get()->AssignReturnRoute(homeId, nodeId); }
 
 		/// <summary>Ask a Node to update its Neighbor Tables</summary>
@@ -1354,7 +1352,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
 		/// <param name="nodeId">The NodeID of the Node.</param>
-		/// <returns>if the Command was send succesfully to the </returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool RequestNodeNeighborUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNodeNeighborUpdate(homeId, nodeId); }
 
 		/// <summary>Ask a Node to delete all Return Route.</summary>
@@ -1363,7 +1361,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network where you want to update the device</param>
 		/// <param name="nodeId">The NodeID of the Node.</param>
-		/// <returns>if the Command was send succesfully to the Controller</returns>
+		/// <returns>True if the Command was sent succesfully to the Controller</returns>
 		bool DeleteAllReturnRoutes(uint32 homeId, uint8 nodeId) { return Manager::Get()->DeleteAllReturnRoutes(homeId, nodeId); }
 
 		/// <summary>Send a NIF frame from the Controller to a Node.</summary>
@@ -1372,7 +1370,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">The NodeID of the Node to recieve the NIF</param>
-		/// <returns>if the sendNIF Command was send succesfully to the Controller</returns>
+		/// <returns>True if the sendNIF Command was sent succesfully to the Controller</returns>
 		bool SendNodeInformation(uint32 homeId, uint8 nodeId) { return Manager::Get()->SendNodeInformation(homeId, nodeId); }
 
 		/// <summary>Create a new primary controller when old primary fails. Requires SUC.</summary>
@@ -1380,16 +1378,16 @@ namespace OpenZWave
 		/// <para>Results of the CreateNewPrimary Command will be send as a Notification with the Notification type as
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
-		/// <returns>if the CreateNewPrimary Command was send succesfully to the Controller</returns>
+		/// <returns>True if the CreateNewPrimary Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
 		bool CreateNewPrimary(uint32 homeId) { return Manager::Get()->CreateNewPrimary(homeId); }
 
 		/// <summary>Receive network configuration information from primary controller. Requires secondary.</summary>
 		/// <remarks><para>This command prepares the controller to recieve Network Configuration from a Secondary Controller.</para>
-		/// <para>Results of the ReceiveConfiguration Command will be send as a Notification with the Notification type as
+		/// <para>Results of the ReceiveConfiguration Command will be sent as a Notification with the Notification type as
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
-		/// <returns>if the ReceiveConfiguration Command was send succesfully to the Controller</returns>
+		/// <returns>True if the ReceiveConfiguration Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
 		bool ReceiveConfiguration(uint32 homeId) { return Manager::Get()->ReceiveConfiguration(homeId); }
 
@@ -1400,7 +1398,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">the ID of the Failed Node</param>
-		/// <returns>if the ReplaceFailedNode Command was send succesfully to the Controller</returns>
+		/// <returns>True if the ReplaceFailedNode Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="HasNodeFailed" />
 		/// <seealso cref="CancelControllerCommand" />
 		bool ReplaceFailedNode(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplaceFailedNode(homeId, nodeId); }
@@ -1410,7 +1408,7 @@ namespace OpenZWave
 		/// <para>Results of the TransferPrimaryRole Command will be send as a Notification with the Notification type as
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
-		/// <returns>if the TransferPrimaryRole Command was send succesfully to the Controller</returns>
+		/// <returns>True if the TransferPrimaryRole Command was sent succesfully to the Controller</returns>
 		/// <see cref="CancelControllerCommand" />
 		bool TransferPrimaryRole(uint32 homeId) { return Manager::Get()->TransferPrimaryRole(homeId); }
 
@@ -1419,7 +1417,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">the ID of the Node</param>
-		/// <returns>if the RequestNetworkUpdate Command was send succesfully to the Controller</returns>
+		/// <returns>True if the RequestNetworkUpdate Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
 		bool RequestNetworkUpdate(uint32 homeId, uint8 nodeId) { return Manager::Get()->RequestNetworkUpdate(homeId, nodeId); }
 
@@ -1428,7 +1426,7 @@ namespace OpenZWave
 		/// Notification::Type_ControllerCommand</para></remarks>
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">the ID of the Node</param>
-		/// <returns>if the ReplicationSend Command was send succesfully to the Controller</returns>
+		/// <returns>True if the ReplicationSend Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
 		bool ReplicationSend(uint32 homeId, uint8 nodeId) { return Manager::Get()->ReplicationSend(homeId, nodeId); }
 
@@ -1439,9 +1437,9 @@ namespace OpenZWave
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">the ID of the Virtual Node</param>
 		/// <param name="buttonId">the ID of the Button to create</param>
-		/// <returns>if the CreateButton Command was send succesfully to the Controller</returns>
+		/// <returns>True if the CreateButton Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
-		bool CreateButton(uint32 homeId, uint8 nodeId, uint8 buttonid) { return Manager::Get()->CreateButton(homeId, nodeId, buttonid); }
+		bool CreateButton(uint32 homeId, uint8 nodeId, uint8 buttonId) { return Manager::Get()->CreateButton(homeId, nodeId, buttonId); }
 
 		/// <summary>Delete a handheld button id.</summary>
 		/// <remarks><para>Only intended for Bridge Firmware Controllers.</para>
@@ -1450,9 +1448,9 @@ namespace OpenZWave
 		/// <param name="homeId">The HomeID of the Z-Wave network</param>
 		/// <param name="nodeId">the ID of the Virtual Node</param>
 		/// <param name="buttonId">the ID of the Button to delete</param>
-		/// <returns>if the DeleteButton Command was send succesfully to the Controller</returns>
+		/// <returns>True if the DeleteButton Command was sent succesfully to the Controller</returns>
 		/// <seealso cref="CancelControllerCommand" />
-		bool DeleteButton(uint32 homeId, uint8 nodeId, uint8 buttonid) { return Manager::Get()->DeleteButton(homeId, nodeId, buttonid); }
+		bool DeleteButton(uint32 homeId, uint8 nodeId, uint8 buttonId) { return Manager::Get()->DeleteButton(homeId, nodeId, buttonId); }
 
 		//-----------------------------------------------------------------------------
 		// Controller commands
@@ -1475,7 +1473,7 @@ namespace OpenZWave
 		/// <summary>Soft Reset a PC Z-Wave Controller.</summary>
 		/// <remarks>Resets a controller without erasing its network configuration settings.</remarks>
 		/// <param name="homeId">The Home ID of the Z-Wave controller to be reset.</param>
-		/// <seealso cref="ResetController" />
+		/// <seealso cref="ResetController(uint32)" />
 		void SoftReset(uint32 homeId) { Manager::Get()->SoftReset(homeId); }
 
 		/// <summary>Cancels any in-progress command running on a controller.</summary>
