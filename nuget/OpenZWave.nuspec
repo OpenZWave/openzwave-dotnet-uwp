@@ -3,17 +3,19 @@
   <metadata>
     <id>$packageid$</id>
     <version>$version$</version>
-    <title>OpenZWave for .NET and UWP</title>
-    <authors>Morten Nielsen</authors>
-    <owners>Morten Nielsen</owners>
+    <title>OpenZWave</title>
+    <authors>openzwave.com</authors>
+    <owners>openzwave.com</owners>
     <licenseUrl>https://github.com/OpenZWave/open-zwave/blob/1c2511bb46d935864f0a6ff19fd804028b7beab3/license/lgpl.txt</licenseUrl>
-    <projectUrl>https://github.com/dotMorten/openzwave-dotnet-uwp</projectUrl>
+    <projectUrl>https://github.com/OpenZWave/openzwave-dotnet-uwp</projectUrl>
     <iconUrl>http://www.openzwave.net/css/ozwlogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Dotnet Wrapper for Windows and UWP </description>
+    <description>Dotnet Wrapper for .NET and UWP that include :
+- OpenZWaveDotNet.dll
+- config directory (xml files for devices)</description>
     <summary>free software library that interfaces with selected Z-Wave PC controllers to manipulate and respond to devices on a Z-Wave network.</summary>
     <releaseNotes>https://github.com/OpenZWave/open-zwave/blob/1c2511bb46d935864f0a6ff19fd804028b7beab3/ChangeLog</releaseNotes>
-    <tags>openzwave zwave z-wave home automation iot</tags>
+    <tags>openzwave zwave z-wave home automation iot uwp .net</tags>
     <references>
 	  <group targetFramework="net452">
           <reference file="OpenZWaveDotNet.dll" />
