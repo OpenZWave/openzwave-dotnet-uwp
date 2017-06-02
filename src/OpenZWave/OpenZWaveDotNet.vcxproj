@@ -48,10 +48,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleAssemblies />
     <CodeAnalysisRules />
-    <TargetName Condition="'$(Configuration)'=='Debug'">OpenZWaveDotNet</TargetName>
+    <TargetName Condition="'$(Configuration)'=='Debug'">OpenZWave</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>OpenZWaveDotNet</TargetName>
+    <TargetName>OpenZWave</TargetName>
     <IntDir>$(ProjectDir)\..\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

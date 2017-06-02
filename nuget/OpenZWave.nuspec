@@ -18,7 +18,7 @@
     <tags>openzwave zwave z-wave home automation iot uwp .net</tags>
     <references>
 	  <group targetFramework="net452">
-          <reference file="OpenZWaveDotNet.dll" />
+          <reference file="OpenZWave.dll" />
       </group>
       <group targetFramework="uap10">
         <reference file="OpenZWave.winmd" />
