@@ -57,15 +57,15 @@ void ZWOptions::Initialize()
 
 void ZWOptions::Initialize
 (
-	String^ _configPath,
-	String^	_userPath,
-	String^	_commandLine
+	String^ configPath,
+	String^	userPath,
+	String^	commandLine
 )
 {
 	// Create the Manager singleton
-	std::string config = ConvertString(_configPath);
-	std::string user = ConvertString(_userPath);
-	std::string command = ConvertString(_commandLine);
+	std::string config = ConvertString(configPath);
+	std::string user = ConvertString(userPath);
+	std::string command = ConvertString(commandLine);
 	
 	Options::Create(config, user, command);
 }
@@ -76,12 +76,12 @@ void ZWOptions::Initialize
 //-----------------------------------------------------------------------------
 bool ZWOptions::AddOptionBool
 (
-	String^ _name,
-	bool _default
+	String^ name,
+	bool value
 )
 {
-	std::string name = ConvertString(_name);
-	return Options::Get()->AddOptionBool(name, _default);
+	std::string sname = ConvertString(name);
+	return Options::Get()->AddOptionBool(sname, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -90,12 +90,12 @@ bool ZWOptions::AddOptionBool
 //-----------------------------------------------------------------------------
 bool ZWOptions::AddOptionInt
 (
-	String^ _name,
-	int32 _default
+	String^ name,
+	int32 value
 )
 {
-	std::string name = ConvertString(_name);
-	return Options::Get()->AddOptionInt(name, _default);
+	std::string sname = ConvertString(name);
+	return Options::Get()->AddOptionInt(sname, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -104,14 +104,14 @@ bool ZWOptions::AddOptionInt
 //-----------------------------------------------------------------------------
 bool ZWOptions::AddOptionString
 (
-	String^ _name,
-	String^ _default,
-	bool _append
+	String^ name,
+	String^ value,
+	bool append
 )
 {
-	std::string name = ConvertString(_name);
-	std::string defaultStr = ConvertString(_default);
-	return Options::Get()->AddOptionString(name, defaultStr, _append);
+	std::string sname = ConvertString(name);
+	std::string defaultStr = ConvertString(value);
+	return Options::Get()->AddOptionString(sname, defaultStr, append);
 }
 
 //-----------------------------------------------------------------------------
@@ -120,13 +120,13 @@ bool ZWOptions::AddOptionString
 //-----------------------------------------------------------------------------
 bool ZWOptions::GetOptionAsBool
 (
-	String^ _name,
+	String^ name,
 	bool *o_value
 )
 {
 	bool value;
-	std::string name = ConvertString(_name);
-	if (Options::Get()->GetOptionAsBool(name, &value))
+	std::string sname = ConvertString(name);
+	if (Options::Get()->GetOptionAsBool(sname, &value))
 	{
 		*o_value = value;
 		return true;
@@ -140,13 +140,13 @@ bool ZWOptions::GetOptionAsBool
 //-----------------------------------------------------------------------------
 bool ZWOptions::GetOptionAsInt
 (
-	String^ _name,
+	String^ name,
 	int *o_value
 )
 {
 	int32 value;
-	std::string name = ConvertString(_name);
-	if (Options::Get()->GetOptionAsInt(name, &value))
+	std::string sname = ConvertString(name);
+	if (Options::Get()->GetOptionAsInt(sname, &value))
 	{
 		*o_value = value;
 		return true;
@@ -160,13 +160,13 @@ bool ZWOptions::GetOptionAsInt
 //-----------------------------------------------------------------------------
 bool ZWOptions::GetOptionAsString
 (
-	String^ _name,
+	String^ name,
 	String^ *o_value
 )
 {
 	std::string value;
-	std::string name = ConvertString(_name);
-	if (Options::Get()->GetOptionAsString(name, &value))
+	std::string sname = ConvertString(name);
+	if (Options::Get()->GetOptionAsString(sname, &value))
 	{
 		*o_value = ConvertStdString(value);
 		return true;
@@ -180,9 +180,9 @@ bool ZWOptions::GetOptionAsString
 //-----------------------------------------------------------------------------
 ZWOptionType ZWOptions::GetOptionType
 (
-	String^ _name
+	String^ name
 )
 {
-	std::string name = ConvertString(_name);
-	return (ZWOptionType)Options::Get()->GetOptionType(name);
+	std::string sname = ConvertString(name);
+	return (ZWOptionType)Options::Get()->GetOptionType(sname);
 }

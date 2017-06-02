@@ -234,7 +234,7 @@ bool ZWManager::GetValueAsShort
 
 //-----------------------------------------------------------------------------
 // <ZWManager::GetValueAsFloat>
-// Gets a value as an Float
+// Gets a value as a Float
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsFloat
 (

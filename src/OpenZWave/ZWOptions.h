@@ -80,11 +80,11 @@ namespace OpenZWave
 		static property ZWOptions^ Instance { ZWOptions^ get(); }
 		
 		/// <summary>Creates an object to manage the program options.</summary>
-		/// <param name="_configPath">a string containing the path to the OpenZWave library config
+		/// <param name="configPath">a string containing the path to the OpenZWave library config
 		/// folder, which contains XML descriptions of Z-Wave manufacturers and products.</param>
-		/// <param name="_userPath">a string containing the path to the application's user data
+		/// <param name="userPath">a string containing the path to the application's user data
 		/// folder where the OpenZWave should store the Z-Wave network configuration and state.</param>
-		/// <param name="_commandLine">A string containing the program's command line options.
+		/// <param name="commandLine">A string containing the program's command line options.
 		/// Command line options are parsed after the options.xml file, and so take precedence.
 		/// Options are identified by a leading -- (two minus signs). The following items
 		/// in the string are treated as values for this option, until the next -- is
@@ -92,7 +92,7 @@ namespace OpenZWave
 		/// the value is assumed to be "true".  Note that option names are case insensitive, and
 		/// that option values should be separated by a space.</param>
 		/// <remarks>
-		/// The _userPath is also the folder where OpenZWave will look for the file Options.xml
+		/// The <paramref cref="userPath" /> is also the folder where OpenZWave will look for the file Options.xml
 		/// which contains program option values.  The file should be in the form outlined below,
 		/// with one or more Option elements containing a name and value attribute.  Multiple
 		/// values with the same option name should be listed separately. Note that option names
@@ -106,7 +106,7 @@ namespace OpenZWave
 		//   <Option name="ignore" value="COMMAND_CLASS_VERSION" />
 		// </Options>
 		// ]]></code></example>
-		void Initialize(String^ _configPath, String^ _userPath, String^ _commandLine);
+		void Initialize(String^ configPath, String^ userPath, String^ commandLine);
 		
 		/// <summary>Creates an object to manage the program options using the default data paths.</summary>
 		void Initialize();
@@ -131,56 +131,56 @@ namespace OpenZWave
 		/// <summary>Add a boolean option to the program.</summary>
 		/// <remarks>Adds an option to the program whose value can then be read from a file or command line.
 		/// All calls to AddOptionInt must be made before Lock.</remarks>
-		/// <param name="_name"> the name of the option.  Option names are case insensitive and must be unique.</param>
-		/// <param name="_default">the default value for this option.</param>
+		/// <param name="name"> the name of the option.  Option names are case insensitive and must be unique.</param>
+		/// <param name="value">the default value for this option.</param>
 		/// <seealso cref="GetOptionAsBool" />
-		bool AddOptionBool(String^ _name, bool _default);
+		bool AddOptionBool(String^ name, bool value);
 
 		/// <summary>Add an integer option to the program.</summary>
 		/// <remarks>Adds an option to the program whose value can then be read from a file or command line.
 		/// All calls to AddOptionInt must be made before Lock.</remarks>
-		/// <param name="_name">the name of the option. Option names are case insensitive and must be unique.</param>
-		/// <param name="_default">the default value for this option.</param>
+		/// <param name="name">the name of the option. Option names are case insensitive and must be unique.</param>
+		/// <param name="value">the default value for this option.</param>
 		/// <seealso cref="GetOptionAsInt" />
-		bool AddOptionInt(String^ _name, int32 _default);
+		bool AddOptionInt(String^ name, int32 value);
 
 		/// <summary>Add a string option to the program.</summary>
 		/// <remarks>Adds an option to the program whose value can then be read from a file or command line.
 		/// All calls to AddOptionString must be made before Lock.</remarks>
-		/// <param name="_name">the name of the option. Option names are case insensitive and must be unique.</param>
-		/// <param name="_default">the default value for this option.</param>
-		/// <param name="_append">Setting append to true will cause values read from the command line
+		/// <param name="name">the name of the option. Option names are case insensitive and must be unique.</param>
+		/// <param name="value">the default value for this option.</param>
+		/// <param name="append">Setting append to true will cause values read from the command line
 		/// or XML file to be concatenated into a comma delimited list. If _append is false,
 		/// newer values will overwrite older ones.</param>
 		/// <seealso cref="GetOptionAsString" />
-		bool AddOptionString(String^ _name, String^ _default, bool _append);
+		bool AddOptionString(String^ name, String^ value, bool append);
 
 		/// <summary>Get the value of a boolean option.</summary>
-		/// <param name="_name">the name of the option.  Option names are case insensitive.</param>
+		/// <param name="name">the name of the option.  Option names are case insensitive.</param>
 		/// <param name="o_value">the item that will be filled with the option value.</param>
 		/// <returns>true if the option value was fetched successfully, false if the
 		/// option does not exist, or does not contain a boolean value</returns>
-		bool GetOptionAsBool(String^ _name, bool *o_value);
+		bool GetOptionAsBool(String^ name, bool *o_value);
 
 		/// <summary>Get the value of an integer option.</summary>
-		/// <param name="_name">the name of the option.  Option names are case insensitive.</param>
+		/// <param name="name">the name of the option.  Option names are case insensitive.</param>
 		/// <param name="o_value">the item that will be filled with the option value.</param>
 		/// <returns>true if the option value was fetched successfully, false if the
 		/// option does not exist, or does not contain an integer value</returns>
-		bool GetOptionAsInt(String^ _name, int *o_value);
+		bool GetOptionAsInt(String^ name, int *o_value);
 
 		/// <summary>Get the value of a string option.</summary>
-		/// <param name="_name">the name of the option. Option names are case insensitive.</param>
+		/// <param name="name">the name of the option. Option names are case insensitive.</param>
 		/// <param name="o_value">the item that will be filled with the option value.</param>
 		/// <returns>true if the option value was fetched successfully, false if the
 		/// option does not exist, or does not contain a string value</returns>
-		bool GetOptionAsString(String^ _name, String^ *o_value);
+		bool GetOptionAsString(String^ name, String^ *o_value);
 
 		/// <summary>Get the type of value stored in an option.</summary>
-		/// <param name="_name">the name of the option.  Option names are case insensitive.</param>
+		/// <param name="name">the name of the option.  Option names are case insensitive.</param>
 		/// <returns>An enum value representing the type of the option value. If the
 		/// option does not exist, OptionType_Invalid is returned.</returns>
-		ZWOptionType GetOptionType(String^ _name);
+		ZWOptionType GetOptionType(String^ name);
 
 		/// <summary>Test whether the options have been locked.</summary>
 		/// <returns><c>true</c> if the options have been locked.</returns>
