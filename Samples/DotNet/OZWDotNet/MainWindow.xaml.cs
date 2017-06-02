@@ -25,7 +25,7 @@ namespace OZWDotNet
         public MainWindow()
         {
             InitializeComponent();
-            VM = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
+            VM = Watcher.Instance ?? new Watcher(this.Dispatcher);
             VM.Initialize();
             DataContext = this;
             ApplicationState.Instance.InitializeAsync().ContinueWith((t) =>
@@ -34,7 +34,7 @@ namespace OZWDotNet
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public NodeWatcher VM { get; }
+        public Watcher VM { get; }
 
         public ApplicationState AppState => ApplicationState.Instance;
 

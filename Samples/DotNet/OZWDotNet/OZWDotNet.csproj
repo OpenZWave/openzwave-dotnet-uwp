@@ -69,8 +69,8 @@
     <Compile Include="..\..\UWP\OZWAppx\NetworkManager\Node.cs">
       <Link>NetworkManager\Node.cs</Link>
     </Compile>
-    <Compile Include="..\..\UWP\OZWAppx\NetworkManager\NodeWatcher.cs">
-      <Link>NetworkManager\NodeWatcher.cs</Link>
+    <Compile Include="..\..\UWP\OZWAppx\NetworkManager\Watcher.cs">
+      <Link>NetworkManager\Watcher.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
