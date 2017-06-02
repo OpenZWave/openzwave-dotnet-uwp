@@ -206,7 +206,7 @@ namespace OpenZWave.NetworkManager
         }
 
         /// <summary>
-        /// Called by the <see cref="NodeWatcher"/> when events specific to this instance occur
+        /// Called by the <see cref="Watcher"/> when events specific to this instance occur
         /// </summary>
         /// <param name="notification"></param>
         internal void HandleNodeEvent(ZWNotification notification)

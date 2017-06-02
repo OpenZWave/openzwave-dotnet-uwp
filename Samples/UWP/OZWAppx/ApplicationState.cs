@@ -81,15 +81,13 @@ namespace OZWAppx
                 _isActive = value;
                 if (value)
                 {
-                    NodeWatcher.Instance.Controllers.Add(new Controller(PortID));
-                    ZWManager.Instance.AddDriver(PortID);
+                    Watcher.Instance.AddController(PortID, Name);
                 }
                 else
                 {
-                    ZWManager.Instance.RemoveDriver(PortID);
+                    Watcher.Instance.RemoveController(PortID);
                 }
             }
         }
     }
-
 }

@@ -31,7 +31,7 @@ namespace OZWAppx
         public MainPage()
         {
             this.InitializeComponent();
-            Watcher = NodeWatcher.Instance ?? new NodeWatcher(this.Dispatcher);
+            Watcher = Watcher.Instance ?? new Watcher(this.Dispatcher);
             Watcher.Initialize();
             ApplicationState.Instance.InitializeAsync().ContinueWith((t) =>
             {
@@ -39,7 +39,7 @@ namespace OZWAppx
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public NodeWatcher Watcher { get; }
+        public Watcher Watcher { get; }
 
         private void GetSerialPorts()
         {

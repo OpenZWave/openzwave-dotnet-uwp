@@ -21,15 +21,22 @@ namespace OpenZWave.NetworkManager
     /// This class monitors discovery, removal and changes to available devices (nodes),
     /// and raises the proper change notifications to use it for binding to a view
     /// </summary>
-    public class NodeWatcher : INotifyPropertyChanged
+    public class Watcher : INotifyPropertyChanged
     {
-        private ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
-
-        public static NodeWatcher Instance { get; private set; }
+        private readonly List<ZWaveRequest> m_pendingRequests = new List<ZWaveRequest>();
+        private readonly ObservableCollection<Node> m_nodeList = new ObservableCollection<Node>();
+        private readonly ObservableCollection<Controller> m_controllerList = new ObservableCollection<Controller>();
+        public static Watcher Instance { get; private set; }
 
         private readonly CoreDispatcher Dispatcher;
-        
-        public NodeWatcher(CoreDispatcher dispatcher)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Watcher"/> class
+        /// </summary>
+        /// <param name="dispatcher">Dispatcher to use for raising change notification.
+        /// If null, change notificatin events will can be raised on any thread. If you are relying on binding,
+        /// make sure you assign the UI Thread Dispatcher here</param>
+        public Watcher(CoreDispatcher dispatcher = null)
         {
             if (Instance != null)
                 throw new InvalidOperationException("Only one watcher instance can be created");
@@ -37,27 +44,49 @@ namespace OpenZWave.NetworkManager
             Instance = this;            
         }
 
-        public void Initialize()
+        public void Initialize(string configPath = "/config", string userPath = null, string commandLine = "")
         {
-            ZWOptions.Instance.Initialize();
+            if (userPath == null)
+            {
+#if NETFX_CORE
+                userPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+#else
+	            userPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+#endif
+            }
+            ZWOptions.Instance.Initialize(configPath, userPath, commandLine);
 
-            // Add any app specific options here...
+            if (!ZWOptions.Instance.AreLocked)
+            {
+                // Add any app specific options here...
 
-            // ordinarily, just write "Detail" level messages to the log
-            //m_options.AddOptionInt("SaveLogLevel", (int)ZWLogLevel.Detail);
+                // ordinarily, just write "Detail" level messages to the log
+                //ZWOptions.Instance.AddOptionInt("SaveLogLevel", (int)ZWLogLevel.Detail);
 
-            // save recent messages with "Debug" level messages to be dumped if an error occurs
-            //m_options.AddOptionInt("QueueLogLevel", (int)ZWLogLevel.Debug);
+                // save recent messages with "Debug" level messages to be dumped if an error occurs
+                //ZWOptions.Instance.AddOptionInt("QueueLogLevel", (int)ZWLogLevel.Debug);
 
-            // only "dump" Debug to the log emessages when an error-level message is logged
-            //m_options.AddOptionInt("DumpTriggerLevel", (int)ZWLogLevel.Error);
+                // only "dump" Debug to the log emessages when an error-level message is logged
+                //ZWOptions.Instance.AddOptionInt("DumpTriggerLevel", (int)ZWLogLevel.Error);
 
-            // Lock the options
-            ZWOptions.Instance.Lock();
-
+                // Lock the options
+                ZWOptions.Instance.Lock();
+            }
             // Create the OpenZWave Manager
             ZWManager.Instance.Initialize();
             ZWManager.Instance.NotificationReceived += OnNodeNotification;
+        }
+
+        public void AddController(string portId, string displayName)
+        {
+            m_controllerList.Add(new Controller(portId, displayName));
+            ZWManager.Instance.AddDriver(portId);
+        }
+
+        public void RemoveController(string portId)
+        {
+            ZWManager.Instance.RemoveDriver(portId);
+            // m_controllerList will automatically be updated when the DriverRemoved notification triggers
         }
 
         /// <summary>
@@ -68,7 +97,7 @@ namespace OpenZWave.NetworkManager
         /// <summary>
         /// Gets a list of controllers registered with the controller.
         /// </summary>
-        public IList<Controller> Controllers { get; } = new ObservableCollection<Controller>();
+        public IEnumerable<Controller> Controllers => m_controllerList;
 
         /// <summary>
         /// The notifications handler.
@@ -76,23 +105,28 @@ namespace OpenZWave.NetworkManager
         /// <param name="notification">The notification.</param>
         private void OnNodeNotification(ZWManager manager, NotificationReceivedEventArgs e)
         {
-            // Handle the notification on a thread that can safely
-            // modify the controls without throwing an exception.
-#if NETFX_CORE
-            var _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-#else
-            Dispatcher.BeginInvoke(new Action(() =>
-#endif
+            if (Dispatcher == null)
             {
                 NotificationHandler(e.Notification);
             }
+            else
+            {
+                // Handle the notification on a thread that can safely
+                // modify the controls without throwing an exception.
+#if NETFX_CORE
+                var _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+#else
+            Dispatcher.BeginInvoke(new Action(() =>
+#endif
+                {
+                    NotificationHandler(e.Notification);
+                }
 #if !NETFX_CORE
             )
 #endif
             );
+            }
         }
-
-        private List<ZWaveRequest> PendingRequests = new List<ZWaveRequest>();
 
         private class ZWaveRequest
         {
@@ -134,17 +168,17 @@ namespace OpenZWave.NetworkManager
                 // Debug.WriteLine("  Units: " + m_manager.GetValueUnits(v));
             };
 
-            foreach(var item in PendingRequests.ToArray())
+            foreach(var item in m_pendingRequests.ToArray())
             {
                 if(item.HomeID == homeID && (item.NodeID == nodeId || item.NodeID < 0) && item.Type == type)
                 {
                     item.CompletionSource.SetResult(notification);
-                    PendingRequests.Remove(item);
+                    m_pendingRequests.Remove(item);
                 }
                 else if(item.Age > item.Timeout)
                 {
                     item.CompletionSource.SetException(new TimeoutException());
-                    PendingRequests.Remove(item);
+                    m_pendingRequests.Remove(item);
                 }
             }
 
@@ -218,17 +252,17 @@ namespace OpenZWave.NetworkManager
                         var ctrl = Controllers.Where(c => c.ControllerPath == p).FirstOrDefault();
                         if (ctrl != null)
                         {
-                            ctrl.UpdateHomeId(homeID);
+                            ctrl.HandleControllerEvent(notification);
                         }
                         else
                         {
-                            Controllers.Add(new Controller(p, homeID));
+                            m_controllerList.Add(new Controller(p, p, homeID));
                         }
                         break;
                     }
-
                 case ZWNotificationType.DriverFailed:
                     {
+                        // TODO: if HomeID is 0 we don't really know anything about which one failed
                         Debug.WriteLine("Driver failed for HomeID " + homeID.ToString());
                         var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
                         if (d != null)
@@ -237,54 +271,24 @@ namespace OpenZWave.NetworkManager
                         }
                         break;
                     }
-
                 case ZWNotificationType.DriverRemoved:
                     {
+                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
                         var nodes = GetNodes(homeID).ToArray();
                         foreach (var node in nodes)
                             m_nodeList.Remove(node);
-                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
                         if (d != null)
                         {
-                            Controllers.Remove(d);
-                            d.UpdateHomeId(0);
-                            OnPropertyChanged(nameof(Controllers));
+                            m_controllerList.Remove(d);
                         }
                         break;
                     }
-                
                 case ZWNotificationType.AllNodesQueried:
-                    {
-                        Debug.WriteLine("All nodes queried");
-                        ZWManager.Instance.WriteConfig(homeID);
-                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
-                        if (d != null)
-                        {
-                            d.UpdateDriverStatus(DriverStatus.AllNodesQueried);
-                        }
-                        break;
-                    }
-
                 case ZWNotificationType.AllNodesQueriedSomeDead:
-                    {
-                        Debug.WriteLine("All nodes queried (some dead)");
-                        ZWManager.Instance.WriteConfig(homeID);
-                        var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
-                        if (d != null)
-                        {
-                            d.UpdateDriverStatus(DriverStatus.AllNodesQueriedSomeDead);
-                        }
-                        break;
-                    }
-
                 case ZWNotificationType.AwakeNodesQueried:
                     {
-                        ZWManager.Instance.WriteConfig(homeID);
                         var d = Controllers.Where(t => t.HomeId == homeID).FirstOrDefault();
-                        if (d != null)
-                        {
-                            d.UpdateDriverStatus(DriverStatus.AwakeNodesQueried);
-                        }
+                        d?.HandleControllerEvent(notification);
                         break;
                     }
 

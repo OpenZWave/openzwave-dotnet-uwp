@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace OpenZWave.NetworkManager
     {
         private string _path;
 
-        internal Controller(string path, uint homeId = 0)
+        internal Controller(string path, string displayName, uint homeId = 0)
         {
             _path = path;
             HomeId = homeId;
@@ -30,7 +31,10 @@ namespace OpenZWave.NetworkManager
                 DriverStatus = DriverStatus.Loading;
             else
                 DriverStatus = DriverStatus.DriverReady;
+            DisplayName = displayName ?? path;
         }
+
+        public string DisplayName { get; }
 
         internal void UpdateHomeId(uint homeid)
         {
@@ -241,5 +245,51 @@ namespace OpenZWave.NetworkManager
         public event EventHandler AllNodesQueried;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+
+        /// <summary>
+        /// Called by the <see cref="Watcher"/> when events specific to this instance occur
+        /// </summary>
+        /// <param name="notification"></param>
+        internal bool HandleControllerEvent(ZWNotification notification)
+        {
+            var homeID = notification.HomeId;
+            var nodeId = notification.NodeId;
+            var type = notification.Type;
+
+            switch (type)
+            {
+                case ZWNotificationType.DriverReady:
+                    {
+                        UpdateHomeId(homeID);
+                        return true;
+                    }
+                case ZWNotificationType.AllNodesQueried:
+                    {
+                        Debug.WriteLine("All nodes queried");
+                        ZWManager.Instance.WriteConfig(homeID);
+                        UpdateDriverStatus(DriverStatus.AllNodesQueried);
+                        return true;
+                    }
+
+                case ZWNotificationType.AllNodesQueriedSomeDead:
+                    {
+                        Debug.WriteLine("All nodes queried (some dead)");
+                        ZWManager.Instance.WriteConfig(homeID);
+                        UpdateDriverStatus(DriverStatus.AllNodesQueriedSomeDead);
+                        return true;
+                    }
+
+                case ZWNotificationType.AwakeNodesQueried:
+                    {
+                        ZWManager.Instance.WriteConfig(homeID);
+                        UpdateDriverStatus(DriverStatus.AwakeNodesQueried);
+                        return true;
+                    }
+                default:
+                    return false;
+            }
+        }
     }
 }

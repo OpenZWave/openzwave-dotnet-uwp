@@ -24,13 +24,17 @@
             <toolkit:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="nm:Controller">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <TextBlock 
                             HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Text="{x:Bind DriverStatus, Mode=OneWay}" />
+                            Text="{x:Bind DriverStatus, Mode=OneWay}" Grid.Column="1" />
 
                         <StackPanel Margin="0,5" HorizontalAlignment="Stretch" >
-                            <TextBlock x:Name="ManufacturerField" Text="{x:Bind ControllerPath, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
-                            <TextBlock x:Name="LocationField" Text="{x:Bind HomeId, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="NoWrap" RelativePanel.RightOf="FromEllipse" />
+                            <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" RelativePanel.RightOf="FromEllipse" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                            <TextBlock Text="{x:Bind HomeId, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="NoWrap" RelativePanel.RightOf="FromEllipse" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

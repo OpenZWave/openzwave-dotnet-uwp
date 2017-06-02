@@ -27,6 +27,6 @@ namespace OZWAppx.Views
         {
             this.InitializeComponent();
         }
-        public NodeWatcher Watcher => NodeWatcher.Instance;
+        public Watcher Watcher => Watcher.Instance;
     }
 }
