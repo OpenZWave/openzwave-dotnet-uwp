@@ -4,7 +4,7 @@ This library was based on the OpenZWave .NET Library, but refactored to greatly 
 
 ### Nuget
 
-Install this package via [Nuget](https://www.nuget.org/packages/OpenZWave/2.0.0-beta1):
+Install this package via [Nuget](https://www.nuget.org/packages/OpenZWave/2.0.0-beta2):
 > ```
 > 
 > PM> Install-Package OpenZWave -Pre 
