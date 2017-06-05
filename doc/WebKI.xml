@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="ActivateScene method" Url="html/M_OpenZWave_ZWManager_ActivateScene.htm" />
+  <HelpKINode Title="AddAssociation method" Url="html/M_OpenZWave_ZWManager_AddAssociation.htm" />
+  <HelpKINode Title="AddDriver method" Url="html/Overload_OpenZWave_ZWManager_AddDriver.htm" />
+  <HelpKINode Title="AddNode method" Url="html/M_OpenZWave_ZWManager_AddNode.htm" />
+  <HelpKINode Title="AddOptionBool method" Url="html/M_OpenZWave_ZWOptions_AddOptionBool.htm" />
+  <HelpKINode Title="AddOptionInt method" Url="html/M_OpenZWave_ZWOptions_AddOptionInt.htm" />
+  <HelpKINode Title="AddOptionString method" Url="html/M_OpenZWave_ZWOptions_AddOptionString.htm" />
+  <HelpKINode Title="AddSceneValue method" Url="html/Overload_OpenZWave_ZWManager_AddSceneValue.htm" />
+  <HelpKINode Title="AddSceneValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_AddSceneValueListSelection.htm" />
+  <HelpKINode Title="Alert enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Alive enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="AllNodesQueried enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="AllNodesQueriedSomeDead enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="Always enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="AreLocked property" Url="html/P_OpenZWave_ZWOptions_AreLocked.htm" />
+  <HelpKINode Title="AssignReturnRoute method" Url="html/M_OpenZWave_ZWManager_AssignReturnRoute.htm" />
+  <HelpKINode Title="Awake enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="AwakeNodesQueried enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="Basic enumeration member" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="Bool enumeration member">
+    <HelpKINode Title="ZWOptionType Enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+    <HelpKINode Title="ZWValueType Enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Button enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="ButtonOff enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ButtonOn enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="Byte enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="CancelControllerCommand method" Url="html/M_OpenZWave_ZWManager_CancelControllerCommand.htm" />
+  <HelpKINode Title="ClearSwitchPoints method" Url="html/M_OpenZWave_ZWManager_ClearSwitchPoints.htm" />
+  <HelpKINode Title="Code property" Url="html/P_OpenZWave_ZWNotification_Code.htm" />
+  <HelpKINode Title="CommandClassId property" Url="html/P_OpenZWave_ZWValueId_CommandClassId.htm" />
+  <HelpKINode Title="Compile" Url="html/06913e91-c56b-46ad-94e6-f663945e448b.htm" />
+  <HelpKINode Title="Config enumeration member" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="ControllerCommand enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="CreateButton enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="CreateButton method" Url="html/M_OpenZWave_ZWManager_CreateButton.htm" />
+  <HelpKINode Title="CreateNewPrimary method" Url="html/M_OpenZWave_ZWManager_CreateNewPrimary.htm" />
+  <HelpKINode Title="CreateScene method" Url="html/M_OpenZWave_ZWManager_CreateScene.htm" />
+  <HelpKINode Title="Dead enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="Debug enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Decimal enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="DeleteAllReturnRoutes method" Url="html/M_OpenZWave_ZWManager_DeleteAllReturnRoutes.htm" />
+  <HelpKINode Title="DeleteButton enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="DeleteButton method" Url="html/M_OpenZWave_ZWManager_DeleteButton.htm" />
+  <HelpKINode Title="Destroy method">
+    <HelpKINode Title="ZWManager.Destroy Method " Url="html/M_OpenZWave_ZWManager_Destroy.htm" />
+    <HelpKINode Title="ZWOptions.Destroy Method " Url="html/M_OpenZWave_ZWOptions_Destroy.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Detail enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="DisablePoll method" Url="html/M_OpenZWave_ZWManager_DisablePoll.htm" />
+  <HelpKINode Title="DriverFailed enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="DriverReady enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="DriverRemoved enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="DriverReset enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="EnablePoll method" Url="html/Overload_OpenZWave_ZWManager_EnablePoll.htm" />
+  <HelpKINode Title="Error enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="EssentialNodeQueriesComplete enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="Event property" Url="html/P_OpenZWave_ZWNotification_Event.htm" />
+  <HelpKINode Title="Fatal enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Genre property" Url="html/P_OpenZWave_ZWValueId_Genre.htm" />
+  <HelpKINode Title="GetAllScenes method" Url="html/M_OpenZWave_ZWManager_GetAllScenes.htm" />
+  <HelpKINode Title="GetAssociations method" Url="html/M_OpenZWave_ZWManager_GetAssociations.htm" />
+  <HelpKINode Title="GetControllerInterfaceType method" Url="html/M_OpenZWave_ZWManager_GetControllerInterfaceType.htm" />
+  <HelpKINode Title="GetControllerNodeId method" Url="html/M_OpenZWave_ZWManager_GetControllerNodeId.htm" />
+  <HelpKINode Title="GetControllerPath method" Url="html/M_OpenZWave_ZWManager_GetControllerPath.htm" />
+  <HelpKINode Title="GetLibraryTypeName method" Url="html/M_OpenZWave_ZWManager_GetLibraryTypeName.htm" />
+  <HelpKINode Title="GetLibraryVersion method" Url="html/M_OpenZWave_ZWManager_GetLibraryVersion.htm" />
+  <HelpKINode Title="GetLoggingState method" Url="html/M_OpenZWave_ZWManager_GetLoggingState.htm" />
+  <HelpKINode Title="GetMaxAssociations method" Url="html/M_OpenZWave_ZWManager_GetMaxAssociations.htm" />
+  <HelpKINode Title="GetNodeBasic method" Url="html/M_OpenZWave_ZWManager_GetNodeBasic.htm" />
+  <HelpKINode Title="GetNodeClassInformation method" Url="html/M_OpenZWave_ZWManager_GetNodeClassInformation.htm" />
+  <HelpKINode Title="GetNodeGeneric method" Url="html/M_OpenZWave_ZWManager_GetNodeGeneric.htm" />
+  <HelpKINode Title="GetNodeLocation method" Url="html/M_OpenZWave_ZWManager_GetNodeLocation.htm" />
+  <HelpKINode Title="GetNodeManufacturerId method" Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerId.htm" />
+  <HelpKINode Title="GetNodeManufacturerName method" Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerName.htm" />
+  <HelpKINode Title="GetNodeMaxBaudRate method" Url="html/M_OpenZWave_ZWManager_GetNodeMaxBaudRate.htm" />
+  <HelpKINode Title="GetNodeName method" Url="html/M_OpenZWave_ZWManager_GetNodeName.htm" />
+  <HelpKINode Title="GetNodeNeighbors method" Url="html/M_OpenZWave_ZWManager_GetNodeNeighbors.htm" />
+  <HelpKINode Title="GetNodeProductId method" Url="html/M_OpenZWave_ZWManager_GetNodeProductId.htm" />
+  <HelpKINode Title="GetNodeProductName method" Url="html/M_OpenZWave_ZWManager_GetNodeProductName.htm" />
+  <HelpKINode Title="GetNodeProductType method" Url="html/M_OpenZWave_ZWManager_GetNodeProductType.htm" />
+  <HelpKINode Title="GetNodeQueryStage method" Url="html/M_OpenZWave_ZWManager_GetNodeQueryStage.htm" />
+  <HelpKINode Title="GetNodeSecurity method" Url="html/M_OpenZWave_ZWManager_GetNodeSecurity.htm" />
+  <HelpKINode Title="GetNodeSpecific method" Url="html/M_OpenZWave_ZWManager_GetNodeSpecific.htm" />
+  <HelpKINode Title="GetNodeType method" Url="html/M_OpenZWave_ZWManager_GetNodeType.htm" />
+  <HelpKINode Title="GetNodeVersion method" Url="html/M_OpenZWave_ZWManager_GetNodeVersion.htm" />
+  <HelpKINode Title="GetNumGroups method" Url="html/M_OpenZWave_ZWManager_GetNumGroups.htm" />
+  <HelpKINode Title="GetNumScenes method" Url="html/M_OpenZWave_ZWManager_GetNumScenes.htm" />
+  <HelpKINode Title="GetNumSwitchPoints method" Url="html/M_OpenZWave_ZWManager_GetNumSwitchPoints.htm" />
+  <HelpKINode Title="GetOptionAsBool method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsBool.htm" />
+  <HelpKINode Title="GetOptionAsInt method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsInt.htm" />
+  <HelpKINode Title="GetOptionAsString method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsString.htm" />
+  <HelpKINode Title="GetOptionType method" Url="html/M_OpenZWave_ZWOptions_GetOptionType.htm" />
+  <HelpKINode Title="GetPollIntensity method" Url="html/M_OpenZWave_ZWManager_GetPollIntensity.htm" />
+  <HelpKINode Title="GetPollInterval method" Url="html/M_OpenZWave_ZWManager_GetPollInterval.htm" />
+  <HelpKINode Title="GetSceneLabel method" Url="html/M_OpenZWave_ZWManager_GetSceneLabel.htm" />
+  <HelpKINode Title="GetSendQueueCount method" Url="html/M_OpenZWave_ZWManager_GetSendQueueCount.htm" />
+  <HelpKINode Title="GetSucNodeId method" Url="html/M_OpenZWave_ZWManager_GetSucNodeId.htm" />
+  <HelpKINode Title="GetSwitchPoint method" Url="html/M_OpenZWave_ZWManager_GetSwitchPoint.htm" />
+  <HelpKINode Title="GetValueAsBool method" Url="html/M_OpenZWave_ZWManager_GetValueAsBool.htm" />
+  <HelpKINode Title="GetValueAsByte method" Url="html/M_OpenZWave_ZWManager_GetValueAsByte.htm" />
+  <HelpKINode Title="GetValueAsInt method" Url="html/M_OpenZWave_ZWManager_GetValueAsInt.htm" />
+  <HelpKINode Title="GetValueAsShort method" Url="html/M_OpenZWave_ZWManager_GetValueAsShort.htm" />
+  <HelpKINode Title="GetValueAsString method" Url="html/M_OpenZWave_ZWManager_GetValueAsString.htm" />
+  <HelpKINode Title="GetValueHelp method" Url="html/M_OpenZWave_ZWManager_GetValueHelp.htm" />
+  <HelpKINode Title="GetValueLabel method" Url="html/M_OpenZWave_ZWManager_GetValueLabel.htm" />
+  <HelpKINode Title="GetValueListItems method" Url="html/M_OpenZWave_ZWManager_GetValueListItems.htm" />
+  <HelpKINode Title="GetValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_GetValueListSelection.htm" />
+  <HelpKINode Title="GetValueListValues method" Url="html/M_OpenZWave_ZWManager_GetValueListValues.htm" />
+  <HelpKINode Title="GetValueUnits method" Url="html/M_OpenZWave_ZWManager_GetValueUnits.htm" />
+  <HelpKINode Title="GetVersionAsString method" Url="html/M_OpenZWave_ZWManager_GetVersionAsString.htm" />
+  <HelpKINode Title="Group enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="GroupIndex property" Url="html/P_OpenZWave_ZWNotification_GroupIndex.htm" />
+  <HelpKINode Title="HasNodeFailed method" Url="html/M_OpenZWave_ZWManager_HasNodeFailed.htm" />
+  <HelpKINode Title="HealNetwork method" Url="html/M_OpenZWave_ZWManager_HealNetwork.htm" />
+  <HelpKINode Title="HealNetworkNode method" Url="html/M_OpenZWave_ZWManager_HealNetworkNode.htm" />
+  <HelpKINode Title="Hid enumeration member" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+  <HelpKINode Title="HomeId property">
+    <HelpKINode Title="ZWNotification.HomeId Property " Url="html/P_OpenZWave_ZWNotification_HomeId.htm" />
+    <HelpKINode Title="ZWValueId.HomeId Property " Url="html/P_OpenZWave_ZWValueId_HomeId.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Id property" Url="html/P_OpenZWave_ZWValueId_Id.htm" />
+  <HelpKINode Title="Index property" Url="html/P_OpenZWave_ZWValueId_Index.htm" />
+  <HelpKINode Title="Info enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Initialize method">
+    <HelpKINode Title="ZWManager.Initialize Method " Url="html/M_OpenZWave_ZWManager_Initialize.htm" />
+    <HelpKINode Title="ZWOptions.Initialize Method " Url="html/Overload_OpenZWave_ZWOptions_Initialize.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Instance property">
+    <HelpKINode Title="ZWManager.Instance Property " Url="html/P_OpenZWave_ZWManager_Instance.htm" />
+    <HelpKINode Title="ZWOptions.Instance Property " Url="html/P_OpenZWave_ZWOptions_Instance.htm" />
+    <HelpKINode Title="ZWValueId.Instance Property " Url="html/P_OpenZWave_ZWValueId_Instance.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Int enumeration member">
+    <HelpKINode Title="ZWOptionType Enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+    <HelpKINode Title="ZWValueType Enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Internal enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Invalid enumeration member" Url="html/T_OpenZWave_ZWOptionType.htm" />
+  <HelpKINode Title="IsBridgeController method" Url="html/M_OpenZWave_ZWManager_IsBridgeController.htm" />
+  <HelpKINode Title="IsNodeAwake method" Url="html/M_OpenZWave_ZWManager_IsNodeAwake.htm" />
+  <HelpKINode Title="IsNodeBeamingDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeBeamingDevice.htm" />
+  <HelpKINode Title="IsNodeFailed method" Url="html/M_OpenZWave_ZWManager_IsNodeFailed.htm" />
+  <HelpKINode Title="IsNodeFrequentListeningDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeFrequentListeningDevice.htm" />
+  <HelpKINode Title="IsNodeInfoReceived method" Url="html/M_OpenZWave_ZWManager_IsNodeInfoReceived.htm" />
+  <HelpKINode Title="IsNodeListeningDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeListeningDevice.htm" />
+  <HelpKINode Title="IsNodeRoutingDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeRoutingDevice.htm" />
+  <HelpKINode Title="IsNodeSecurityDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeSecurityDevice.htm" />
+  <HelpKINode Title="IsNodeZWavePlus method" Url="html/M_OpenZWave_ZWManager_IsNodeZWavePlus.htm" />
+  <HelpKINode Title="IsPolled method" Url="html/M_OpenZWave_ZWManager_IsPolled.htm" />
+  <HelpKINode Title="IsPrimaryController method" Url="html/M_OpenZWave_ZWManager_IsPrimaryController.htm" />
+  <HelpKINode Title="IsStaticUpdateController method" Url="html/M_OpenZWave_ZWManager_IsStaticUpdateController.htm" />
+  <HelpKINode Title="IsValuePolled method" Url="html/M_OpenZWave_ZWManager_IsValuePolled.htm" />
+  <HelpKINode Title="IsValueReadOnly method" Url="html/M_OpenZWave_ZWManager_IsValueReadOnly.htm" />
+  <HelpKINode Title="IsValueSet method" Url="html/M_OpenZWave_ZWManager_IsValueSet.htm" />
+  <HelpKINode Title="List enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="Lock method" Url="html/M_OpenZWave_ZWOptions_Lock.htm" />
+  <HelpKINode Title="LogDriverStatistics method" Url="html/M_OpenZWave_ZWManager_LogDriverStatistics.htm" />
+  <HelpKINode Title="ManufacturerSpecificDBReady enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="MsgComplete enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="NodeAdded enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeEvent enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeId property">
+    <HelpKINode Title="ZWNotification.NodeId Property " Url="html/P_OpenZWave_ZWNotification_NodeId.htm" />
+    <HelpKINode Title="ZWValueId.NodeId Property " Url="html/P_OpenZWave_ZWValueId_NodeId.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NodeNaming enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeNew enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeProtocolInfo enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeQueriesComplete enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeRemoved enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="NodeReset enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="None enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="NoOperation enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="Notification enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="Notification property" Url="html/P_OpenZWave_NotificationReceivedEventArgs_Notification.htm" />
+  <HelpKINode Title="NotificationReceived event" Url="html/E_OpenZWave_ZWManager_NotificationReceived.htm" />
+  <HelpKINode Title="NotificationReceivedEventArgs class">
+    <HelpKINode Title="NotificationReceivedEventArgs Class" Url="html/T_OpenZWave_NotificationReceivedEventArgs.htm" />
+    <HelpKINode Title="about NotificationReceivedEventArgs class" Url="html/T_OpenZWave_NotificationReceivedEventArgs.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_OpenZWave_NotificationReceivedEventArgs.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NotificationReceivedEventArgs.Notification property" Url="html/P_OpenZWave_NotificationReceivedEventArgs_Notification.htm" />
+  <HelpKINode Title="NotificationReceivedEventHandler delegate" Url="html/T_OpenZWave_NotificationReceivedEventHandler.htm" />
+  <HelpKINode Title="OpenZWave namespace" Url="html/N_OpenZWave.htm" />
+  <HelpKINode Title="OpenZWave.NotificationReceivedEventArgs class" Url="html/T_OpenZWave_NotificationReceivedEventArgs.htm" />
+  <HelpKINode Title="OpenZWave.NotificationReceivedEventHandler delegate" Url="html/T_OpenZWave_NotificationReceivedEventHandler.htm" />
+  <HelpKINode Title="OpenZWave.ZWControllerInterface enumeration" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+  <HelpKINode Title="OpenZWave.ZWLogLevel enumeration" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="OpenZWave.ZWManager class" Url="html/T_OpenZWave_ZWManager.htm" />
+  <HelpKINode Title="OpenZWave.ZWNotification class" Url="html/T_OpenZWave_ZWNotification.htm" />
+  <HelpKINode Title="OpenZWave.ZWNotificationCode enumeration" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="OpenZWave.ZWNotificationType enumeration" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="OpenZWave.ZWOptions class" Url="html/T_OpenZWave_ZWOptions.htm" />
+  <HelpKINode Title="OpenZWave.ZWOptionType enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+  <HelpKINode Title="OpenZWave.ZWValueGenre enumeration" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="OpenZWave.ZWValueId class" Url="html/T_OpenZWave_ZWValueId.htm" />
+  <HelpKINode Title="OpenZWave.ZWValueType enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="PollingDisabled enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="PollingEnabled enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="PressButton method" Url="html/M_OpenZWave_ZWManager_PressButton.htm" />
+  <HelpKINode Title="Raw enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="ReceiveConfiguration method" Url="html/M_OpenZWave_ZWManager_ReceiveConfiguration.htm" />
+  <HelpKINode Title="RefreshNodeInfo method" Url="html/M_OpenZWave_ZWManager_RefreshNodeInfo.htm" />
+  <HelpKINode Title="RefreshValue method" Url="html/M_OpenZWave_ZWManager_RefreshValue.htm" />
+  <HelpKINode Title="ReleaseButton method" Url="html/M_OpenZWave_ZWManager_ReleaseButton.htm" />
+  <HelpKINode Title="RemoveAssociation method" Url="html/M_OpenZWave_ZWManager_RemoveAssociation.htm" />
+  <HelpKINode Title="RemoveDriver method" Url="html/M_OpenZWave_ZWManager_RemoveDriver.htm" />
+  <HelpKINode Title="RemoveFailedNode method" Url="html/M_OpenZWave_ZWManager_RemoveFailedNode.htm" />
+  <HelpKINode Title="RemoveNode method" Url="html/M_OpenZWave_ZWManager_RemoveNode.htm" />
+  <HelpKINode Title="RemoveScene method" Url="html/M_OpenZWave_ZWManager_RemoveScene.htm" />
+  <HelpKINode Title="RemoveSceneValue method" Url="html/M_OpenZWave_ZWManager_RemoveSceneValue.htm" />
+  <HelpKINode Title="RemoveSwitchPoint method" Url="html/M_OpenZWave_ZWManager_RemoveSwitchPoint.htm" />
+  <HelpKINode Title="ReplaceFailedNode method" Url="html/M_OpenZWave_ZWManager_ReplaceFailedNode.htm" />
+  <HelpKINode Title="ReplicationSend method" Url="html/M_OpenZWave_ZWManager_ReplicationSend.htm" />
+  <HelpKINode Title="RequestAllConfigParams method" Url="html/M_OpenZWave_ZWManager_RequestAllConfigParams.htm" />
+  <HelpKINode Title="RequestConfigParam method" Url="html/M_OpenZWave_ZWManager_RequestConfigParam.htm" />
+  <HelpKINode Title="RequestNetworkUpdate method" Url="html/M_OpenZWave_ZWManager_RequestNetworkUpdate.htm" />
+  <HelpKINode Title="RequestNodeDynamic method" Url="html/M_OpenZWave_ZWManager_RequestNodeDynamic.htm" />
+  <HelpKINode Title="RequestNodeNeighborUpdate method" Url="html/M_OpenZWave_ZWManager_RequestNodeNeighborUpdate.htm" />
+  <HelpKINode Title="RequestNodeState method" Url="html/M_OpenZWave_ZWManager_RequestNodeState.htm" />
+  <HelpKINode Title="ResetController method" Url="html/M_OpenZWave_ZWManager_ResetController.htm" />
+  <HelpKINode Title="SceneEvent enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="SceneExists method" Url="html/M_OpenZWave_ZWManager_SceneExists.htm" />
+  <HelpKINode Title="SceneGetValueAsBool method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsBool.htm" />
+  <HelpKINode Title="SceneGetValueAsByte method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsByte.htm" />
+  <HelpKINode Title="SceneGetValueAsInt method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsInt.htm" />
+  <HelpKINode Title="SceneGetValueAsShort method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsShort.htm" />
+  <HelpKINode Title="SceneGetValueAsString method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsString.htm" />
+  <HelpKINode Title="SceneGetValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_SceneGetValueListSelection.htm" />
+  <HelpKINode Title="SceneGetValues method" Url="html/M_OpenZWave_ZWManager_SceneGetValues.htm" />
+  <HelpKINode Title="Schedule enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="SendNodeInformation method" Url="html/M_OpenZWave_ZWManager_SendNodeInformation.htm" />
+  <HelpKINode Title="Serial enumeration member" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+  <HelpKINode Title="SetChangeVerified method" Url="html/M_OpenZWave_ZWManager_SetChangeVerified.htm" />
+  <HelpKINode Title="SetConfigParam method" Url="html/M_OpenZWave_ZWManager_SetConfigParam.htm" />
+  <HelpKINode Title="SetLogFileName method" Url="html/M_OpenZWave_ZWManager_SetLogFileName.htm" />
+  <HelpKINode Title="SetLoggingState method" Url="html/M_OpenZWave_ZWManager_SetLoggingState.htm" />
+  <HelpKINode Title="SetNodeLocation method" Url="html/M_OpenZWave_ZWManager_SetNodeLocation.htm" />
+  <HelpKINode Title="SetNodeManufacturerName method" Url="html/M_OpenZWave_ZWManager_SetNodeManufacturerName.htm" />
+  <HelpKINode Title="SetNodeName method" Url="html/M_OpenZWave_ZWManager_SetNodeName.htm" />
+  <HelpKINode Title="SetNodeProductName method" Url="html/M_OpenZWave_ZWManager_SetNodeProductName.htm" />
+  <HelpKINode Title="SetPollIntensity method" Url="html/M_OpenZWave_ZWManager_SetPollIntensity.htm" />
+  <HelpKINode Title="SetPollInterval method" Url="html/M_OpenZWave_ZWManager_SetPollInterval.htm" />
+  <HelpKINode Title="SetSceneLabel method" Url="html/M_OpenZWave_ZWManager_SetSceneLabel.htm" />
+  <HelpKINode Title="SetSceneValue method" Url="html/Overload_OpenZWave_ZWManager_SetSceneValue.htm" />
+  <HelpKINode Title="SetSceneValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_SetSceneValueListSelection.htm" />
+  <HelpKINode Title="SetSwitchPoint method" Url="html/M_OpenZWave_ZWManager_SetSwitchPoint.htm" />
+  <HelpKINode Title="SetValue method" Url="html/Overload_OpenZWave_ZWManager_SetValue.htm" />
+  <HelpKINode Title="SetValueLabel method" Url="html/M_OpenZWave_ZWManager_SetValueLabel.htm" />
+  <HelpKINode Title="SetValueListSelection method" Url="html/M_OpenZWave_ZWManager_SetValueListSelection.htm" />
+  <HelpKINode Title="Short enumeration member" Url="html/T_OpenZWave_ZWValueType.htm" />
+  <HelpKINode Title="Sleep enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="SoftReset method" Url="html/M_OpenZWave_ZWManager_SoftReset.htm" />
+  <HelpKINode Title="StreamDetail enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="String enumeration member">
+    <HelpKINode Title="ZWOptionType Enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+    <HelpKINode Title="ZWValueType Enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SwitchAllOff method" Url="html/M_OpenZWave_ZWManager_SwitchAllOff.htm" />
+  <HelpKINode Title="SwitchAllOn method" Url="html/M_OpenZWave_ZWManager_SwitchAllOn.htm" />
+  <HelpKINode Title="System enumeration member" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="TestNetwork method" Url="html/M_OpenZWave_ZWManager_TestNetwork.htm" />
+  <HelpKINode Title="TestNetworkNode method" Url="html/M_OpenZWave_ZWManager_TestNetworkNode.htm" />
+  <HelpKINode Title="Timeout enumeration member" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="TransferPrimaryRole method" Url="html/M_OpenZWave_ZWManager_TransferPrimaryRole.htm" />
+  <HelpKINode Title="Type property">
+    <HelpKINode Title="ZWNotification.Type Property " Url="html/P_OpenZWave_ZWNotification_Type.htm" />
+    <HelpKINode Title="ZWValueId.Type Property " Url="html/P_OpenZWave_ZWValueId_Type.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Unknown enumeration member" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+  <HelpKINode Title="User enumeration member" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="UserAlerts enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ValueAdded enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ValueChanged enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ValueId property" Url="html/P_OpenZWave_ZWNotification_ValueId.htm" />
+  <HelpKINode Title="ValueRefreshed enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ValueRemoved enumeration member" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="version">
+    <HelpKINode Title="2.0.0-beta2" Url="html/64493062-7213-4a2b-ae0d-ba4f9aad38a4.htm" />
+    <HelpKINode Title="history" Url="html/e332b1e2-b3c4-4ab0-bcda-53cf9e70663b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Warning enumeration member" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="Welcome" Url="html/c2cfd9ac-b827-4020-b867-470ba91e24c1.htm" />
+  <HelpKINode Title="WriteConfig method" Url="html/M_OpenZWave_ZWManager_WriteConfig.htm" />
+  <HelpKINode Title="ZWControllerInterface enumeration" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+  <HelpKINode Title="ZWLogLevel enumeration" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+  <HelpKINode Title="ZWManager class">
+    <HelpKINode Title="ZWManager Class" Url="html/T_OpenZWave_ZWManager.htm" />
+    <HelpKINode Title="about ZWManager class" Url="html/T_OpenZWave_ZWManager.htm" />
+    <HelpKINode Title="events" Url="html/Events_T_OpenZWave_ZWManager.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_OpenZWave_ZWManager.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_OpenZWave_ZWManager.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ZWManager.ActivateScene method" Url="html/M_OpenZWave_ZWManager_ActivateScene.htm" />
+  <HelpKINode Title="ZWManager.AddAssociation method" Url="html/M_OpenZWave_ZWManager_AddAssociation.htm" />
+  <HelpKINode Title="ZWManager.AddDriver method" Url="html/Overload_OpenZWave_ZWManager_AddDriver.htm" />
+  <HelpKINode Title="ZWManager.AddNode method" Url="html/M_OpenZWave_ZWManager_AddNode.htm" />
+  <HelpKINode Title="ZWManager.AddSceneValue method" Url="html/Overload_OpenZWave_ZWManager_AddSceneValue.htm" />
+  <HelpKINode Title="ZWManager.AddSceneValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_AddSceneValueListSelection.htm" />
+  <HelpKINode Title="ZWManager.AssignReturnRoute method" Url="html/M_OpenZWave_ZWManager_AssignReturnRoute.htm" />
+  <HelpKINode Title="ZWManager.CancelControllerCommand method" Url="html/M_OpenZWave_ZWManager_CancelControllerCommand.htm" />
+  <HelpKINode Title="ZWManager.ClearSwitchPoints method" Url="html/M_OpenZWave_ZWManager_ClearSwitchPoints.htm" />
+  <HelpKINode Title="ZWManager.CreateButton method" Url="html/M_OpenZWave_ZWManager_CreateButton.htm" />
+  <HelpKINode Title="ZWManager.CreateNewPrimary method" Url="html/M_OpenZWave_ZWManager_CreateNewPrimary.htm" />
+  <HelpKINode Title="ZWManager.CreateScene method" Url="html/M_OpenZWave_ZWManager_CreateScene.htm" />
+  <HelpKINode Title="ZWManager.DeleteAllReturnRoutes method" Url="html/M_OpenZWave_ZWManager_DeleteAllReturnRoutes.htm" />
+  <HelpKINode Title="ZWManager.DeleteButton method" Url="html/M_OpenZWave_ZWManager_DeleteButton.htm" />
+  <HelpKINode Title="ZWManager.Destroy method" Url="html/M_OpenZWave_ZWManager_Destroy.htm" />
+  <HelpKINode Title="ZWManager.DisablePoll method" Url="html/M_OpenZWave_ZWManager_DisablePoll.htm" />
+  <HelpKINode Title="ZWManager.EnablePoll method" Url="html/Overload_OpenZWave_ZWManager_EnablePoll.htm" />
+  <HelpKINode Title="ZWManager.GetAllScenes method" Url="html/M_OpenZWave_ZWManager_GetAllScenes.htm" />
+  <HelpKINode Title="ZWManager.GetAssociations method" Url="html/M_OpenZWave_ZWManager_GetAssociations.htm" />
+  <HelpKINode Title="ZWManager.GetControllerInterfaceType method" Url="html/M_OpenZWave_ZWManager_GetControllerInterfaceType.htm" />
+  <HelpKINode Title="ZWManager.GetControllerNodeId method" Url="html/M_OpenZWave_ZWManager_GetControllerNodeId.htm" />
+  <HelpKINode Title="ZWManager.GetControllerPath method" Url="html/M_OpenZWave_ZWManager_GetControllerPath.htm" />
+  <HelpKINode Title="ZWManager.GetLibraryTypeName method" Url="html/M_OpenZWave_ZWManager_GetLibraryTypeName.htm" />
+  <HelpKINode Title="ZWManager.GetLibraryVersion method" Url="html/M_OpenZWave_ZWManager_GetLibraryVersion.htm" />
+  <HelpKINode Title="ZWManager.GetLoggingState method" Url="html/M_OpenZWave_ZWManager_GetLoggingState.htm" />
+  <HelpKINode Title="ZWManager.GetMaxAssociations method" Url="html/M_OpenZWave_ZWManager_GetMaxAssociations.htm" />
+  <HelpKINode Title="ZWManager.GetNodeBasic method" Url="html/M_OpenZWave_ZWManager_GetNodeBasic.htm" />
+  <HelpKINode Title="ZWManager.GetNodeClassInformation method" Url="html/M_OpenZWave_ZWManager_GetNodeClassInformation.htm" />
+  <HelpKINode Title="ZWManager.GetNodeGeneric method" Url="html/M_OpenZWave_ZWManager_GetNodeGeneric.htm" />
+  <HelpKINode Title="ZWManager.GetNodeLocation method" Url="html/M_OpenZWave_ZWManager_GetNodeLocation.htm" />
+  <HelpKINode Title="ZWManager.GetNodeManufacturerId method" Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerId.htm" />
+  <HelpKINode Title="ZWManager.GetNodeManufacturerName method" Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerName.htm" />
+  <HelpKINode Title="ZWManager.GetNodeMaxBaudRate method" Url="html/M_OpenZWave_ZWManager_GetNodeMaxBaudRate.htm" />
+  <HelpKINode Title="ZWManager.GetNodeName method" Url="html/M_OpenZWave_ZWManager_GetNodeName.htm" />
+  <HelpKINode Title="ZWManager.GetNodeNeighbors method" Url="html/M_OpenZWave_ZWManager_GetNodeNeighbors.htm" />
+  <HelpKINode Title="ZWManager.GetNodeProductId method" Url="html/M_OpenZWave_ZWManager_GetNodeProductId.htm" />
+  <HelpKINode Title="ZWManager.GetNodeProductName method" Url="html/M_OpenZWave_ZWManager_GetNodeProductName.htm" />
+  <HelpKINode Title="ZWManager.GetNodeProductType method" Url="html/M_OpenZWave_ZWManager_GetNodeProductType.htm" />
+  <HelpKINode Title="ZWManager.GetNodeQueryStage method" Url="html/M_OpenZWave_ZWManager_GetNodeQueryStage.htm" />
+  <HelpKINode Title="ZWManager.GetNodeSecurity method" Url="html/M_OpenZWave_ZWManager_GetNodeSecurity.htm" />
+  <HelpKINode Title="ZWManager.GetNodeSpecific method" Url="html/M_OpenZWave_ZWManager_GetNodeSpecific.htm" />
+  <HelpKINode Title="ZWManager.GetNodeType method" Url="html/M_OpenZWave_ZWManager_GetNodeType.htm" />
+  <HelpKINode Title="ZWManager.GetNodeVersion method" Url="html/M_OpenZWave_ZWManager_GetNodeVersion.htm" />
+  <HelpKINode Title="ZWManager.GetNumGroups method" Url="html/M_OpenZWave_ZWManager_GetNumGroups.htm" />
+  <HelpKINode Title="ZWManager.GetNumScenes method" Url="html/M_OpenZWave_ZWManager_GetNumScenes.htm" />
+  <HelpKINode Title="ZWManager.GetNumSwitchPoints method" Url="html/M_OpenZWave_ZWManager_GetNumSwitchPoints.htm" />
+  <HelpKINode Title="ZWManager.GetPollIntensity method" Url="html/M_OpenZWave_ZWManager_GetPollIntensity.htm" />
+  <HelpKINode Title="ZWManager.GetPollInterval method" Url="html/M_OpenZWave_ZWManager_GetPollInterval.htm" />
+  <HelpKINode Title="ZWManager.GetSceneLabel method" Url="html/M_OpenZWave_ZWManager_GetSceneLabel.htm" />
+  <HelpKINode Title="ZWManager.GetSendQueueCount method" Url="html/M_OpenZWave_ZWManager_GetSendQueueCount.htm" />
+  <HelpKINode Title="ZWManager.GetSucNodeId method" Url="html/M_OpenZWave_ZWManager_GetSucNodeId.htm" />
+  <HelpKINode Title="ZWManager.GetSwitchPoint method" Url="html/M_OpenZWave_ZWManager_GetSwitchPoint.htm" />
+  <HelpKINode Title="ZWManager.GetValueAsBool method" Url="html/M_OpenZWave_ZWManager_GetValueAsBool.htm" />
+  <HelpKINode Title="ZWManager.GetValueAsByte method" Url="html/M_OpenZWave_ZWManager_GetValueAsByte.htm" />
+  <HelpKINode Title="ZWManager.GetValueAsInt method" Url="html/M_OpenZWave_ZWManager_GetValueAsInt.htm" />
+  <HelpKINode Title="ZWManager.GetValueAsShort method" Url="html/M_OpenZWave_ZWManager_GetValueAsShort.htm" />
+  <HelpKINode Title="ZWManager.GetValueAsString method" Url="html/M_OpenZWave_ZWManager_GetValueAsString.htm" />
+  <HelpKINode Title="ZWManager.GetValueHelp method" Url="html/M_OpenZWave_ZWManager_GetValueHelp.htm" />
+  <HelpKINode Title="ZWManager.GetValueLabel method" Url="html/M_OpenZWave_ZWManager_GetValueLabel.htm" />
+  <HelpKINode Title="ZWManager.GetValueListItems method" Url="html/M_OpenZWave_ZWManager_GetValueListItems.htm" />
+  <HelpKINode Title="ZWManager.GetValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_GetValueListSelection.htm" />
+  <HelpKINode Title="ZWManager.GetValueListValues method" Url="html/M_OpenZWave_ZWManager_GetValueListValues.htm" />
+  <HelpKINode Title="ZWManager.GetValueUnits method" Url="html/M_OpenZWave_ZWManager_GetValueUnits.htm" />
+  <HelpKINode Title="ZWManager.GetVersionAsString method" Url="html/M_OpenZWave_ZWManager_GetVersionAsString.htm" />
+  <HelpKINode Title="ZWManager.HasNodeFailed method" Url="html/M_OpenZWave_ZWManager_HasNodeFailed.htm" />
+  <HelpKINode Title="ZWManager.HealNetwork method" Url="html/M_OpenZWave_ZWManager_HealNetwork.htm" />
+  <HelpKINode Title="ZWManager.HealNetworkNode method" Url="html/M_OpenZWave_ZWManager_HealNetworkNode.htm" />
+  <HelpKINode Title="ZWManager.Initialize method" Url="html/M_OpenZWave_ZWManager_Initialize.htm" />
+  <HelpKINode Title="ZWManager.Instance property" Url="html/P_OpenZWave_ZWManager_Instance.htm" />
+  <HelpKINode Title="ZWManager.IsBridgeController method" Url="html/M_OpenZWave_ZWManager_IsBridgeController.htm" />
+  <HelpKINode Title="ZWManager.IsNodeAwake method" Url="html/M_OpenZWave_ZWManager_IsNodeAwake.htm" />
+  <HelpKINode Title="ZWManager.IsNodeBeamingDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeBeamingDevice.htm" />
+  <HelpKINode Title="ZWManager.IsNodeFailed method" Url="html/M_OpenZWave_ZWManager_IsNodeFailed.htm" />
+  <HelpKINode Title="ZWManager.IsNodeFrequentListeningDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeFrequentListeningDevice.htm" />
+  <HelpKINode Title="ZWManager.IsNodeInfoReceived method" Url="html/M_OpenZWave_ZWManager_IsNodeInfoReceived.htm" />
+  <HelpKINode Title="ZWManager.IsNodeListeningDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeListeningDevice.htm" />
+  <HelpKINode Title="ZWManager.IsNodeRoutingDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeRoutingDevice.htm" />
+  <HelpKINode Title="ZWManager.IsNodeSecurityDevice method" Url="html/M_OpenZWave_ZWManager_IsNodeSecurityDevice.htm" />
+  <HelpKINode Title="ZWManager.IsNodeZWavePlus method" Url="html/M_OpenZWave_ZWManager_IsNodeZWavePlus.htm" />
+  <HelpKINode Title="ZWManager.IsPolled method" Url="html/M_OpenZWave_ZWManager_IsPolled.htm" />
+  <HelpKINode Title="ZWManager.IsPrimaryController method" Url="html/M_OpenZWave_ZWManager_IsPrimaryController.htm" />
+  <HelpKINode Title="ZWManager.IsStaticUpdateController method" Url="html/M_OpenZWave_ZWManager_IsStaticUpdateController.htm" />
+  <HelpKINode Title="ZWManager.IsValuePolled method" Url="html/M_OpenZWave_ZWManager_IsValuePolled.htm" />
+  <HelpKINode Title="ZWManager.IsValueReadOnly method" Url="html/M_OpenZWave_ZWManager_IsValueReadOnly.htm" />
+  <HelpKINode Title="ZWManager.IsValueSet method" Url="html/M_OpenZWave_ZWManager_IsValueSet.htm" />
+  <HelpKINode Title="ZWManager.LogDriverStatistics method" Url="html/M_OpenZWave_ZWManager_LogDriverStatistics.htm" />
+  <HelpKINode Title="ZWManager.NotificationReceived event" Url="html/E_OpenZWave_ZWManager_NotificationReceived.htm" />
+  <HelpKINode Title="ZWManager.PressButton method" Url="html/M_OpenZWave_ZWManager_PressButton.htm" />
+  <HelpKINode Title="ZWManager.ReceiveConfiguration method" Url="html/M_OpenZWave_ZWManager_ReceiveConfiguration.htm" />
+  <HelpKINode Title="ZWManager.RefreshNodeInfo method" Url="html/M_OpenZWave_ZWManager_RefreshNodeInfo.htm" />
+  <HelpKINode Title="ZWManager.RefreshValue method" Url="html/M_OpenZWave_ZWManager_RefreshValue.htm" />
+  <HelpKINode Title="ZWManager.ReleaseButton method" Url="html/M_OpenZWave_ZWManager_ReleaseButton.htm" />
+  <HelpKINode Title="ZWManager.RemoveAssociation method" Url="html/M_OpenZWave_ZWManager_RemoveAssociation.htm" />
+  <HelpKINode Title="ZWManager.RemoveDriver method" Url="html/M_OpenZWave_ZWManager_RemoveDriver.htm" />
+  <HelpKINode Title="ZWManager.RemoveFailedNode method" Url="html/M_OpenZWave_ZWManager_RemoveFailedNode.htm" />
+  <HelpKINode Title="ZWManager.RemoveNode method" Url="html/M_OpenZWave_ZWManager_RemoveNode.htm" />
+  <HelpKINode Title="ZWManager.RemoveScene method" Url="html/M_OpenZWave_ZWManager_RemoveScene.htm" />
+  <HelpKINode Title="ZWManager.RemoveSceneValue method" Url="html/M_OpenZWave_ZWManager_RemoveSceneValue.htm" />
+  <HelpKINode Title="ZWManager.RemoveSwitchPoint method" Url="html/M_OpenZWave_ZWManager_RemoveSwitchPoint.htm" />
+  <HelpKINode Title="ZWManager.ReplaceFailedNode method" Url="html/M_OpenZWave_ZWManager_ReplaceFailedNode.htm" />
+  <HelpKINode Title="ZWManager.ReplicationSend method" Url="html/M_OpenZWave_ZWManager_ReplicationSend.htm" />
+  <HelpKINode Title="ZWManager.RequestAllConfigParams method" Url="html/M_OpenZWave_ZWManager_RequestAllConfigParams.htm" />
+  <HelpKINode Title="ZWManager.RequestConfigParam method" Url="html/M_OpenZWave_ZWManager_RequestConfigParam.htm" />
+  <HelpKINode Title="ZWManager.RequestNetworkUpdate method" Url="html/M_OpenZWave_ZWManager_RequestNetworkUpdate.htm" />
+  <HelpKINode Title="ZWManager.RequestNodeDynamic method" Url="html/M_OpenZWave_ZWManager_RequestNodeDynamic.htm" />
+  <HelpKINode Title="ZWManager.RequestNodeNeighborUpdate method" Url="html/M_OpenZWave_ZWManager_RequestNodeNeighborUpdate.htm" />
+  <HelpKINode Title="ZWManager.RequestNodeState method" Url="html/M_OpenZWave_ZWManager_RequestNodeState.htm" />
+  <HelpKINode Title="ZWManager.ResetController method" Url="html/M_OpenZWave_ZWManager_ResetController.htm" />
+  <HelpKINode Title="ZWManager.SceneExists method" Url="html/M_OpenZWave_ZWManager_SceneExists.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueAsBool method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsBool.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueAsByte method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsByte.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueAsInt method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsInt.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueAsShort method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsShort.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueAsString method" Url="html/M_OpenZWave_ZWManager_SceneGetValueAsString.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_SceneGetValueListSelection.htm" />
+  <HelpKINode Title="ZWManager.SceneGetValues method" Url="html/M_OpenZWave_ZWManager_SceneGetValues.htm" />
+  <HelpKINode Title="ZWManager.SendNodeInformation method" Url="html/M_OpenZWave_ZWManager_SendNodeInformation.htm" />
+  <HelpKINode Title="ZWManager.SetChangeVerified method" Url="html/M_OpenZWave_ZWManager_SetChangeVerified.htm" />
+  <HelpKINode Title="ZWManager.SetConfigParam method" Url="html/M_OpenZWave_ZWManager_SetConfigParam.htm" />
+  <HelpKINode Title="ZWManager.SetLogFileName method" Url="html/M_OpenZWave_ZWManager_SetLogFileName.htm" />
+  <HelpKINode Title="ZWManager.SetLoggingState method" Url="html/M_OpenZWave_ZWManager_SetLoggingState.htm" />
+  <HelpKINode Title="ZWManager.SetNodeLocation method" Url="html/M_OpenZWave_ZWManager_SetNodeLocation.htm" />
+  <HelpKINode Title="ZWManager.SetNodeManufacturerName method" Url="html/M_OpenZWave_ZWManager_SetNodeManufacturerName.htm" />
+  <HelpKINode Title="ZWManager.SetNodeName method" Url="html/M_OpenZWave_ZWManager_SetNodeName.htm" />
+  <HelpKINode Title="ZWManager.SetNodeProductName method" Url="html/M_OpenZWave_ZWManager_SetNodeProductName.htm" />
+  <HelpKINode Title="ZWManager.SetPollIntensity method" Url="html/M_OpenZWave_ZWManager_SetPollIntensity.htm" />
+  <HelpKINode Title="ZWManager.SetPollInterval method" Url="html/M_OpenZWave_ZWManager_SetPollInterval.htm" />
+  <HelpKINode Title="ZWManager.SetSceneLabel method" Url="html/M_OpenZWave_ZWManager_SetSceneLabel.htm" />
+  <HelpKINode Title="ZWManager.SetSceneValue method" Url="html/Overload_OpenZWave_ZWManager_SetSceneValue.htm" />
+  <HelpKINode Title="ZWManager.SetSceneValueListSelection method" Url="html/Overload_OpenZWave_ZWManager_SetSceneValueListSelection.htm" />
+  <HelpKINode Title="ZWManager.SetSwitchPoint method" Url="html/M_OpenZWave_ZWManager_SetSwitchPoint.htm" />
+  <HelpKINode Title="ZWManager.SetValue method" Url="html/Overload_OpenZWave_ZWManager_SetValue.htm" />
+  <HelpKINode Title="ZWManager.SetValueLabel method" Url="html/M_OpenZWave_ZWManager_SetValueLabel.htm" />
+  <HelpKINode Title="ZWManager.SetValueListSelection method" Url="html/M_OpenZWave_ZWManager_SetValueListSelection.htm" />
+  <HelpKINode Title="ZWManager.SoftReset method" Url="html/M_OpenZWave_ZWManager_SoftReset.htm" />
+  <HelpKINode Title="ZWManager.SwitchAllOff method" Url="html/M_OpenZWave_ZWManager_SwitchAllOff.htm" />
+  <HelpKINode Title="ZWManager.SwitchAllOn method" Url="html/M_OpenZWave_ZWManager_SwitchAllOn.htm" />
+  <HelpKINode Title="ZWManager.TestNetwork method" Url="html/M_OpenZWave_ZWManager_TestNetwork.htm" />
+  <HelpKINode Title="ZWManager.TestNetworkNode method" Url="html/M_OpenZWave_ZWManager_TestNetworkNode.htm" />
+  <HelpKINode Title="ZWManager.TransferPrimaryRole method" Url="html/M_OpenZWave_ZWManager_TransferPrimaryRole.htm" />
+  <HelpKINode Title="ZWManager.WriteConfig method" Url="html/M_OpenZWave_ZWManager_WriteConfig.htm" />
+  <HelpKINode Title="ZWNotification class">
+    <HelpKINode Title="ZWNotification Class" Url="html/T_OpenZWave_ZWNotification.htm" />
+    <HelpKINode Title="about ZWNotification class" Url="html/T_OpenZWave_ZWNotification.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_OpenZWave_ZWNotification.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ZWNotification.Code property" Url="html/P_OpenZWave_ZWNotification_Code.htm" />
+  <HelpKINode Title="ZWNotification.Event property" Url="html/P_OpenZWave_ZWNotification_Event.htm" />
+  <HelpKINode Title="ZWNotification.GroupIndex property" Url="html/P_OpenZWave_ZWNotification_GroupIndex.htm" />
+  <HelpKINode Title="ZWNotification.HomeId property" Url="html/P_OpenZWave_ZWNotification_HomeId.htm" />
+  <HelpKINode Title="ZWNotification.NodeId property" Url="html/P_OpenZWave_ZWNotification_NodeId.htm" />
+  <HelpKINode Title="ZWNotification.Type property" Url="html/P_OpenZWave_ZWNotification_Type.htm" />
+  <HelpKINode Title="ZWNotification.ValueId property" Url="html/P_OpenZWave_ZWNotification_ValueId.htm" />
+  <HelpKINode Title="ZWNotificationCode enumeration" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+  <HelpKINode Title="ZWNotificationType enumeration" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+  <HelpKINode Title="ZWOptions class">
+    <HelpKINode Title="ZWOptions Class" Url="html/T_OpenZWave_ZWOptions.htm" />
+    <HelpKINode Title="about ZWOptions class" Url="html/T_OpenZWave_ZWOptions.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_OpenZWave_ZWOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_OpenZWave_ZWOptions.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ZWOptions.AddOptionBool method" Url="html/M_OpenZWave_ZWOptions_AddOptionBool.htm" />
+  <HelpKINode Title="ZWOptions.AddOptionInt method" Url="html/M_OpenZWave_ZWOptions_AddOptionInt.htm" />
+  <HelpKINode Title="ZWOptions.AddOptionString method" Url="html/M_OpenZWave_ZWOptions_AddOptionString.htm" />
+  <HelpKINode Title="ZWOptions.AreLocked property" Url="html/P_OpenZWave_ZWOptions_AreLocked.htm" />
+  <HelpKINode Title="ZWOptions.Destroy method" Url="html/M_OpenZWave_ZWOptions_Destroy.htm" />
+  <HelpKINode Title="ZWOptions.GetOptionAsBool method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsBool.htm" />
+  <HelpKINode Title="ZWOptions.GetOptionAsInt method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsInt.htm" />
+  <HelpKINode Title="ZWOptions.GetOptionAsString method" Url="html/M_OpenZWave_ZWOptions_GetOptionAsString.htm" />
+  <HelpKINode Title="ZWOptions.GetOptionType method" Url="html/M_OpenZWave_ZWOptions_GetOptionType.htm" />
+  <HelpKINode Title="ZWOptions.Initialize method" Url="html/Overload_OpenZWave_ZWOptions_Initialize.htm" />
+  <HelpKINode Title="ZWOptions.Instance property" Url="html/P_OpenZWave_ZWOptions_Instance.htm" />
+  <HelpKINode Title="ZWOptions.Lock method" Url="html/M_OpenZWave_ZWOptions_Lock.htm" />
+  <HelpKINode Title="ZWOptionType enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+  <HelpKINode Title="ZWValueGenre enumeration" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+  <HelpKINode Title="ZWValueId class">
+    <HelpKINode Title="ZWValueId Class" Url="html/T_OpenZWave_ZWValueId.htm" />
+    <HelpKINode Title="about ZWValueId class" Url="html/T_OpenZWave_ZWValueId.htm" />
+    <HelpKINode Title="constructor" Url="html/M_OpenZWave_ZWValueId__ctor.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_OpenZWave_ZWValueId.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ZWValueId.CommandClassId property" Url="html/P_OpenZWave_ZWValueId_CommandClassId.htm" />
+  <HelpKINode Title="ZWValueId.Genre property" Url="html/P_OpenZWave_ZWValueId_Genre.htm" />
+  <HelpKINode Title="ZWValueId.HomeId property" Url="html/P_OpenZWave_ZWValueId_HomeId.htm" />
+  <HelpKINode Title="ZWValueId.Id property" Url="html/P_OpenZWave_ZWValueId_Id.htm" />
+  <HelpKINode Title="ZWValueId.Index property" Url="html/P_OpenZWave_ZWValueId_Index.htm" />
+  <HelpKINode Title="ZWValueId.Instance property" Url="html/P_OpenZWave_ZWValueId_Instance.htm" />
+  <HelpKINode Title="ZWValueId.NodeId property" Url="html/P_OpenZWave_ZWValueId_NodeId.htm" />
+  <HelpKINode Title="ZWValueId.Type property" Url="html/P_OpenZWave_ZWValueId_Type.htm" />
+  <HelpKINode Title="ZWValueId.ZWValueId constructor" Url="html/M_OpenZWave_ZWValueId__ctor.htm" />
+  <HelpKINode Title="ZWValueType enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+</HelpKI>

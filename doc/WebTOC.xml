@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpTOC>
+
+  <HelpTOCNode Title="Welcome to the OpenZWave for .NET and Windows Universal" Url="html/c2cfd9ac-b827-4020-b867-470ba91e24c1.htm" />
+  <HelpTOCNode Title="CompilingOpenZWave" Url="html/06913e91-c56b-46ad-94e6-f663945e448b.htm" />
+  <HelpTOCNode Id="b919ba67-4ff8-40f2-bf7a-fe10bf3e0b6d" Title="Version History" Url="html/e332b1e2-b3c4-4ab0-bcda-53cf9e70663b.htm">
+    <HelpTOCNode Title="Version 2.0.0-beta2" Url="html/64493062-7213-4a2b-ae0d-ba4f9aad38a4.htm" />
+  </HelpTOCNode>
+  <HelpTOCNode Id="393b73a3-b761-4a85-96c5-560e338e2f67" Title="OpenZWave" Url="html/N_OpenZWave.htm">
+    <HelpTOCNode Id="d1ba2a71-3faa-43f2-9cd1-96e51624a3fe" Title="NotificationReceivedEventArgs Class" Url="html/T_OpenZWave_NotificationReceivedEventArgs.htm">
+      <HelpTOCNode Id="d14601e1-de46-4fcd-9c39-ba468122a021" Title="NotificationReceivedEventArgs Properties" Url="html/Properties_T_OpenZWave_NotificationReceivedEventArgs.htm">
+        <HelpTOCNode Title="Notification Property " Url="html/P_OpenZWave_NotificationReceivedEventArgs_Notification.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="NotificationReceivedEventHandler Delegate" Url="html/T_OpenZWave_NotificationReceivedEventHandler.htm" />
+    <HelpTOCNode Title="ZWControllerInterface Enumeration" Url="html/T_OpenZWave_ZWControllerInterface.htm" />
+    <HelpTOCNode Title="ZWLogLevel Enumeration" Url="html/T_OpenZWave_ZWLogLevel.htm" />
+    <HelpTOCNode Id="a863571a-a4c3-4cda-a931-0bab293cc599" Title="ZWManager Class" Url="html/T_OpenZWave_ZWManager.htm">
+      <HelpTOCNode Id="9422823f-cbb0-426a-88fb-33eb91499d8c" Title="ZWManager Properties" Url="html/Properties_T_OpenZWave_ZWManager.htm">
+        <HelpTOCNode Title="Instance Property " Url="html/P_OpenZWave_ZWManager_Instance.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="a418d320-20e9-44f0-85bc-baba16fe3a6d" Title="ZWManager Methods" Url="html/Methods_T_OpenZWave_ZWManager.htm">
+        <HelpTOCNode Title="ActivateScene Method " Url="html/M_OpenZWave_ZWManager_ActivateScene.htm" />
+        <HelpTOCNode Title="AddAssociation Method " Url="html/M_OpenZWave_ZWManager_AddAssociation.htm" />
+        <HelpTOCNode Id="4309f6af-d7c5-4275-9ee4-e75c6520f3fb" Title="AddDriver Method " Url="html/Overload_OpenZWave_ZWManager_AddDriver.htm">
+          <HelpTOCNode Title="AddDriver Method (String)" Url="html/M_OpenZWave_ZWManager_AddDriver.htm" />
+          <HelpTOCNode Title="AddDriver Method (String, ZWControllerInterface)" Url="html/M_OpenZWave_ZWManager_AddDriver_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="AddNode Method " Url="html/M_OpenZWave_ZWManager_AddNode.htm" />
+        <HelpTOCNode Id="67bbef57-5188-479e-a649-27b2d4c019d0" Title="AddSceneValue Method " Url="html/Overload_OpenZWave_ZWManager_AddSceneValue.htm">
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, Boolean)" Url="html/M_OpenZWave_ZWManager_AddSceneValue.htm" />
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, Byte)" Url="html/M_OpenZWave_ZWManager_AddSceneValue_1.htm" />
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, Int16)" Url="html/M_OpenZWave_ZWManager_AddSceneValue_2.htm" />
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_AddSceneValue_3.htm" />
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, Single)" Url="html/M_OpenZWave_ZWManager_AddSceneValue_4.htm" />
+          <HelpTOCNode Title="AddSceneValue Method (Byte, ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_AddSceneValue_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="f9b4bb11-9a03-4925-8b25-3d86fd99bc92" Title="AddSceneValueListSelection Method " Url="html/Overload_OpenZWave_ZWManager_AddSceneValueListSelection.htm">
+          <HelpTOCNode Title="AddSceneValueListSelection Method (Byte, ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_AddSceneValueListSelection.htm" />
+          <HelpTOCNode Title="AddSceneValueListSelection Method (Byte, ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_AddSceneValueListSelection_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="AssignReturnRoute Method " Url="html/M_OpenZWave_ZWManager_AssignReturnRoute.htm" />
+        <HelpTOCNode Title="CancelControllerCommand Method " Url="html/M_OpenZWave_ZWManager_CancelControllerCommand.htm" />
+        <HelpTOCNode Title="ClearSwitchPoints Method " Url="html/M_OpenZWave_ZWManager_ClearSwitchPoints.htm" />
+        <HelpTOCNode Title="CreateButton Method " Url="html/M_OpenZWave_ZWManager_CreateButton.htm" />
+        <HelpTOCNode Title="CreateNewPrimary Method " Url="html/M_OpenZWave_ZWManager_CreateNewPrimary.htm" />
+        <HelpTOCNode Title="CreateScene Method " Url="html/M_OpenZWave_ZWManager_CreateScene.htm" />
+        <HelpTOCNode Title="DeleteAllReturnRoutes Method " Url="html/M_OpenZWave_ZWManager_DeleteAllReturnRoutes.htm" />
+        <HelpTOCNode Title="DeleteButton Method " Url="html/M_OpenZWave_ZWManager_DeleteButton.htm" />
+        <HelpTOCNode Title="Destroy Method " Url="html/M_OpenZWave_ZWManager_Destroy.htm" />
+        <HelpTOCNode Title="DisablePoll Method " Url="html/M_OpenZWave_ZWManager_DisablePoll.htm" />
+        <HelpTOCNode Id="8d664ab7-094f-468d-a6f7-c1cb81f738fe" Title="EnablePoll Method " Url="html/Overload_OpenZWave_ZWManager_EnablePoll.htm">
+          <HelpTOCNode Title="EnablePoll Method (ZWValueId)" Url="html/M_OpenZWave_ZWManager_EnablePoll.htm" />
+          <HelpTOCNode Title="EnablePoll Method (ZWValueId, Byte)" Url="html/M_OpenZWave_ZWManager_EnablePoll_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="GetAllScenes Method " Url="html/M_OpenZWave_ZWManager_GetAllScenes.htm" />
+        <HelpTOCNode Title="GetAssociations Method " Url="html/M_OpenZWave_ZWManager_GetAssociations.htm" />
+        <HelpTOCNode Title="GetControllerInterfaceType Method " Url="html/M_OpenZWave_ZWManager_GetControllerInterfaceType.htm" />
+        <HelpTOCNode Title="GetControllerNodeId Method " Url="html/M_OpenZWave_ZWManager_GetControllerNodeId.htm" />
+        <HelpTOCNode Title="GetControllerPath Method " Url="html/M_OpenZWave_ZWManager_GetControllerPath.htm" />
+        <HelpTOCNode Title="GetLibraryTypeName Method " Url="html/M_OpenZWave_ZWManager_GetLibraryTypeName.htm" />
+        <HelpTOCNode Title="GetLibraryVersion Method " Url="html/M_OpenZWave_ZWManager_GetLibraryVersion.htm" />
+        <HelpTOCNode Title="GetLoggingState Method " Url="html/M_OpenZWave_ZWManager_GetLoggingState.htm" />
+        <HelpTOCNode Title="GetMaxAssociations Method " Url="html/M_OpenZWave_ZWManager_GetMaxAssociations.htm" />
+        <HelpTOCNode Title="GetNodeBasic Method " Url="html/M_OpenZWave_ZWManager_GetNodeBasic.htm" />
+        <HelpTOCNode Title="GetNodeClassInformation Method " Url="html/M_OpenZWave_ZWManager_GetNodeClassInformation.htm" />
+        <HelpTOCNode Title="GetNodeGeneric Method " Url="html/M_OpenZWave_ZWManager_GetNodeGeneric.htm" />
+        <HelpTOCNode Title="GetNodeLocation Method " Url="html/M_OpenZWave_ZWManager_GetNodeLocation.htm" />
+        <HelpTOCNode Title="GetNodeManufacturerId Method " Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerId.htm" />
+        <HelpTOCNode Title="GetNodeManufacturerName Method " Url="html/M_OpenZWave_ZWManager_GetNodeManufacturerName.htm" />
+        <HelpTOCNode Title="GetNodeMaxBaudRate Method " Url="html/M_OpenZWave_ZWManager_GetNodeMaxBaudRate.htm" />
+        <HelpTOCNode Title="GetNodeName Method " Url="html/M_OpenZWave_ZWManager_GetNodeName.htm" />
+        <HelpTOCNode Title="GetNodeNeighbors Method " Url="html/M_OpenZWave_ZWManager_GetNodeNeighbors.htm" />
+        <HelpTOCNode Title="GetNodeProductId Method " Url="html/M_OpenZWave_ZWManager_GetNodeProductId.htm" />
+        <HelpTOCNode Title="GetNodeProductName Method " Url="html/M_OpenZWave_ZWManager_GetNodeProductName.htm" />
+        <HelpTOCNode Title="GetNodeProductType Method " Url="html/M_OpenZWave_ZWManager_GetNodeProductType.htm" />
+        <HelpTOCNode Title="GetNodeQueryStage Method " Url="html/M_OpenZWave_ZWManager_GetNodeQueryStage.htm" />
+        <HelpTOCNode Title="GetNodeSecurity Method " Url="html/M_OpenZWave_ZWManager_GetNodeSecurity.htm" />
+        <HelpTOCNode Title="GetNodeSpecific Method " Url="html/M_OpenZWave_ZWManager_GetNodeSpecific.htm" />
+        <HelpTOCNode Title="GetNodeType Method " Url="html/M_OpenZWave_ZWManager_GetNodeType.htm" />
+        <HelpTOCNode Title="GetNodeVersion Method " Url="html/M_OpenZWave_ZWManager_GetNodeVersion.htm" />
+        <HelpTOCNode Title="GetNumGroups Method " Url="html/M_OpenZWave_ZWManager_GetNumGroups.htm" />
+        <HelpTOCNode Title="GetNumScenes Method " Url="html/M_OpenZWave_ZWManager_GetNumScenes.htm" />
+        <HelpTOCNode Title="GetNumSwitchPoints Method " Url="html/M_OpenZWave_ZWManager_GetNumSwitchPoints.htm" />
+        <HelpTOCNode Title="GetPollIntensity Method " Url="html/M_OpenZWave_ZWManager_GetPollIntensity.htm" />
+        <HelpTOCNode Title="GetPollInterval Method " Url="html/M_OpenZWave_ZWManager_GetPollInterval.htm" />
+        <HelpTOCNode Title="GetSceneLabel Method " Url="html/M_OpenZWave_ZWManager_GetSceneLabel.htm" />
+        <HelpTOCNode Title="GetSendQueueCount Method " Url="html/M_OpenZWave_ZWManager_GetSendQueueCount.htm" />
+        <HelpTOCNode Title="GetSucNodeId Method " Url="html/M_OpenZWave_ZWManager_GetSucNodeId.htm" />
+        <HelpTOCNode Title="GetSwitchPoint Method " Url="html/M_OpenZWave_ZWManager_GetSwitchPoint.htm" />
+        <HelpTOCNode Title="GetValueAsBool Method " Url="html/M_OpenZWave_ZWManager_GetValueAsBool.htm" />
+        <HelpTOCNode Title="GetValueAsByte Method " Url="html/M_OpenZWave_ZWManager_GetValueAsByte.htm" />
+        <HelpTOCNode Title="GetValueAsInt Method " Url="html/M_OpenZWave_ZWManager_GetValueAsInt.htm" />
+        <HelpTOCNode Title="GetValueAsShort Method " Url="html/M_OpenZWave_ZWManager_GetValueAsShort.htm" />
+        <HelpTOCNode Title="GetValueAsString Method " Url="html/M_OpenZWave_ZWManager_GetValueAsString.htm" />
+        <HelpTOCNode Title="GetValueHelp Method " Url="html/M_OpenZWave_ZWManager_GetValueHelp.htm" />
+        <HelpTOCNode Title="GetValueLabel Method " Url="html/M_OpenZWave_ZWManager_GetValueLabel.htm" />
+        <HelpTOCNode Title="GetValueListItems Method " Url="html/M_OpenZWave_ZWManager_GetValueListItems.htm" />
+        <HelpTOCNode Id="2113f020-3a2b-48ba-9fca-a3556f1e96e9" Title="GetValueListSelection Method " Url="html/Overload_OpenZWave_ZWManager_GetValueListSelection.htm">
+          <HelpTOCNode Title="GetValueListSelection Method (ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_GetValueListSelection.htm" />
+          <HelpTOCNode Title="GetValueListSelection Method (ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_GetValueListSelection_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="GetValueListValues Method " Url="html/M_OpenZWave_ZWManager_GetValueListValues.htm" />
+        <HelpTOCNode Title="GetValueUnits Method " Url="html/M_OpenZWave_ZWManager_GetValueUnits.htm" />
+        <HelpTOCNode Title="GetVersionAsString Method " Url="html/M_OpenZWave_ZWManager_GetVersionAsString.htm" />
+        <HelpTOCNode Title="HasNodeFailed Method " Url="html/M_OpenZWave_ZWManager_HasNodeFailed.htm" />
+        <HelpTOCNode Title="HealNetwork Method " Url="html/M_OpenZWave_ZWManager_HealNetwork.htm" />
+        <HelpTOCNode Title="HealNetworkNode Method " Url="html/M_OpenZWave_ZWManager_HealNetworkNode.htm" />
+        <HelpTOCNode Title="Initialize Method " Url="html/M_OpenZWave_ZWManager_Initialize.htm" />
+        <HelpTOCNode Title="IsBridgeController Method " Url="html/M_OpenZWave_ZWManager_IsBridgeController.htm" />
+        <HelpTOCNode Title="IsNodeAwake Method " Url="html/M_OpenZWave_ZWManager_IsNodeAwake.htm" />
+        <HelpTOCNode Title="IsNodeBeamingDevice Method " Url="html/M_OpenZWave_ZWManager_IsNodeBeamingDevice.htm" />
+        <HelpTOCNode Title="IsNodeFailed Method " Url="html/M_OpenZWave_ZWManager_IsNodeFailed.htm" />
+        <HelpTOCNode Title="IsNodeFrequentListeningDevice Method " Url="html/M_OpenZWave_ZWManager_IsNodeFrequentListeningDevice.htm" />
+        <HelpTOCNode Title="IsNodeInfoReceived Method " Url="html/M_OpenZWave_ZWManager_IsNodeInfoReceived.htm" />
+        <HelpTOCNode Title="IsNodeListeningDevice Method " Url="html/M_OpenZWave_ZWManager_IsNodeListeningDevice.htm" />
+        <HelpTOCNode Title="IsNodeRoutingDevice Method " Url="html/M_OpenZWave_ZWManager_IsNodeRoutingDevice.htm" />
+        <HelpTOCNode Title="IsNodeSecurityDevice Method " Url="html/M_OpenZWave_ZWManager_IsNodeSecurityDevice.htm" />
+        <HelpTOCNode Title="IsNodeZWavePlus Method " Url="html/M_OpenZWave_ZWManager_IsNodeZWavePlus.htm" />
+        <HelpTOCNode Title="IsPolled Method " Url="html/M_OpenZWave_ZWManager_IsPolled.htm" />
+        <HelpTOCNode Title="IsPrimaryController Method " Url="html/M_OpenZWave_ZWManager_IsPrimaryController.htm" />
+        <HelpTOCNode Title="IsStaticUpdateController Method " Url="html/M_OpenZWave_ZWManager_IsStaticUpdateController.htm" />
+        <HelpTOCNode Title="IsValuePolled Method " Url="html/M_OpenZWave_ZWManager_IsValuePolled.htm" />
+        <HelpTOCNode Title="IsValueReadOnly Method " Url="html/M_OpenZWave_ZWManager_IsValueReadOnly.htm" />
+        <HelpTOCNode Title="IsValueSet Method " Url="html/M_OpenZWave_ZWManager_IsValueSet.htm" />
+        <HelpTOCNode Title="LogDriverStatistics Method " Url="html/M_OpenZWave_ZWManager_LogDriverStatistics.htm" />
+        <HelpTOCNode Title="PressButton Method " Url="html/M_OpenZWave_ZWManager_PressButton.htm" />
+        <HelpTOCNode Title="ReceiveConfiguration Method " Url="html/M_OpenZWave_ZWManager_ReceiveConfiguration.htm" />
+        <HelpTOCNode Title="RefreshNodeInfo Method " Url="html/M_OpenZWave_ZWManager_RefreshNodeInfo.htm" />
+        <HelpTOCNode Title="RefreshValue Method " Url="html/M_OpenZWave_ZWManager_RefreshValue.htm" />
+        <HelpTOCNode Title="ReleaseButton Method " Url="html/M_OpenZWave_ZWManager_ReleaseButton.htm" />
+        <HelpTOCNode Title="RemoveAssociation Method " Url="html/M_OpenZWave_ZWManager_RemoveAssociation.htm" />
+        <HelpTOCNode Title="RemoveDriver Method " Url="html/M_OpenZWave_ZWManager_RemoveDriver.htm" />
+        <HelpTOCNode Title="RemoveFailedNode Method " Url="html/M_OpenZWave_ZWManager_RemoveFailedNode.htm" />
+        <HelpTOCNode Title="RemoveNode Method " Url="html/M_OpenZWave_ZWManager_RemoveNode.htm" />
+        <HelpTOCNode Title="RemoveScene Method " Url="html/M_OpenZWave_ZWManager_RemoveScene.htm" />
+        <HelpTOCNode Title="RemoveSceneValue Method " Url="html/M_OpenZWave_ZWManager_RemoveSceneValue.htm" />
+        <HelpTOCNode Title="RemoveSwitchPoint Method " Url="html/M_OpenZWave_ZWManager_RemoveSwitchPoint.htm" />
+        <HelpTOCNode Title="ReplaceFailedNode Method " Url="html/M_OpenZWave_ZWManager_ReplaceFailedNode.htm" />
+        <HelpTOCNode Title="ReplicationSend Method " Url="html/M_OpenZWave_ZWManager_ReplicationSend.htm" />
+        <HelpTOCNode Title="RequestAllConfigParams Method " Url="html/M_OpenZWave_ZWManager_RequestAllConfigParams.htm" />
+        <HelpTOCNode Title="RequestConfigParam Method " Url="html/M_OpenZWave_ZWManager_RequestConfigParam.htm" />
+        <HelpTOCNode Title="RequestNetworkUpdate Method " Url="html/M_OpenZWave_ZWManager_RequestNetworkUpdate.htm" />
+        <HelpTOCNode Title="RequestNodeDynamic Method " Url="html/M_OpenZWave_ZWManager_RequestNodeDynamic.htm" />
+        <HelpTOCNode Title="RequestNodeNeighborUpdate Method " Url="html/M_OpenZWave_ZWManager_RequestNodeNeighborUpdate.htm" />
+        <HelpTOCNode Title="RequestNodeState Method " Url="html/M_OpenZWave_ZWManager_RequestNodeState.htm" />
+        <HelpTOCNode Title="ResetController Method " Url="html/M_OpenZWave_ZWManager_ResetController.htm" />
+        <HelpTOCNode Title="SceneExists Method " Url="html/M_OpenZWave_ZWManager_SceneExists.htm" />
+        <HelpTOCNode Title="SceneGetValueAsBool Method " Url="html/M_OpenZWave_ZWManager_SceneGetValueAsBool.htm" />
+        <HelpTOCNode Title="SceneGetValueAsByte Method " Url="html/M_OpenZWave_ZWManager_SceneGetValueAsByte.htm" />
+        <HelpTOCNode Title="SceneGetValueAsInt Method " Url="html/M_OpenZWave_ZWManager_SceneGetValueAsInt.htm" />
+        <HelpTOCNode Title="SceneGetValueAsShort Method " Url="html/M_OpenZWave_ZWManager_SceneGetValueAsShort.htm" />
+        <HelpTOCNode Title="SceneGetValueAsString Method " Url="html/M_OpenZWave_ZWManager_SceneGetValueAsString.htm" />
+        <HelpTOCNode Id="93e4321e-92b5-452a-be81-aec56bb2a263" Title="SceneGetValueListSelection Method " Url="html/Overload_OpenZWave_ZWManager_SceneGetValueListSelection.htm">
+          <HelpTOCNode Title="SceneGetValueListSelection Method (Byte, ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_SceneGetValueListSelection.htm" />
+          <HelpTOCNode Title="SceneGetValueListSelection Method (Byte, ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_SceneGetValueListSelection_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="SceneGetValues Method " Url="html/M_OpenZWave_ZWManager_SceneGetValues.htm" />
+        <HelpTOCNode Title="SendNodeInformation Method " Url="html/M_OpenZWave_ZWManager_SendNodeInformation.htm" />
+        <HelpTOCNode Title="SetChangeVerified Method " Url="html/M_OpenZWave_ZWManager_SetChangeVerified.htm" />
+        <HelpTOCNode Title="SetConfigParam Method " Url="html/M_OpenZWave_ZWManager_SetConfigParam.htm" />
+        <HelpTOCNode Title="SetLogFileName Method " Url="html/M_OpenZWave_ZWManager_SetLogFileName.htm" />
+        <HelpTOCNode Title="SetLoggingState Method " Url="html/M_OpenZWave_ZWManager_SetLoggingState.htm" />
+        <HelpTOCNode Title="SetNodeLocation Method " Url="html/M_OpenZWave_ZWManager_SetNodeLocation.htm" />
+        <HelpTOCNode Title="SetNodeManufacturerName Method " Url="html/M_OpenZWave_ZWManager_SetNodeManufacturerName.htm" />
+        <HelpTOCNode Title="SetNodeName Method " Url="html/M_OpenZWave_ZWManager_SetNodeName.htm" />
+        <HelpTOCNode Title="SetNodeProductName Method " Url="html/M_OpenZWave_ZWManager_SetNodeProductName.htm" />
+        <HelpTOCNode Title="SetPollIntensity Method " Url="html/M_OpenZWave_ZWManager_SetPollIntensity.htm" />
+        <HelpTOCNode Title="SetPollInterval Method " Url="html/M_OpenZWave_ZWManager_SetPollInterval.htm" />
+        <HelpTOCNode Title="SetSceneLabel Method " Url="html/M_OpenZWave_ZWManager_SetSceneLabel.htm" />
+        <HelpTOCNode Id="928a2677-b45a-44c3-8a45-2fce247cce38" Title="SetSceneValue Method " Url="html/Overload_OpenZWave_ZWManager_SetSceneValue.htm">
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, Boolean)" Url="html/M_OpenZWave_ZWManager_SetSceneValue.htm" />
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, Byte)" Url="html/M_OpenZWave_ZWManager_SetSceneValue_1.htm" />
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, Int16)" Url="html/M_OpenZWave_ZWManager_SetSceneValue_2.htm" />
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_SetSceneValue_3.htm" />
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, Single)" Url="html/M_OpenZWave_ZWManager_SetSceneValue_4.htm" />
+          <HelpTOCNode Title="SetSceneValue Method (Byte, ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_SetSceneValue_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="3dc394fd-0016-4e7f-bc53-6738d750297c" Title="SetSceneValueListSelection Method " Url="html/Overload_OpenZWave_ZWManager_SetSceneValueListSelection.htm">
+          <HelpTOCNode Title="SetSceneValueListSelection Method (Byte, ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_SetSceneValueListSelection.htm" />
+          <HelpTOCNode Title="SetSceneValueListSelection Method (Byte, ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_SetSceneValueListSelection_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="SetSwitchPoint Method " Url="html/M_OpenZWave_ZWManager_SetSwitchPoint.htm" />
+        <HelpTOCNode Id="1768dbdc-8c44-4b69-a975-0a2ce47a4fab" Title="SetValue Method " Url="html/Overload_OpenZWave_ZWManager_SetValue.htm">
+          <HelpTOCNode Title="SetValue Method (ZWValueId, Boolean)" Url="html/M_OpenZWave_ZWManager_SetValue.htm" />
+          <HelpTOCNode Title="SetValue Method (ZWValueId, Byte)" Url="html/M_OpenZWave_ZWManager_SetValue_1.htm" />
+          <HelpTOCNode Title="SetValue Method (ZWValueId, Int16)" Url="html/M_OpenZWave_ZWManager_SetValue_2.htm" />
+          <HelpTOCNode Title="SetValue Method (ZWValueId, Int32)" Url="html/M_OpenZWave_ZWManager_SetValue_3.htm" />
+          <HelpTOCNode Title="SetValue Method (ZWValueId, Single)" Url="html/M_OpenZWave_ZWManager_SetValue_4.htm" />
+          <HelpTOCNode Title="SetValue Method (ZWValueId, String)" Url="html/M_OpenZWave_ZWManager_SetValue_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="SetValueLabel Method " Url="html/M_OpenZWave_ZWManager_SetValueLabel.htm" />
+        <HelpTOCNode Title="SetValueListSelection Method " Url="html/M_OpenZWave_ZWManager_SetValueListSelection.htm" />
+        <HelpTOCNode Title="SoftReset Method " Url="html/M_OpenZWave_ZWManager_SoftReset.htm" />
+        <HelpTOCNode Title="SwitchAllOff Method " Url="html/M_OpenZWave_ZWManager_SwitchAllOff.htm" />
+        <HelpTOCNode Title="SwitchAllOn Method " Url="html/M_OpenZWave_ZWManager_SwitchAllOn.htm" />
+        <HelpTOCNode Title="TestNetwork Method " Url="html/M_OpenZWave_ZWManager_TestNetwork.htm" />
+        <HelpTOCNode Title="TestNetworkNode Method " Url="html/M_OpenZWave_ZWManager_TestNetworkNode.htm" />
+        <HelpTOCNode Title="TransferPrimaryRole Method " Url="html/M_OpenZWave_ZWManager_TransferPrimaryRole.htm" />
+        <HelpTOCNode Title="WriteConfig Method " Url="html/M_OpenZWave_ZWManager_WriteConfig.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="dbec5b73-d4cb-456f-8a0c-3f2959cd5ca6" Title="ZWManager Events" Url="html/Events_T_OpenZWave_ZWManager.htm">
+        <HelpTOCNode Title="NotificationReceived Event" Url="html/E_OpenZWave_ZWManager_NotificationReceived.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="d07a2bf0-4529-47f2-97bc-74640f324908" Title="ZWNotification Class" Url="html/T_OpenZWave_ZWNotification.htm">
+      <HelpTOCNode Id="493b47f2-f10e-4a17-a78c-1a54fd055cc0" Title="ZWNotification Properties" Url="html/Properties_T_OpenZWave_ZWNotification.htm">
+        <HelpTOCNode Title="Code Property " Url="html/P_OpenZWave_ZWNotification_Code.htm" />
+        <HelpTOCNode Title="Event Property " Url="html/P_OpenZWave_ZWNotification_Event.htm" />
+        <HelpTOCNode Title="GroupIndex Property " Url="html/P_OpenZWave_ZWNotification_GroupIndex.htm" />
+        <HelpTOCNode Title="HomeId Property " Url="html/P_OpenZWave_ZWNotification_HomeId.htm" />
+        <HelpTOCNode Title="NodeId Property " Url="html/P_OpenZWave_ZWNotification_NodeId.htm" />
+        <HelpTOCNode Title="Type Property " Url="html/P_OpenZWave_ZWNotification_Type.htm" />
+        <HelpTOCNode Title="ValueId Property " Url="html/P_OpenZWave_ZWNotification_ValueId.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="ZWNotificationCode Enumeration" Url="html/T_OpenZWave_ZWNotificationCode.htm" />
+    <HelpTOCNode Title="ZWNotificationType Enumeration" Url="html/T_OpenZWave_ZWNotificationType.htm" />
+    <HelpTOCNode Id="580b3085-c417-499c-9a73-bc5e66c8ae41" Title="ZWOptions Class" Url="html/T_OpenZWave_ZWOptions.htm">
+      <HelpTOCNode Id="eac7561d-97d6-4074-92ed-268f04e9b580" Title="ZWOptions Properties" Url="html/Properties_T_OpenZWave_ZWOptions.htm">
+        <HelpTOCNode Title="AreLocked Property " Url="html/P_OpenZWave_ZWOptions_AreLocked.htm" />
+        <HelpTOCNode Title="Instance Property " Url="html/P_OpenZWave_ZWOptions_Instance.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="96203d27-f14a-4b07-bc37-bc78573c12d2" Title="ZWOptions Methods" Url="html/Methods_T_OpenZWave_ZWOptions.htm">
+        <HelpTOCNode Title="AddOptionBool Method " Url="html/M_OpenZWave_ZWOptions_AddOptionBool.htm" />
+        <HelpTOCNode Title="AddOptionInt Method " Url="html/M_OpenZWave_ZWOptions_AddOptionInt.htm" />
+        <HelpTOCNode Title="AddOptionString Method " Url="html/M_OpenZWave_ZWOptions_AddOptionString.htm" />
+        <HelpTOCNode Title="Destroy Method " Url="html/M_OpenZWave_ZWOptions_Destroy.htm" />
+        <HelpTOCNode Title="GetOptionAsBool Method " Url="html/M_OpenZWave_ZWOptions_GetOptionAsBool.htm" />
+        <HelpTOCNode Title="GetOptionAsInt Method " Url="html/M_OpenZWave_ZWOptions_GetOptionAsInt.htm" />
+        <HelpTOCNode Title="GetOptionAsString Method " Url="html/M_OpenZWave_ZWOptions_GetOptionAsString.htm" />
+        <HelpTOCNode Title="GetOptionType Method " Url="html/M_OpenZWave_ZWOptions_GetOptionType.htm" />
+        <HelpTOCNode Id="3663ff48-7cc4-461e-bbe8-0c7f4128d03e" Title="Initialize Method " Url="html/Overload_OpenZWave_ZWOptions_Initialize.htm">
+          <HelpTOCNode Title="Initialize Method " Url="html/M_OpenZWave_ZWOptions_Initialize.htm" />
+          <HelpTOCNode Title="Initialize Method (String, String, String)" Url="html/M_OpenZWave_ZWOptions_Initialize_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Lock Method " Url="html/M_OpenZWave_ZWOptions_Lock.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="ZWOptionType Enumeration" Url="html/T_OpenZWave_ZWOptionType.htm" />
+    <HelpTOCNode Title="ZWValueGenre Enumeration" Url="html/T_OpenZWave_ZWValueGenre.htm" />
+    <HelpTOCNode Id="7503fd8b-859e-4865-9052-f44ead6c09b2" Title="ZWValueId Class" Url="html/T_OpenZWave_ZWValueId.htm">
+      <HelpTOCNode Title="ZWValueId Constructor " Url="html/M_OpenZWave_ZWValueId__ctor.htm" />
+      <HelpTOCNode Id="ee35fabe-2664-439b-acee-5cb158a94cf0" Title="ZWValueId Properties" Url="html/Properties_T_OpenZWave_ZWValueId.htm">
+        <HelpTOCNode Title="CommandClassId Property " Url="html/P_OpenZWave_ZWValueId_CommandClassId.htm" />
+        <HelpTOCNode Title="Genre Property " Url="html/P_OpenZWave_ZWValueId_Genre.htm" />
+        <HelpTOCNode Title="HomeId Property " Url="html/P_OpenZWave_ZWValueId_HomeId.htm" />
+        <HelpTOCNode Title="Id Property " Url="html/P_OpenZWave_ZWValueId_Id.htm" />
+        <HelpTOCNode Title="Index Property " Url="html/P_OpenZWave_ZWValueId_Index.htm" />
+        <HelpTOCNode Title="Instance Property " Url="html/P_OpenZWave_ZWValueId_Instance.htm" />
+        <HelpTOCNode Title="NodeId Property " Url="html/P_OpenZWave_ZWValueId_NodeId.htm" />
+        <HelpTOCNode Title="Type Property " Url="html/P_OpenZWave_ZWValueId_Type.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="ZWValueType Enumeration" Url="html/T_OpenZWave_ZWValueType.htm" />
+  </HelpTOCNode>
+</HelpTOC>
