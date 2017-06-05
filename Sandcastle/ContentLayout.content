@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="c2cfd9ac-b827-4020-b867-470ba91e24c1" visible="True" isDefault="true" title="Welcome to the OpenZWave for .NET and Windows Universal">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Welcome" />
+    </HelpKeywords>
+  </Topic>
+  <Topic id="06913e91-c56b-46ad-94e6-f663945e448b" visible="True" isSelected="true">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Compile" />
+    </HelpKeywords>
+  </Topic>
+  <Topic id="e332b1e2-b3c4-4ab0-bcda-53cf9e70663b" visible="True" isExpanded="true" title="Version History">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="version, history" />
+    </HelpKeywords>
+    <Topic id="64493062-7213-4a2b-ae0d-ba4f9aad38a4" visible="True" title="Version 2.0.0-beta2">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 2.0.0-beta2" />
+      </HelpKeywords>
+    </Topic>
+  </Topic>
+</Topics>

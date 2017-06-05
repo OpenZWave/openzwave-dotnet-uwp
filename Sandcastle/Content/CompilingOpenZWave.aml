@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="06913e91-c56b-46ad-94e6-f663945e448b" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <summary>
+      <para>Compiling OpenZWave</para>
+    </summary>
+
+    <introduction>
+      <!-- Uncomment this to generate an outline of the section and sub-section
+           titles.  Specify a numeric value as the inner text to limit it to
+           a specific number of sub-topics when creating the outline.  Specify
+           zero (0) to limit it to top-level sections only.  -->
+      <!-- <autoOutline /> -->
+
+      <para>Steps to recompile</para>
+    </introduction>
+
+    <!-- Add one or more top-level section elements.  These are collapsible.
+         If using <autoOutline />, add an address attribute to identify it
+         and specify a title so that it can be jumped to with a hyperlink. -->
+    <section address="Clone">
+      <title>Clone</title>
+      <content>
+        <para>When cloning this repo, make sure you also clone the submodule using the `--recursive` parameter.</para>
+        <code>
+          git clone --recursive https://github.com/OpenZWave/openzwave-dotnet-uwp
+        </code>
+        <para>Note that when downloading the .zip file from this repo, you will _not_ get the required sub module.
+        In that case you can download <link xlink:href="https://github.com/OpenZWave/open-zwave/tree/Dev">the dev-branch from openzwave</link>
+          and unzip it in the `open-zwave` folder at the root of this repo.</para>
+      </content>
+    </section>
+
+    <section address="dotNet">
+    <title>.NET</title>
+    <content>
+      <para>To build .NET open `OpenZWaveDotNet.sln`.</para>
+      <para>If you're using a newer version of Visual Studio, you might be asked to upgrade the OpenZWave project.</para>
+    </content>
+    </section>
+
+    <section address="UWP">
+      <title>UWP</title>
+      <content>
+        <para>To build UWP, open `src/OpenZWaveUWP.sln`.</para>
+        <para>You will need the 14393 Windows 10 SDK installed, and either Visual Studio 2015 or 2017.</para>
+      </content>
+    </section>
+
+    <section address="NuGet">
+      <title>NuGet</title>
+      <content>
+        <para>To build the NuGet package, you must first build UWP Release mode for x86, x64 and ARM,
+        as well as .NET for x86.</para>
+        <para>
+          Before building, edit the `VERSION` and `PackageName` parameter in the script to create
+          a custom version number and package ID, which helps avoiding conflicts with released versions.
+        </para>
+        <para>
+          Next download [NuGet.exe](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe) to the
+          local nuget folder and execute the `BuildPackage.cmd` command.
+        </para>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <!-- One or more of the following:
+           - A local link
+           - An external link
+           - A code entity reference
+
+      <link xlink:href="Other Topic's ID"/>
+      <link xlink:href="Other Topic's ID">Link inner text</link>
+
+      <externalLink>
+          <linkText>Link text</linkText>
+          <linkAlternateText>Optional alternate link text</linkAlternateText>
+          <linkUri>URI</linkUri>
+      </externalLink>
+
+      <codeEntityReference>API member ID</codeEntityReference>
+
+      Examples:
+
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8270" />
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8278">Some other topic</link>
+
+      <externalLink>
+          <linkText>SHFB on GitHub</linkText>
+          <linkAlternateText>Go to GitHub</linkAlternateText>
+          <linkUri>https://GitHub.com/EWSoftware/SHFB</linkUri>
+      </externalLink>
+
+      <codeEntityReference>T:TestDoc.TestClass</codeEntityReference>
+      <codeEntityReference>P:TestDoc.TestClass.SomeProperty</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor(System.String,System.Int32)</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.ToString</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.FirstMethod</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.SecondMethod(System.Int32,System.String)</codeEntityReference>
+      -->
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

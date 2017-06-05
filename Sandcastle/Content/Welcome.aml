@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="c2cfd9ac-b827-4020-b867-470ba91e24c1" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+  			<para>Welcome to the openzwave-dotnet-uwp wiki!</para>
+        <para>For more full examples, check out the sample apps.</para>
+		</introduction>
+
+    <section>
+      <title>Installing</title>
+      <content>
+        <para>Package can be referenced via NuGet:</para>
+        <code>
+          PM> Install-Package OpenZWave -Pre
+        </code>
+        <para>Note that .NET applications must be set to compile for x86 and not AnyCPU or x64 (this does not apply to UWP apps which also supports x64 and ARM).</para>
+      </content>
+    </section>
+
+    <section>
+      <title>Deploying configuration files</title>
+      <content>
+        <para>If you are using NuGet, ignore this.</para>
+        <para>
+          It's important that you deploy all the XML configuration files from <codeInline>\open-zwave\config\**\*.*</codeInline> into the <codeInline>/config/</codeInline> folder of your app. The sample apps uses a <codeInline>DeployConfigFiles.targets</codeInline> file to do this (via msbuild) by including this in your project:
+        </para>
+        <code language="xml">
+          &lt;Import Project="DeployConfigFiles.targets" /&gt;
+        </code>
+        <para>
+          Note, that if you use the nuget package this will automatically happen, as this .targets file is automatically included.
+        </para>
+      </content>
+    </section>
+
+    <section>
+      <title>Initializing the OpenZWave Library</title>
+      <content>
+        <code language="c#">
+          //Initialize
+          ZWMOptions.Instance.Initialize(); //Configure default options
+          ZWMOptions.Instance.Lock();       //Options must be locked before using
+          ZWManager.Instance.Initialize();  //Start up the manager
+        </code>
+      </content>
+    </section>
+    
+    <section>
+      <title>Opening a serial port (.NET)</title>
+      <content>
+        <para>Using .NET: </para>
+        <code language="c#">
+          var availablePorts = System.IO.Ports.SerialPort.GetPortNames();
+          var serialPort = availablePorts.First().Id; //Adjust to pick the right port for your usb stick
+          ZWManager.Instance.AddDriver(serialPort); //Add the serial port (you can have multiple!)
+        </code>
+      </content>
+    </section>
+    <section>
+      <title>Opening a serial port (UWP)</title>
+      <content>
+        <para>
+          In UWP apps you must first enable the Serial Port capability. To do this, you must add the following section to the Capabilities part of the `Package.appxmanifest`:
+        </para>
+        <code language="xml">
+          <![CDATA[
+          <Capabilities>
+            <DeviceCapability Name="serialcommunication">
+              <Device Id="any">
+                <Function Type="name:serialPort" />
+              </Device>
+            </DeviceCapability>
+          </Capabilities>]]>
+        </code>
+        <para>
+          Next is finding the serial port using the DeviceInformation APIs, and then add the driver
+        </para>
+        <code language="c#">
+          //Hook up the serial port
+          var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
+          var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
+          var serialPort = devices.First().Id; //Adjust to pick the right port for your usb stick
+          ZWManager.Instance.AddDriver(serialPort); //Add the serial port (you can have multiple!)
+        </code>
+        <para>
+          <legacyItalic><legacyBold>Note</legacyBold>: If you are running on IoT Core, an OpenZWave-to-AllJoyn bridge is installed by default, and might already be using the serial port. If that is the case, stop the OpenZWave-AllJoyn Bridge service first.</legacyItalic>
+        </para>
+      </content>
+    </section>
+
+    <section>
+      <title>
+        Listening for devices
+      </title>
+      <content>
+        <code language="c#">
+          ZWManager.Instance.NotificationReceived += OnNodeNotification; //Start listening for node events
+        </code>
+        <para>
+          The rest is in the Notification handler. Every time a node is found, changed, removed etc.
+          an event is reported here, including responses to commands you send. Nodes are identified
+          by the HomeID (one per usb controller connected), and by the NodeID. You use these two values
+          to uniquely identify a node on your network, and can then perform operations like changing
+          properties via the ZWManager instance.
+        </para>
+        <code language="c#">
+          private void OnNodeNotification(ZWManager manager, NotificationReceivedEventArgs e)
+          {
+             var notification = e.Notification;
+             var homeID = notification.HomeId;
+             var nodeId = notification.NodeId;
+             var type = notification.Type;
+          }
+        </code>
+      </content>
+    </section>
+
+		<relatedTopics>
+			<link xlink:href="e332b1e2-b3c4-4ab0-bcda-53cf9e70663b" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>
