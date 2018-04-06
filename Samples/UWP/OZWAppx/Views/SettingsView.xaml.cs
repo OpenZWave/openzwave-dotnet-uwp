@@ -23,7 +23,19 @@ namespace OZWAppx.Views
         public SettingsView()
         {
             this.InitializeComponent();
+            if (!VM.SerialPorts.Any())
+                NoDevicesPanel.Visibility = Visibility.Visible;
         }
         public ApplicationState VM => ApplicationState.Instance;
+
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await VM.RefreshSerialPortsAsync();
+            }
+            catch { }
+            NoDevicesPanel.Visibility = VM.SerialPorts.Any() ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

@@ -43,11 +43,7 @@ namespace OZWAppx
 
         private void GetSerialPorts()
         {
-            if (!ApplicationState.Instance.SerialPorts.Any())
-            {
-                var _ = new Windows.UI.Popups.MessageDialog("No serial ports found").ShowAsync();
-            }
-            else if (ApplicationState.Instance.SerialPorts.Count == 1)
+            if (ApplicationState.Instance.SerialPorts.Count == 1)
             {
                 hamburgerMenu.SelectedIndex = 0;
                 ApplicationState.Instance.SerialPorts[0].IsActive = true; //Assume if there's only one port, that's the ZStick port
@@ -55,6 +51,10 @@ namespace OZWAppx
             }
             else
             {
+                if (!ApplicationState.Instance.SerialPorts.Any())
+                {
+                    var _ = new Windows.UI.Popups.MessageDialog("No serial ports found").ShowAsync();
+                }
                 hamburgerMenu.SelectedIndex = 1;
                 (hamburgerMenu.Content as Frame).Navigate(typeof(Views.SettingsView));
             }

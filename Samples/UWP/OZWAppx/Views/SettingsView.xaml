@@ -7,21 +7,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="500"
+    d:DesignWidth="500">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <Border Background="CornflowerBlue" RequestedTheme="Dark" Grid.ColumnSpan="2" Height="48">
             <TextBlock Text="Settings" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="20,5" />
         </Border>
 
-        <StackPanel Margin="20" Grid.Row="1">
-            <TextBlock Text="Serial ports:" Style="{ThemeResource SubtitleTextBlockStyle}" />
+        <TextBlock Text="Serial ports:" Margin="20,20,0,0" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Row="1" />
+
+        <StackPanel Margin="20,0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="NoDevicesPanel" Visibility="Collapsed">
+            <TextBlock Text="No serial ports found" FontWeight="Bold"/>
+            <TextBlock Text="Please ensure your ZWave controller is plugged in and driver is successfully installed." TextWrapping="Wrap" />
+            <Button Content="Refresh Port List" Click="RefreshButton_Click" Margin="0,20" Padding="20,0" />
+        </StackPanel>
+
+        <StackPanel Margin="20,0" Grid.Row="2">
             <ItemsControl x:Name="serialPorts" ItemsSource="{x:Bind VM.SerialPorts, Mode=OneWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -29,6 +38,12 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="20">
+            <TextBlock Text="Need a ZWave USB Stick?" FontWeight="Bold" />
+            <TextBlock Text="If no serial port is shown above, or none of them are connected to a ZWave Controller, you need a ZWave Controller attached to your PC. A suggested controller is the Aeotec Z-Stick Gen5 controller - available from Amazon here:" TextWrapping="Wrap" />
+            <HyperlinkButton Content="https://amzn.to/2qeCUbU" NavigateUri="https://amzn.to/2qeCUbU" />
         </StackPanel>
     </Grid>
 </Page>

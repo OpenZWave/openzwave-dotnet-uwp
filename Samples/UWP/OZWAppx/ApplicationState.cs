@@ -33,19 +33,32 @@ namespace OZWAppx
             return initializeTask;
         }
 
-        private async Task Initialize()
+        private Task Initialize()
         {
+            return RefreshSerialPortsAsync();
+        }
+
+        public async Task RefreshSerialPortsAsync()
+        {
+            var activePorts = SerialPorts.Where(p => p.IsActive).Select(p => p.PortID).ToList();
+            SerialPorts.Clear();
 #if NETFX_CORE
             var serialPortSelector = Windows.Devices.SerialCommunication.SerialDevice.GetDeviceSelector();
             var devices = await DeviceInformation.FindAllAsync(serialPortSelector);
             foreach (var item in devices)
             {
-                SerialPorts.Add(new SerialPortInfo(item.Id, item.Name));
+                bool isActive = activePorts.Contains(item.Id);
+                SerialPorts.Add(new SerialPortInfo(item.Id, item.Name, isActive));
+                if (isActive)
+                    activePorts.Remove(item.Id);
             }
 #else //.NET
             foreach(var item in System.IO.Ports.SerialPort.GetPortNames())
             {
-                SerialPorts.Add(new SerialPortInfo(item, item));
+                bool isActive = activePorts.Contains(item);
+                SerialPorts.Add(new SerialPortInfo(item, item, isActive));
+                if (isActive)
+                    activePorts.Remove(item.Id);
             }
 #endif
 #if DEBUG
@@ -54,6 +67,12 @@ namespace OZWAppx
             // SerialPorts.Add(new SerialPortInfo("//COM-TEST/3", "Test Port 3"));
             // SerialPorts.Add(new SerialPortInfo("//COM-TEST/4", "Test Port 4"));
 #endif
+
+            // Remove controllers on ports that were active but lost
+            foreach (var item in activePorts)
+            {
+                Watcher.Instance.RemoveController(item);
+            }
         }
 
         public ObservableCollection<SerialPortInfo> SerialPorts { get; } = new ObservableCollection<SerialPortInfo>();
@@ -63,7 +82,7 @@ namespace OZWAppx
 
     public sealed class SerialPortInfo
     {
-        internal SerialPortInfo(string id, string name)
+        internal SerialPortInfo(string id, string name, bool isActive = false)
         {
             PortID = id;
             Name = name;

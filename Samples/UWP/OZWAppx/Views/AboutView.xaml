@@ -8,6 +8,36 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Background="CornflowerBlue" RequestedTheme="Dark" Grid.ColumnSpan="2" Height="48">
+            <TextBlock Text="About" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="20,5" />
+        </Border>
+
+        <StackPanel Margin="20" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <TextBlock Text="Z-Wave Controller - Sample Application" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Row="1" />
+            <TextBlock TextWrapping="Wrap" Margin="0,20">
+                <Run>
+                    This application demonstrates discovery and control of Z-Wave devices using the OpenZWave library.
+                </Run>
+                <LineBreak />
+                <Run>
+                    To use it, you will need an Z-Wave controller attached to one of your serial or USB ports.
+                </Run>
+            </TextBlock>
+            <HyperlinkButton Content="Get a Z-Wave USB Controller" 
+                             NavigateUri="https://amzn.to/2qeCUbU" 
+                             Margin="20,5" />
+            <HyperlinkButton Content="Get the source code for this application on GitHub"
+                             NavigateUri="https://github.com/OpenZWave/openzwave-dotnet-uwp"
+                             Margin="20,5"/>
+            <HyperlinkButton Content="Found a bug? Report it here"
+                             NavigateUri="https://github.com/OpenZWave/openzwave-dotnet-uwp/issues"
+                             Margin="20,5"/>
+        </StackPanel>
 
     </Grid>
 </Page>
