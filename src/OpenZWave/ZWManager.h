@@ -1187,6 +1187,13 @@ namespace OpenZWave
 		/// <seealso cref="RemoveAssociation" />
 		uint8 GetNumGroups(uint32 homeId, uint8 nodeId) { return Manager::Get()->GetNumGroups(homeId, nodeId); }
 
+    /// <summary>Gets a label for the particular group of a node. This label is populated by the device specific configuration files.</summary>
+    /// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+    /// <param name="nodeId">The ID of the node whose groups we are interested in.</param>
+    /// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+    /// <returns>The label for the specified group.</returns>
+    String^ GetGroupLabel(uint32 homeId, uint8 nodeId, uint8 groupIdx) { return ConvertString(Manager::Get()->GetGroupLabel(homeId, nodeId, groupIdx)); }
+
 		/// <summary>Gets the associations for a group.</summary>
 		/// <remarks>Makes a copy of the list of associated nodes in the group, and returns it in an array of uint8's.
 		/// The caller is responsible for freeing the array memory with a call to delete [].</remarks>
