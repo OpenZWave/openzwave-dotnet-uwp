@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir>$(ProjectDir)\..\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Output\$(MSBuildProjectName)\$(PlatformTarget)\$(Configuration)\</OutDir>
     <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -52,10 +52,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>OpenZWave</TargetName>
-    <IntDir>$(ProjectDir)\..\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)..\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>$(ProjectDir)\..\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)..\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
