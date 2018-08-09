@@ -81,6 +81,7 @@
                 <MenuFlyout>
                     <MenuFlyoutItem Text="Power On" Click="PowerOn_ContextMenuClick" />
                     <MenuFlyoutItem Text="Power Off" Click="PowerOff_ContextMenuClick" />
+                    <MenuFlyoutItem Text="Refresh Node Info" Click="Refresh_ContextMenuClick" />
                     <MenuFlyoutSeparator />
                     <MenuFlyoutItem Text="Request Node Neighbor Update" IsEnabled="False" />
                     <MenuFlyoutItem Text="Assign Return Route" IsEnabled="False" />

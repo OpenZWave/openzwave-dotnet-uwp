@@ -77,6 +77,11 @@ namespace OZWAppx.Views
             dlg.Commands.Add(new UICommand("Cancel"));
             var _ = dlg.ShowAsync();
         }
+
+        private void Refresh_ContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            Node.RefreshNodeInfo();
+        }
     }
 
     public class DeviceViewVM : INotifyPropertyChanged

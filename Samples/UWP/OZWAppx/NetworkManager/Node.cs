@@ -355,5 +355,11 @@ namespace OpenZWave.NetworkManager
         {
             NodeRemoved?.Invoke(this, EventArgs.Empty);
         }
+
+        public void RefreshNodeInfo()
+        {
+            ZWManager.Instance.RefreshNodeInfo(HomeID, ID);
+        }
+
     }
 }
