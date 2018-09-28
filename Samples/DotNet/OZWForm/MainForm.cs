@@ -589,6 +589,14 @@ namespace OZWForm
                 ControllerCommandDlg.ZWControllerCommand.RequestNetworkUpdate);
         }
 
+
+        private void refreshNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoCommand(() =>
+             m_manager.RefreshNodeInfo(m_homeId, m_rightClickNode),
+              ControllerCommandDlg.ZWControllerCommand.RefreshNodeInfo);
+        }
+
         /// <summary>
         /// Handles the Click event of the requestNodeNeighborUpdateToolStripMenuItem control.
         /// </summary>

@@ -62,6 +62,7 @@ namespace OZWForm
             HasNodeFailed,
             ReplaceFailedNode,
             TransferPrimaryRole,
+            RefreshNodeInfo,
             RequestNetworkUpdate,
             RequestNodeNeighborUpdate,
             AssignReturnRoute,
@@ -215,7 +216,19 @@ namespace OZWForm
                         MyControllerStateChangedHandler(ZWControllerState.Failed);
                     }
                     break;
-                }
+                    }
+                case ZWControllerCommand.RefreshNodeInfo:
+                    {
+                        this.ButtonCancel.Enabled = false;
+                        this.Text = "Refreshing Node Info";
+                        this.label1.Text = "Refreshing the node info\nThis command cannot be cancelled.";
+
+                        if (!m_manager.RefreshNodeInfo(m_homeId, m_nodeId))
+                        {
+                            MyControllerStateChangedHandler(ZWControllerState.Failed);
+                        }
+                        break;
+                    }
                 case ZWControllerCommand.RequestNetworkUpdate:
                 {
                     this.ButtonCancel.Enabled = false;

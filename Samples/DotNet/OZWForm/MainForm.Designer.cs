@@ -51,6 +51,7 @@
             this.transferPrimaryRoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSecureDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.removeControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +65,7 @@
             this.eraseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.addSecureDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.NodeGridView)).BeginInit();
             this.NodeContextMenuStrip.SuspendLayout();
             this.MenuBar.SuspendLayout();
@@ -95,6 +96,7 @@
             this.PowerOnToolStripMenuItem,
             this.PowerOffToolStripMenuItem,
             this.toolStripSeparator4,
+            this.refreshNodeToolStripMenuItem,
             this.requestNodeNeighborUpdateToolStripMenuItem,
             this.assignReturnRouteToolStripMenuItem,
             this.deleteReturnRouteToolStripMenuItem,
@@ -105,7 +107,7 @@
             this.toolStripSeparator6,
             this.propertiesToolStripMenuItem});
             this.NodeContextMenuStrip.Name = "NodeContextMenuStrip";
-            this.NodeContextMenuStrip.Size = new System.Drawing.Size(243, 220);
+            this.NodeContextMenuStrip.Size = new System.Drawing.Size(243, 264);
             // 
             // PowerOnToolStripMenuItem
             // 
@@ -258,6 +260,13 @@
             this.addDeviceToolStripMenuItem.Text = "Add Device";
             this.addDeviceToolStripMenuItem.Click += new System.EventHandler(this.addDeviceToolStripMenuItem_Click);
             // 
+            // addSecureDeviceToolStripMenuItem
+            // 
+            this.addSecureDeviceToolStripMenuItem.Name = "addSecureDeviceToolStripMenuItem";
+            this.addSecureDeviceToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.addSecureDeviceToolStripMenuItem.Text = "Add Secure Device";
+            this.addSecureDeviceToolStripMenuItem.Click += new System.EventHandler(this.addSecureDeviceToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -343,12 +352,12 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(70, 17);
             this.toolStripStatusLabel1.Text = "Initializing...";
             // 
-            // addSecureDeviceToolStripMenuItem
+            // refreshNodeToolStripMenuItem
             // 
-            this.addSecureDeviceToolStripMenuItem.Name = "addSecureDeviceToolStripMenuItem";
-            this.addSecureDeviceToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.addSecureDeviceToolStripMenuItem.Text = "Add Secure Device";
-            this.addSecureDeviceToolStripMenuItem.Click += new System.EventHandler(this.addSecureDeviceToolStripMenuItem_Click);
+            this.refreshNodeToolStripMenuItem.Name = "refreshNodeToolStripMenuItem";
+            this.refreshNodeToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.refreshNodeToolStripMenuItem.Text = "Refresh Node";
+            this.refreshNodeToolStripMenuItem.Click += new System.EventHandler(this.refreshNodeToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -410,6 +419,7 @@
 		private System.Windows.Forms.ToolStripMenuItem softToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem eraseAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addSecureDeviceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshNodeToolStripMenuItem;
     }
 }
 
