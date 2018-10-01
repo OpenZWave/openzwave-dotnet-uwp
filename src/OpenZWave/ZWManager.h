@@ -718,9 +718,16 @@ namespace OpenZWave
 
 		/// <summary>Gets the user-friendly label for the value.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
+	  /// <returns>The value label.</returns>
+		/// <seealso cref="ZWValueId" />
+		String^ GetValueLabel(ZWValueId^ id) { return GetValueLabel(id, -1); }
+		
+		/// <summary>Gets the user-friendly label for the value.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="pos">The bit to get the label for if its a BitSet ValueID.</param>
 		/// <returns>The value label.</returns>
 		/// <seealso cref="ZWValueId" />
-		String^ GetValueLabel(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
+		String^ GetValueLabel(ZWValueId^ id, int32 pos) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID(), pos)); }
 
 		/// <summary>Sets the user-friendly label for the value.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
@@ -728,7 +735,16 @@ namespace OpenZWave
 		/// <seealso cref="ZWValueId" />
 		// \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
 		// \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_HOMEID if the Driver cannot be found
-		void SetValueLabel(ZWValueId^ id, String^ value) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value)); }
+		void SetValueLabel(ZWValueId^ id, String^ value) { SetValueLabel(id, value, -1); }
+
+		/// <summary>Sets the user-friendly label for the value.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="value">The new value of the label.</param>
+		/// <param name="pos">The bit to set the label for if its a BitSet ValueID.</param>
+		/// <seealso cref="ZWValueId" />
+		// \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_VALUEID if the ValueID is invalid
+		// \throws OZWException with Type OZWException::OZWEXCEPTION_INVALID_HOMEID if the Driver cannot be found
+		void SetValueLabel(ZWValueId^ id, String^ value, int32 pos) { Manager::Get()->SetValueLabel(id->CreateUnmanagedValueID(), ConvertString(value), pos); }
 
 		/// <summary>Gets the units that the value is measured in.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
@@ -738,9 +754,23 @@ namespace OpenZWave
 
 		/// <summary>Gets a help string describing the value's purpose and usage.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="pos">The bit to get the label for if its a BitSet ValueID.</param>
 		/// <returns>The value help text.</returns>
 		/// <seealso cref="ZWValueId" />
 		String^ GetValueHelp(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
+
+		/// <summary>Sets a help string describing the value's purpose and usage.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <returns>The new value of the help text.</returns>
+		/// <seealso cref="ZWValueId" />
+		void SetValueHelp(ZWValueId^ id, String^ value) { SetValueHelp(id, value, -1); }
+
+		/// <summary>Sets a help string describing the value's purpose and usage.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="pos">The bit to get the label for if its a BitSet ValueID.</param>
+		/// <returns>The new value of the help text.</returns>
+		/// <seealso cref="ZWValueId" />
+		void SetValueHelp(ZWValueId^ id, String^ value, int32 pos) { Manager::Get()->SetValueHelp(id->CreateUnmanagedValueID(), ConvertString(value), pos); }
 
 		/// <summary>Test whether the value is read-only.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
@@ -857,6 +887,21 @@ namespace OpenZWave
 #else
 			Platform::Array<byte>^ *o_value);
 #endif
+
+		/// <summary>Gets a the value of a Bit from a BitSet ValueID</summary>
+		/// <remarks>Returns a raw representation of a value, regardless of type.</remarks>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="pos">The Bit you want to test for</param>
+		/// <param name="o_value">a bool that will be filled with the value.</param>
+		/// <returns><c>true</c> if the value was obtained. Returns <c>false</c> if the value is not a ValueType.Raw.
+		/// The type can be tested with a call to ValueID.GetType.</returns>
+		bool GetValueAsBitSet(ZWValueId^ id, uint8 pos,
+#if __cplusplus_cli
+				[Out] System::Boolean %
+#else
+				bool *
+#endif
+				o_value);
 
 	    /// <summary>Gets the selected item from a list value (as a string).</summary>
 		/// <param nam="id">The unique identifier of the value.</param>
@@ -990,6 +1035,38 @@ namespace OpenZWave
 #endif
 			return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), data, (uint8_t)value->Length);
 		}
+
+		/// <summary>Sets the state of a bit in a BitSet ValueID.
+		/// Due to the possibility of a device being asleep, the command is assumed to succeed, and the value
+		/// held by the node is updated directly.  This will be reverted by a future status message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</summary>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="pos">The Position of the Bit you want to Set.</param>
+		/// <param name="value">The new value of the bool..</param>
+		/// <returns>true if the value was set.  Returns false if the value is not a ValueID::ValueType_Bool. The type can be tested with a call to ValueID::GetType.</returns>
+		bool SetValue(ZWValueId^ id, uint8 pos, bool value) { return Manager::Get()->SetValue(id->CreateUnmanagedValueID(), pos, value); }
+
+
+		/// <summary>Sets the Valid BitMask for a BitSet ValueID
+		/// Sets a BitMask of Valid Bits for a BitSet ValueID</summary>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="mask">The Mask to set.</param>
+		/// <returns>true if the mask was applied.  Returns false if the value is not a ValueID::ValueType_BitSet or the Mask was invalid. The type can be tested with a call to ValueID::GetType.</returns>
+		bool SetBitMask(ZWValueId^ id, uint32 mask) { return Manager::Get()->SetBitMask(id->CreateUnmanagedValueID(), mask); }
+
+		/// <summary>Gets the Valid BitMask for a BitSet ValueID
+		/// Gets a BitMask of Valid Bits for a BitSet ValueID</Summary>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="pos">The Mask to for the BitSet.</param>
+		/// <returns>true if the mask was retrieved.  Returns false if the value is not a ValueID::ValueType_BitSet or the Mask was invalid. The type can be tested with a call to ValueID::GetType.</returns>
+		bool GetBitMask(ZWValueId^ id, int32* mask) { return Manager::Get()->GetBitMask(id->CreateUnmanagedValueID(), mask); }
+
+		/// <summary>Gets the size of a BitMask ValueID
+		/// Gets the size of a BitMask ValueID - Either 1, 2 or 4</summary>
+		/// <param name="id">The unique identifier of the integer value.</param>
+		/// <param name="size">The Size of the BitSet</param>
+		/// <returns>true if the size was retrieved.  Returns false if the value is not a ValueID::ValueType_BitSet or the Mask was invalid. The type can be tested with a call to ValueID::GetType.</returns>
+		bool GetBitSetSize(ZWValueId^ id, uint8* size) { return Manager::Get()->GetBitSetSize(id->CreateUnmanagedValueID(), size); }
 
 		/// <summary>Sets the selected item in a list.</summary>
 		/// <remarks>
@@ -1223,17 +1300,24 @@ namespace OpenZWave
 		/// <seealso cref="RemoveAssociation" />
 		uint8 GetMaxAssociations(uint32 homeId, uint8 nodeId, uint8 groupIdx) { return Manager::Get()->GetMaxAssociations(homeId, nodeId, groupIdx); }
 
-	    /// <summary>Adds a node to an association group.</summary>
-	    /// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
-	    /// held in this class is updated directly.  This will be reverted by a future Association message from the device
-	    /// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
-	    /// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
-	    /// <param name="nodeId">The ID of the node whose associations are to be changed.</param>
-	    /// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
-	    /// <param name="targetNodeId">Identifier for the node that will be added to the association group.</param>
-	    /// <seealso cref="GetNumGroups" />
-	    /// <seealso cref="GetAssociations" />
-	    /// <seealso cref="RemoveAssociation" />
+		/// <summary>Returns true is group supports multi instance.</summary>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose associations we are interested in.</param>
+		/// <param name="groupIdx">one-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+		/// <returns> True if group supports multi instance.</returns>
+		bool IsMultiInstance(uint32 homeId, uint8 nodeId, uint8 groupIdx) { return Manager::Get()->IsMultiInstance(homeId, nodeId, groupIdx); }
+
+		/// <summary>Adds a node to an association group.</summary>
+		/// <remarks>Due to the possibility of a device being asleep, the command is assumed to suceeed, and the association data
+		/// held in this class is updated directly.  This will be reverted by a future Association message from the device
+		/// if the Z-Wave message actually failed to get through.  Notification callbacks will be sent in both cases.</remarks>
+		/// <param name="homeId">The Home ID of the Z-Wave controller that manages the node.</param>
+		/// <param name="nodeId">The ID of the node whose associations are to be changed.</param>
+		/// <param name="groupIdx">One-based index of the group (because Z-Wave product manuals use one-based group numbering).</param>
+		/// <param name="targetNodeId">Identifier for the node that will be added to the association group.</param>
+		/// <seealso cref="GetNumGroups" />
+		/// <seealso cref="GetAssociations" />
+		/// <seealso cref="RemoveAssociation" />
 		void AddAssociation(uint32 homeId, uint8 nodeId, uint8 groupIdx, uint8 targetNodeId) { return Manager::Get()->AddAssociation(homeId, nodeId, groupIdx, targetNodeId); }
 
 		/// <summary>Removes a node from an association group.</summary>

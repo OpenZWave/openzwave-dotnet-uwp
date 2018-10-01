@@ -326,6 +326,34 @@ bool ZWManager::GetValueAsRaw
 }
 
 //-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsBitSet>
+// Gets a bitset value as a Bool
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsBitSet
+(
+		ZWValueId^ id, uint8 pos,
+#if __cplusplus_cli
+		[Out] System::Boolean %
+#else
+		bool *
+#endif
+		o_value
+)
+{
+		bool value;
+		if (Manager::Get()->GetValueAsBitSet(id->CreateUnmanagedValueID(),  pos, &value))
+		{
+#if __cplusplus_cli
+				o_value = value;
+#else
+				*o_value = value;
+#endif
+				return true;
+		}
+		return false;
+}
+
+//-----------------------------------------------------------------------------
 // <ZWManager::GetValueListSelection>
 // Gets the selected item from a list value (returning a string)
 //-----------------------------------------------------------------------------
