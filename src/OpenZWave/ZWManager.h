@@ -720,7 +720,7 @@ namespace OpenZWave
 		/// <param name="id">The unique identifier of the value.</param>
 	  /// <returns>The value label.</returns>
 		/// <seealso cref="ZWValueId" />
-		String^ GetValueLabel(ZWValueId^ id) { return GetValueLabel(id, -1); }
+		String^ GetValueLabel(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueLabel(id->CreateUnmanagedValueID())); }
 		
 		/// <summary>Gets the user-friendly label for the value.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
@@ -754,16 +754,22 @@ namespace OpenZWave
 
 		/// <summary>Gets a help string describing the value's purpose and usage.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
-		/// <param name="pos">The bit to get the label for if its a BitSet ValueID.</param>
 		/// <returns>The value help text.</returns>
 		/// <seealso cref="ZWValueId" />
 		String^ GetValueHelp(ZWValueId^ id) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID())); }
+		
+		/// <summary>Gets a help string describing the value's purpose and usage.</summary>
+		/// <param name="id">The unique identifier of the value.</param>
+		/// <param name="pos">Get the Help for associated Bits (Valid with ValueBitSet only).</param>
+		/// <returns>The value help text.</returns>
+		/// <seealso cref="ZWValueId" />
+		String^ GetValueHelp(ZWValueId^ id, int32 pos) { return ConvertString(Manager::Get()->GetValueHelp(id->CreateUnmanagedValueID(), pos)); }
 
 		/// <summary>Sets a help string describing the value's purpose and usage.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
 		/// <returns>The new value of the help text.</returns>
 		/// <seealso cref="ZWValueId" />
-		void SetValueHelp(ZWValueId^ id, String^ value) { SetValueHelp(id, value, -1); }
+		void SetValueHelp(ZWValueId^ id, String^ value) { Manager::Get()->SetValueHelp(id->CreateUnmanagedValueID(), ConvertString(value)); }
 
 		/// <summary>Sets a help string describing the value's purpose and usage.</summary>
 		/// <param name="id">The unique identifier of the value.</param>
