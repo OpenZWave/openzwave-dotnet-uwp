@@ -64,7 +64,7 @@ namespace OpenZWave
 			ZWValueGenre genre,
 			uint8 commandClassId,
 			uint8 instance,
-			uint8 valueIndex,
+			uint16 valueIndex,
 			ZWValueType type,
 			uint8 pollIntensity
 		)
