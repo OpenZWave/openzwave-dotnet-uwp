@@ -8,6 +8,7 @@ REM UAP...
 XCOPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.dll package\runtimes\win10-x86\native\ /Y
 XCOPY ..\src\Output\OpenZWaveUWP\x64\Release\OpenZWave.dll package\runtimes\win10-x64\native\ /Y
 XCOPY ..\src\Output\OpenZWaveUWP\ARM\Release\OpenZWave.dll package\runtimes\win10-arm\native\ /Y
+XCOPY ..\src\Output\OpenZWaveUWP\ARM64\Release\OpenZWave.dll package\runtimes\win10-arm64\native\ /Y
 XCOPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.winmd package\lib\uap10.0\ /Y
 XCOPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.pri package\lib\uap10.0\ /Y
 XCOPY ..\src\Output\OpenZWaveUWP\x86\Release\OpenZWave.xml package\lib\uap10.0\ /Y
