@@ -44,11 +44,6 @@ namespace OZWAppx.Views
 
         public ControllerViewVM VM { get; private set; } = new ControllerViewVM();
 
-        private void SaveConfiguration_Click(object sender, RoutedEventArgs e)
-        {
-            Controller.WriteConfiguration();
-        }
-
         private void ResetSoft_Click(object sender, RoutedEventArgs e)
         {
             Controller.SoftReset();

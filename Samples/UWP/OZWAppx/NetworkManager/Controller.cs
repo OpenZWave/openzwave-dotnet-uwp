@@ -127,21 +127,6 @@ namespace OpenZWave.NetworkManager
         public string LibraryTypeName => HomeId == 0 ? null : ZWManager.Instance.GetLibraryTypeName(HomeId);
 
         /// <summary>
-        /// Saves the configuration of a PC Controller's Z-Wave network to the application's
-        /// user data folder.
-        /// </summary>
-        /// <remarks>
-        /// This method does not normally need to be called, since OpenZWave will save the
-        /// state automatically during the shutdown process. It is provided here only as
-        /// an aid to development. The configuration of each PC Controller's Z-Wave network
-        /// is stored in a separate file. The filename consists of the 8 digit hexadecimal
-        /// version of the controller's Home ID, prefixed with the string 'zwcfg_'. This
-        /// convention allows OpenZWave to find the correct configuration file for a controller,
-        /// even if it is attached to a different serial port.
-        /// </remarks>
-        public void WriteConfiguration() => ZWManager.Instance.WriteConfig(HomeId);
-
-        /// <summary>
         /// Receive network configuration information from primary controller. Requires secondary.
         /// </summary>
         /// <remarks>
@@ -268,7 +253,6 @@ namespace OpenZWave.NetworkManager
                 case ZWNotificationType.AllNodesQueried:
                     {
                         Debug.WriteLine("All nodes queried");
-                        ZWManager.Instance.WriteConfig(homeID);
                         UpdateDriverStatus(DriverStatus.AllNodesQueried);
                         return true;
                     }
@@ -276,14 +260,12 @@ namespace OpenZWave.NetworkManager
                 case ZWNotificationType.AllNodesQueriedSomeDead:
                     {
                         Debug.WriteLine("All nodes queried (some dead)");
-                        ZWManager.Instance.WriteConfig(homeID);
                         UpdateDriverStatus(DriverStatus.AllNodesQueriedSomeDead);
                         return true;
                     }
 
                 case ZWNotificationType.AwakeNodesQueried:
                     {
-                        ZWManager.Instance.WriteConfig(homeID);
                         UpdateDriverStatus(DriverStatus.AwakeNodesQueried);
                         return true;
                     }

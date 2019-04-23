@@ -160,27 +160,6 @@ namespace OpenZWave
 		void LogDriverStatistics(uint32 homeId) { Manager::Get()->LogDriverStatistics(homeId); }
 
 		//-----------------------------------------------------------------------------
-		// Configuration
-		//-----------------------------------------------------------------------------
-		/** \name Configuration
-		*  For saving the Z-Wave network configuration so that the entire network does not need to be
-		*  polled every time the application starts.
-		*/
-		/*@{*/
-	public:
-		/// <summary>Saves the configuration of a PC Controller's Z-Wave network to the application's user data folder.</summary>
-		/// <remarks>
-		/// This method does not normally need to be called, since OpenZWave will save the state automatically
-		/// during the shutdown process.  It is provided here only as an aid to development.
-		/// The configuration of each PC Controller's Z-Wave network is stored in a separate file.  The filename
-		/// consists of the 8 digit hexadecimal version of the controller's Home ID, prefixed with the string 'zwcfg_'.
-		/// This convention allows OpenZWave to find the correct configuration file for a controller, even if it is
-		/// attached to a different serial port.</remarks>
-		/// <param name="homeId">The Home ID of the Z-Wave controller to save.</param>
-		void WriteConfig(uint32 homeId) { Manager::Get()->WriteConfig(homeId); }
-		/*@}*/
-
-		//-----------------------------------------------------------------------------
 		//	Drivers
 		//-----------------------------------------------------------------------------
 		/** \name Drivers
