@@ -200,7 +200,7 @@
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src\command_classes;..\..\open-zwave\cpp\src\platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\open-zwave\cpp\src;..\..\open-zwave\cpp\src\value_classes;..\..\open-zwave\cpp\src\command_classes;..\..\open-zwave\cpp\src\platform;..\..\open-zwave\cpp\src\aes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <XMLDocumentationFileName>$(OutDir)</XMLDocumentationFileName>
     </ClCompile>
