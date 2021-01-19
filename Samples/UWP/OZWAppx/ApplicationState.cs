@@ -58,7 +58,7 @@ namespace OZWAppx
                 bool isActive = activePorts.Contains(item);
                 SerialPorts.Add(new SerialPortInfo(item, item, isActive));
                 if (isActive)
-                    activePorts.Remove(item.Id);
+                    activePorts.Remove(item);
             }
 #endif
 #if DEBUG

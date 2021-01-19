@@ -393,19 +393,16 @@ namespace OZWForm
                 case ZWNotificationType.AllNodesQueried:
                 {
                     toolStripStatusLabel1.Text = "Ready:  All nodes queried.";
-                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
                 case ZWNotificationType.AllNodesQueriedSomeDead:
                 {
                     toolStripStatusLabel1.Text = "Ready:  All nodes queried but some are dead.";
-                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
                 case ZWNotificationType.AwakeNodesQueried:
                 {
                     toolStripStatusLabel1.Text = "Ready:  Awake nodes queried (but not some sleeping nodes).";
-                    m_manager.WriteConfig(m_notification.HomeId);
                     break;
                 }
             }
@@ -432,16 +429,6 @@ namespace OZWForm
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Handles the Click event of the SaveToolStripMenuItem control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_manager.WriteConfig(m_homeId);
         }
 
         /// <summary>
