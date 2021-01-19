@@ -214,13 +214,18 @@ namespace OZWForm
             // Create the OpenZWave Manager
             m_manager = ZWManager.Instance;
             ZWManager.Instance.Initialize();
-            ZWManager.Instance.NotificationReceived += new NotificationReceivedEventHandler(NotificationHandler);
+            ZWManager.Instance.NotificationReceived += NotificationHandler;
 
             // Add a driver
 
             var m_driverPort = System.IO.Ports.SerialPort.GetPortNames().FirstOrDefault();
             ZWManager.Instance.AddDriver(m_driverPort);
 //			m_manager.AddDriver(@"HID Controller", ZWControllerInterface.Hid);
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            ZWManager.Instance.NotificationReceived -= NotificationHandler;
+            base.OnClosing(e);
         }
 
         /// <summary>
