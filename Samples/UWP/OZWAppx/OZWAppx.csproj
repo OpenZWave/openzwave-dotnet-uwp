@@ -255,6 +255,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="DeviceIcons\1.png" />
+    <Content Include="DeviceIcons\15.png" />
     <Content Include="DeviceIcons\16.png" />
     <Content Include="DeviceIcons\2.png" />
     <Content Include="DeviceIcons\33.png" />
